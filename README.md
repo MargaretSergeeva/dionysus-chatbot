@@ -1,8 +1,16 @@
 # Dionysus Chatbot
 
-Data engineering and RAG pipeline supporting the Rheingau/Wiesbaden destination management chatbot. Scrapes and normalizes wine competition data ([die-besten-weine-hessens.de](https://www.die-besten-weine-hessens.de)) and tour content ([Outdooractive](https://www.outdooractive.com)), stores it in Postgres with pgvector for semantic search, and feeds a multilingual (DE/EN/NL/DA/IT/FR) chatbot.
+Data pipeline and RAG chatbot for the Rheingau tourism platform (rheingau.com) — wine-finder search and regional tour/activity discovery.
 
-Built as a praktikum project following the **CPMAI** lifecycle, with EU AI Act / GDPR documentation included.
+Dionysus is a RAG-based chatbot for the Rheingau-Taunus destination management platform, covering wine-finder search (763 wine entries) and regional tour/activity discovery sourced from rheingau.com itself.
+
+## What makes this project distinctive
+
+- **Modular, versioned prompt architecture** — instead of one static system prompt, behavior is built from small, independently-versioned prompt blocks (one file per capability: wine filtering, alcohol-free search, pairing suggestions, etc.), each tagged `supported`/`partial`/`blocked` by data readiness. A merge script assembles only supported blocks into the live prompt — features ship or roll back independently, without touching the rest.
+- **Core vs. conditional behavior separation** — always-on behavioral rules (e.g. the PII-handling guardrail) are kept apart from data-dependent prompt blocks, since they don't toggle with data status.
+- **Three-tool PM constellation** — GitHub (code/source of truth), YouTrack DC2 (issues, requirements, phase docs, traceability), Supabase/Postgres+pgvector (curated data + embeddings) — cross-linked by convention (commits reference issue IDs, new files link their YouTrack article and vice versa).
+- **Multilingual retrieval** — DE/EN/NL/DA/IT/FR chatbot answers grounded in semantic search over wine competition data and rheingau.com's own tour/activity content.
+- **Built-in compliance** — EU AI Act risk classification and GDPR documentation live alongside deployment, not bolted on after.
 
 ## Project management
 
@@ -13,29 +21,36 @@ Built as a praktikum project following the **CPMAI** lifecycle, with EU AI Act /
 ## Architecture
 
 ```
-Source sites (Weinfinder, Outdooractive)
+Source sites (Weinfinder, rheingau.com)
         │
         ▼
    scraper/           raw HTML/JSON snapshots
         │
         ▼
-   pipeline/          cleaning & normalization (capitalization, missing fields)
+   pipeline/          cleaning & normalization
         │
         ▼
-   Postgres            curated tables + pgvector embeddings
+   Postgres (Supabase) curated tables + pgvector embeddings
         │
         ▼
    Chatbot platform    retrieval-augmented answers (structured filters + semantic search)
+        │
+        ▼
+   compliance/         EU AI Act & GDPR checks applied at deployment
 ```
 
-## Repo structure
+## Repo structure (proposed — CPMAI-aligned)
 
 ```
-/scraper/          scripts to fetch Weinfinder & Outdooractive data
-/pipeline/          cleaning/normalization scripts, run before loading to Postgres
-/schema/            SQL schema definitions (raw + curated tables, pgvector setup)
-/docs/              project brief, requirements, AI Act & GDPR documentation
-/data/              sample/snapshot CSVs (not full production data)
+/docs/business-understanding/
+/docs/data-understanding/
+/pipeline/                  cleaning/normalization scripts (Data Preparation)
+/modeling/
+  /modeling/schema/         SQL schema + pgvector setup (or keep /schema/ top-level — TBD)
+  /modeling/prompts/        modular prompt blocks (moved from /prompts/)
+/evaluation/                 testing
+/deployment/
+  /deployment/compliance/   EU AI Act & GDPR docs (moved from /docs/ai-act-gdpr.md)
 ```
 
 ## Setup
@@ -48,10 +63,10 @@ Source sites (Weinfinder, Outdooractive)
 
 ## Running the pipeline
 
-```bash
+```
 # 1. Scrape raw data
 python scraper/weinfinder.py
-python scraper/outdooractive.py
+python scraper/rheingau_site.py
 
 # 2. Clean and normalize
 python pipeline/clean_wines.py
@@ -62,15 +77,14 @@ python pipeline/load_to_db.py
 
 ## Data sources
 
-| Source | Content | Access method |
-|---|---|---|
-| die-besten-weine-hessens.de | 763 wine entries (grape, type, award, taste, alcohol %) | Custom scraper (JS-rendered, not sitemap-crawlable) |
-| Outdooractive | Hiking/cycling tours for Rheingau | Custom scraper (JS-rendered) |
-| rheingau.com | Main site content (wanderwege, radfahren) | Platform's built-in sitemap import |
+| Source                      | Content                                                  | Access method                                       |
+| ---------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
+| die-besten-weine-hessens.de | 763 wine entries (grape, type, award, taste, alcohol %)  | Custom scraper (JS-rendered, not sitemap-crawlable) |
+| rheingau.com                | Main site content, tours, wanderwege, radfahren         | Platform's built-in sitemap import                  |
 
 ## Governance
 
-- EU AI Act risk classification and GDPR data processing notes: see `/docs/ai-act-gdpr.md`
+- EU AI Act risk classification and GDPR data processing notes: see `/deployment/compliance/ai-act-gdpr.md`
 - Wine competition data is public information; no personal data is processed in the wine dataset
 
 ## Team

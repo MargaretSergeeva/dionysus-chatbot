@@ -1,0 +1,53 @@
+name: Dify prompt smoke test
+
+# Runs the prompt through a real Dify app on every push to main, so a
+# broken or unmerging prompt block shows up here instead of in production.
+# This does NOT update Dify's saved app config -- Dify's public API has no
+# supported endpoint for that. It sends the merged prompt as a runtime
+# input variable and checks Dify replies. See scripts/dify_smoke_test.py.
+#
+# Setup required (one-time, in the GitHub repo, not by Claude):
+#   Settings > Secrets and variables > Actions > New repository secret
+#     DIFY_API_KEY = <your Dify app's Service API key, from the app's
+#                     "API Access" tab in the Dify dashboard>
+#
+# Optional repo variables (Settings > ... > Variables) if your Dify app
+# differs from the defaults in scripts/dify_smoke_test.py:
+#   DIFY_BASE_URL, DIFY_PROMPT_VARIABLE, DIFY_TEST_MESSAGE
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "prompts/**"
+      - "scripts/dify_smoke_test.py"
+  workflow_dispatch: {}
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Assemble merged prompt (merge.py)
+        run: |
+          if [ -f merge.py ]; then
+            python merge.py
+          else
+            echo "::warning::merge.py not found at repo root -- skipping assembly. \
+            Expecting prompts/merged/system_prompt.md to already exist, or add merge.py."
+          fi
+
+      - name: Run Dify smoke test
+        env:
+          DIFY_API_KEY: ${{ secrets.DIFY_API_KEY }}
+          DIFY_BASE_URL: ${{ vars.DIFY_BASE_URL }}
+          DIFY_PROMPT_VARIABLE: ${{ vars.DIFY_PROMPT_VARIABLE }}
+          DIFY_TEST_MESSAGE: ${{ vars.DIFY_TEST_MESSAGE }}
+        run: python scripts/dify_smoke_test.py

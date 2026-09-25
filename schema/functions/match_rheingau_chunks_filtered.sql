@@ -1,13 +1,13 @@
--- YouTrack: DC2-A-96 (Chatbot architecture: data sources and query routing), issue DC2-131
+-- YouTrack: DC2-A-96 (Chatbot architecture: data sources and query routing), issues DC2-131, DC2-132
 --
 -- Hybrid retrieval: same semantic ranking as match_rheingau_chunks (DC2-119),
--- scoped to chunks whose page passes the same structured amenity/category
+-- scoped to chunks whose page passes the same structured amenity/category/city
 -- filters as filter_rheingau_pages.sql.
 --
 -- Use for combined queries that need both meaning and a hard constraint
--- ("recommend a nice pet-friendly hotel near Rüdesheim") — filter_rheingau_pages
+-- ("recommend a nice pet-friendly hotel in Rüdesheim") — filter_rheingau_pages
 -- alone can't rank by "nice", and match_rheingau_chunks alone can't guarantee
--- the pet-friendly constraint actually holds.
+-- the pet-friendly/city constraint actually holds.
 
 CREATE OR REPLACE FUNCTION public.match_rheingau_chunks_filtered(
   query_embedding vector,
@@ -15,6 +15,7 @@ CREATE OR REPLACE FUNCTION public.match_rheingau_chunks_filtered(
   match_threshold double precision DEFAULT 0.0,
   p_category text DEFAULT NULL,
   p_page_type text DEFAULT NULL,
+  p_city text DEFAULT NULL,
   p_pet_friendly boolean DEFAULT NULL,
   p_bike_friendly boolean DEFAULT NULL,
   p_wifi_available boolean DEFAULT NULL,
@@ -57,6 +58,7 @@ LANGUAGE sql STABLE AS $$
     AND 1 - (c.embedding <=> query_embedding) > match_threshold
     AND (p_category IS NULL OR rp.category = p_category)
     AND (p_page_type IS NULL OR rp.page_type = p_page_type)
+    AND (p_city IS NULL OR rp.city = p_city)
     AND (p_pet_friendly IS NULL OR rp.pet_friendly = p_pet_friendly)
     AND (p_bike_friendly IS NULL OR rp.bike_friendly = p_bike_friendly)
     AND (p_wifi_available IS NULL OR rp.wifi_available = p_wifi_available)
@@ -79,7 +81,11 @@ LANGUAGE sql STABLE AS $$
   LIMIT match_count;
 $$;
 
-COMMENT ON FUNCTION public.match_rheingau_chunks_filtered IS
-  'Hybrid retrieval (DC2-131): semantic ranking like match_rheingau_chunks (DC2-119), scoped to pages
-   passing the same structured amenity/category filters as filter_rheingau_pages. Use for combined
-   queries ("recommend a nice pet-friendly hotel near Rüdesheim").';
+COMMENT ON FUNCTION public.match_rheingau_chunks_filtered(
+  vector, integer, double precision, text, text, text, boolean, boolean, boolean, boolean,
+  boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean,
+  boolean, boolean, boolean, boolean
+) IS
+  'Hybrid retrieval (DC2-131, city param DC2-132): semantic ranking like match_rheingau_chunks
+   (DC2-119), scoped to pages passing the same structured filters as filter_rheingau_pages,
+   including canonical city.';

@@ -13,7 +13,7 @@
 -- Coverage after backfill: poi 93.5%, event 95.4%, accommodation 99.1%,
 -- experience 93.8%; pages 15.8%, tour 9.3% (expected — those aren't
 -- single-location pages, so most legitimately have no page-level address).
--- See DC2-A-134 for the full writeup.
+-- See DC2-A-127 for the full writeup.
 
 CREATE TABLE IF NOT EXISTS public._plz_city_map (
   plz text PRIMARY KEY,
@@ -54,7 +54,7 @@ ALTER TABLE rheingau_pages ADD COLUMN IF NOT EXISTS city text;
 ALTER TABLE rheingau_pages ADD COLUMN IF NOT EXISTS city_source text;
 
 COMMENT ON COLUMN rheingau_pages.city IS
-  'Canonical town/district (DC2-134), backfilled from the PLZ+town found in the page''s
+  'Canonical town/district (DC2-132, DC2-A-127), backfilled from the PLZ+town found in the page''s
    own address block in `content`, mapped through _plz_city_map. NULL when no address
    block was found (mostly category=pages/tour, which are not single-location pages) or
    the PLZ fell outside the known Rheingau range (a handful of data-entry outliers, e.g.
@@ -62,7 +62,7 @@ COMMENT ON COLUMN rheingau_pages.city IS
    the free-text, multi-value `cities` column, which mixes actual towns with the broader
    "Rheingau" region tag and cannot be filtered on reliably.';
 COMMENT ON COLUMN rheingau_pages.city_source IS
-  'How `city` was set. Currently only ''address_plz'' (DC2-134). Lets later tiers
+  'How `city` was set. Currently only ''address_plz'' (DC2-132). Lets later tiers
    (manual/self-reported) be added without touching this backfill.';
 
 WITH extracted AS (

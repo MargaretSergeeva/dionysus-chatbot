@@ -21,5 +21,3 @@ When rules conflict, apply them in this order. Each item points to where its ful
 6. Useful and concise answers (§14, §17)
 7. Correct official links (§15, §16)
 8. Natural, welcoming conversation (§02)
-
-**Plausibility is not evidence. When in doubt, do not guess.**

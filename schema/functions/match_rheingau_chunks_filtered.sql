@@ -34,7 +34,8 @@ CREATE OR REPLACE FUNCTION public.match_rheingau_chunks_filtered(
   p_drying_room_available boolean DEFAULT NULL,
   p_hiking_certified boolean DEFAULT NULL,
   p_accessibility_certified boolean DEFAULT NULL,
-  p_alcohol_free_offer boolean DEFAULT NULL  -- DC2-142, 28.09.2026
+  p_alcohol_free_offer boolean DEFAULT NULL,  -- DC2-142, 28.09.2026
+  p_transport_type text DEFAULT NULL  -- DC2-142: station, ferry, boat_landing, cable_car, parking, camper_stop, ebike_charging, taxi, info
 )
 RETURNS TABLE (
   chunk_id text,
@@ -79,6 +80,7 @@ LANGUAGE sql STABLE AS $$
     AND (p_hiking_certified IS NULL OR rp.hiking_certified = p_hiking_certified)
     AND (p_accessibility_certified IS NULL OR rp.accessibility_certified = p_accessibility_certified)
     AND (p_alcohol_free_offer IS NULL OR rp.alcohol_free_offer = p_alcohol_free_offer)
+    AND (p_transport_type IS NULL OR rp.transport_type = p_transport_type)
   ORDER BY c.embedding <=> query_embedding
   LIMIT match_count;
 $$;
@@ -86,7 +88,7 @@ $$;
 COMMENT ON FUNCTION public.match_rheingau_chunks_filtered(
   vector, integer, double precision, text, text, text, boolean, boolean, boolean, boolean,
   boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean,
-  boolean, boolean, boolean, boolean, boolean
+  boolean, boolean, boolean, boolean, boolean, text
 ) IS
   'Hybrid retrieval (DC2-131, city param DC2-132): semantic ranking like match_rheingau_chunks
    (DC2-119), scoped to pages passing the same structured filters as filter_rheingau_pages,

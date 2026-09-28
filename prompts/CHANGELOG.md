@@ -40,6 +40,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 22**: "documented alcohol-free offers"; GDPR Art. 9 rationale moved to the CR-03 note.
 - **`alcohol_free_offer`** flag added to `rheingau_pages` and both filter functions (empty until the page review is done).
 - **BLOCK 03 Alcohol-free** (both builds, RAG): website pages only, "Alkoholfreier Wein" first, then other documented offers. **New BLOCK 03b** (full): exact filter `alcohol_free_offer = true`; 29 pages tagged after review.
+- **Rule: what CORE says is not repeated in blocks** (decision 28.09.2026). BLOCK 06: "no live sourcing" removed (CORE 01/05/06/19). BLOCK 06b: maintenance sentence moved to the `historical_anchors` note in the registry.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. Gap: FR-07 (conditional statements) has no module yet.
 
 ## prompt-v1.1 — 28.09.2026

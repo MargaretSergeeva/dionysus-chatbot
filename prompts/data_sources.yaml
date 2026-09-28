@@ -73,7 +73,7 @@ sources:
   historical_anchors:
     kind: table
     fields: [name, city, category, historical_fact, key_year, related_wine, usage_note, source_page_id, verified]
-    note: 10 verified anchors, each linked to a rheingau_pages page
+    note: 10 verified anchors, each linked to a rheingau_pages page. Adding, correcting or retiring an anchor is a content-maintenance task (verify against the linked page), not something the bot does.
     docs: DC2-A-102
     builds: [full]
 

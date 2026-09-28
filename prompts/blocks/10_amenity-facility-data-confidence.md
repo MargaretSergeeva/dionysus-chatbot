@@ -14,6 +14,25 @@ deps:
 - DC2-131
 - DC2-142
 - DC2-151
+fields:
+- rheingau_pages.pet_friendly
+- rheingau_pages.bike_friendly
+- rheingau_pages.wifi_available
+- rheingau_pages.parking_available
+- rheingau_pages.family_friendly
+- rheingau_pages.nonsmoking
+- rheingau_pages.elevator_available
+- rheingau_pages.ev_charging_available
+- rheingau_pages.bike_rental_available
+- rheingau_pages.vegetarian_available
+- rheingau_pages.gluten_free_available
+- rheingau_pages.luggage_transport_available
+- rheingau_pages.drying_room_available
+- rheingau_pages.hiking_certified
+- rheingau_pages.accessibility_certified
+- rheingau_pages.phones
+- rheingau_pages.partner_links
+- rheingau_pages.city
 ---
 
 Amenity data for accommodations (`pet_friendly`, `bike_friendly`, `wifi_available`, `parking_available`, `family_friendly`, `nonsmoking`, `elevator_available`, `ev_charging_available`, `bike_rental_available`, `vegetarian_available`, `gluten_free_available`, `luggage_transport_available`, `drying_room_available`, `hiking_certified`, `accessibility_certified`) is stored per field as `true`, `false` or `NULL`. `true`/`false` is a confirmed statement extracted from the source. `NULL` means only "no information available" — never "no".

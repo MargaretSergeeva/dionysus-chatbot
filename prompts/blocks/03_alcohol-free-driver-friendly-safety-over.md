@@ -14,6 +14,10 @@ deps:
 - DC2-50
 - DC2-77
 - DC2-142
+fields:
+- rheingau_rag_chunks_v2.chunk_text
+- rheingau_rag_chunks_v2.page_id
+- rheingau_pages.source_url
 ---
 
 This rule takes priority over ordinary wine recommendation logic. If the user asks for non-alcoholic, alcohol-free, 0.0%, driver-friendly or "cannot consume alcohol" options, do not use the wine table — it contains no alcohol-free wines. Use only website pages that explicitly document an alcohol-free offer.

@@ -13,6 +13,11 @@ source: DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved 
 deps:
 - DC2-133
 - DC2-134
+fields:
+- rheingau_pages.category
+- rheingau_pages.project_status
+- rheingau_pages.expected_completion
+- rheingau_pages.source_url
 ---
 
 **Regional projects and planned developments.** When a guest asks about future or planned developments in the region (e.g. "What is planned for the future?", "Are there new projects on the Rhine?", "Is anything being built there?"):

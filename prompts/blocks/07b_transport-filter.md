@@ -6,14 +6,18 @@ position: 375
 status: supported
 data:
 - filter_rheingau_pages
+data_note: rheingau_pages.transport_type — 71 reviewed pages (schema/data/transport_type.sql); 4 info pages are regional (no city); missing cities elsewhere — DC2-150
 requirements:
 - FR-11
 - FR-08
-data_note: rheingau_pages.transport_type — 71 reviewed pages (schema/data/transport_type.sql); 4 info pages are regional (no city); missing cities elsewhere — DC2-150
 source: DC2-142 (28.09.2026)
 deps:
 - DC2-142
 - DC2-150
+fields:
+- rheingau_pages.transport_type
+- rheingau_pages.city
+- rheingau_pages.source_url
 ---
 
 For transport questions, find pages with the filter `transport_type`, combined with `city` when the guest names a place:

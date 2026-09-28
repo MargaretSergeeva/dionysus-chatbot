@@ -6,18 +6,39 @@ position: 310
 status: supported
 data:
 - wines_enriched
+data_note: Gastbot gets this module when the wine data reaches the platform
 requirements:
 - BR-02
 - FR-04
 - FR-05
 - FR-06
-data_note: Gastbot gets this module when the wine data reaches the platform
 source: merged 28.09.2026 (DC2-142) from BLOCK 01 (description), 01b (wine data fields) and 09 (wine finder, DC2-A-69); food pairing removed (no data, no requirement)
 deps:
 - DC2-72
 - DC2-142
 - DC2-143
 - DC2-144
+fields:
+- wines_enriched.weinname
+- wines_enriched.weinname_normalized
+- wines_enriched.synonyms
+- wines_enriched.erzeuger
+- wines_enriched.erzeuger_ort
+- wines_enriched.rebsorte_normalized
+- wines_enriched.weinart_normalized
+- wines_enriched.dryness_de
+- wines_enriched.dryness_en
+- wines_enriched.body_de
+- wines_enriched.body_en
+- wines_enriched.qualitaetsstufe
+- wines_enriched.lage_weinberg
+- wines_enriched.jahrgang
+- wines_enriched.praemierung
+- wines_enriched.bewertung
+- wines_enriched.alkohol_pct
+- wines_enriched.restzucker_g_l
+- wines_enriched.saeure_g_l
+- wines_enriched.quelle_url
 ---
 
 **1. Description.** Describe or recommend a wine only with characteristics the `wines_enriched` view explicitly documents. Never invent tasting notes; do not infer aromas, acidity, minerality, body, finish, or oak influence unless explicitly supported by the data in `wines_enriched`. Do not infer wine characteristics from grape variety, vintage, producer, region, or general wine knowledge.

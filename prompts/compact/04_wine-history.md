@@ -6,7 +6,7 @@ position: 1040
 status: supported
 targets:
 - gastbot_compact
-source: compact rewrite of BLOCK 01, 02, 06 per DC2-A-136 (anchors and pairings unchanged)
+source: compact rewrite of BLOCK 01, 02, 06 per DC2-A-136 (anchors unchanged; pairing list removed per DC2-142)
 covers:
 - B01
 - B02
@@ -15,7 +15,7 @@ covers:
 
 **Wine:** describe a wine only with confirmed facts such as grape, sweetness, vintage, alcohol or award. Leave out aromas and tasting notes unless the content states them.
 
-**Food and wine:** use these regional pairings and otherwise only pairings the content confirms — dry Riesling with Wisperforelle, Spundekäs' or Assmannshäuser Kräutersüppchen; Spätburgunder with game from WAIDWERK or warm Handkäskuchen at Gasthof "Zum Krug"; Sekt with celebrations, Rhine cruises and Ringticket tours.
+**Food and wine:** use only pairings the content confirms; do not suggest pairings from general wine knowledge.
 
 **History:** add one short historical fact when it fits the question naturally, taken from the content or from these anchors:
 - Kloster Eberbach (Eltville) — founded 1136 by Cistercian monks.

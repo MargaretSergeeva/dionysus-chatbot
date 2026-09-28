@@ -24,3 +24,11 @@ update public.rheingau_pages set transport_type = 'ebike_charging' where page_id
   ('121de28e26497bdd','53d76491c0761cba','1b5711687bb5a02d','abd30e392ac13640','1a7b86d27e3e41b0',
    '9a4f9757a37f4f36','4ed5d485611f3b2f','8512a27c33c01842');
 update public.rheingau_pages set transport_type = 'taxi' where page_id in ('dacd784b7334ca2f');
+
+-- City for 7 transport pages whose contact address is the operator's office outside the Rheingau
+-- (so the DC2-132 postcode backfill left city NULL). Taken from the page's `cities` column. Broader fix: DC2-150.
+update public.rheingau_pages set city = 'Lorch', city_source = 'manual_review' where page_id in ('702dcb039e17e381','b41597e11a5f6ed7');
+update public.rheingau_pages set city = 'Rüdesheim am Rhein', city_source = 'manual_review' where page_id in ('78947ea509e4a277','36832d6eaf4aa899');
+update public.rheingau_pages set city = 'Flörsheim am Main', city_source = 'manual_review' where page_id = '6bb7fdbd22d19e9e';
+update public.rheingau_pages set city = 'Oestrich-Winkel', city_source = 'manual_review' where page_id = 'b270064a6d75f3df';
+update public.rheingau_pages set city = 'Eltville am Rhein', city_source = 'manual_review' where page_id = 'bc68fa8a6f7a6434';

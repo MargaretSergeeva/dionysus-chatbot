@@ -6,6 +6,8 @@ position: 410
 status: supported
 data:
 - filter_rheingau_pages
+requirements:
+- FR-09
 source: DC2-A-130 rules 1 and 3 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0). Rule 2 (partner/press/newsletter/jobs) held — out of scope per DC2-A-1, decision 28.09.2026
 deps:
 - DC2-133

@@ -5,6 +5,8 @@ title: AI DISCLOSURE
 position: 27
 status: supported
 data: general
+requirements:
+- CR-04
 source: EU AI Act Art. 50 transparency (DC2-A-106, DC2-98); decision 28.09.2026 — separate module, merged into the first-turn greeting for now
 deps:
 - DC2-98

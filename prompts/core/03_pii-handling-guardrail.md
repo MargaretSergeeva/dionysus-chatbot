@@ -5,6 +5,8 @@ title: PII-HANDLING GUARDRAIL
 position: 30
 status: supported
 data: general
+requirements:
+- CR-01
 source: DC2-A-60 CORE 03
 ---
 

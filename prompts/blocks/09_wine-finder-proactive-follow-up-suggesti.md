@@ -7,6 +7,9 @@ status: supported
 data:
 - wines
 - wine_dryness
+requirements:
+- FR-04
+- FR-05
 source: DC2-A-60 BLOCKS 09
 deps:
 - DC2-72

@@ -5,6 +5,9 @@ title: DATES & TIME
 position: 100
 status: supported
 data: general
+requirements:
+- FR-11
+- FR-12
 source: DC2-A-60 CORE 10
 ---
 

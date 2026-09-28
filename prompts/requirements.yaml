@@ -1,0 +1,85 @@
+# Requirements — the machine-readable list behind YouTrack DC2-A-84 (DC2-147).
+# Every prompt module lists the IDs it covers in `requirements:`; the gate fails on unknown IDs.
+# The status report shows requirement → modules; `prompt: false` = met outside the prompt (no module expected).
+#
+# Types: BR = business (why the client wants the bot) · FR = functional (what the bot does)
+#        CR = compliance (law, GDPR, EU AI Act) · QR = quality (our own standard for good answers)
+# Add new requirements here and in DC2-A-84 when they are found.
+
+requirements:
+  # ── Business ───────────────────────────────────────────────
+  BR-01:
+    title: Guests ask in natural language instead of keyword search
+    source: DC2-A-1 §2, DC2-A-4
+  BR-02:
+    title: Promote Rheingau wine by presenting wineries (Weinwerbung)
+    source: DC2-A-1 §2
+  BR-03:
+    title: Client sees what guests ask (question analytics)
+    source: DC2-A-1 §2, §9
+    prompt: false   # logging tables sessions / messages / matched_documents
+
+  # ── Functional ─────────────────────────────────────────────
+  FR-01:
+    title: Answers in 6 languages (DE, EN, NL, DA, IT, FR)
+    source: DC2-A-1 §3
+    note: Gastbot via Reply Translation (platform-covered)
+  FR-02:
+    title: Informal "du"
+    source: DC2-A-1 §3 (client decision 09.09.2026)
+  FR-03:
+    title: Every answer links to its rheingau.com source page
+    source: DC2-A-1 §3
+  FR-04:
+    title: "Wine finder: grape, wine type, dryness, award, winery"
+    source: DC2-A-1 §3, §6
+  FR-05:
+    title: Proactive wine follow-ups ("other gold-medal wines?")
+    source: DC2-A-1 §3
+  FR-06:
+    title: No invented facts — no price, wine or place outside the data
+    source: DC2-A-1 §1, §9
+  FR-07:
+    title: Conditional statements keep their exception (price / opening-hours exceptions)
+    source: DC2-A-1 §9, DC2-A-75 risk 6
+    note: no prompt module yet — to check (retrieval/chunking issue, DC2-A-75)
+  FR-08:
+    title: Exact list questions answered completely (amenities, city)
+    source: DC2-A-1 §1, §5
+  FR-09:
+    title: Scope is rheingau.com + provided data only, no live third-party lookups
+    source: DC2-A-1 §1, §6 (team decision 24.09.2026, DC2-84)
+  FR-10:
+    title: No alcohol-free recommendations the data does not contain
+    source: DC2-A-1 §1
+  FR-11:
+    title: Answer tourism questions and recommend activities that fit the guest's request
+    source: decision 28.09.2026; DC2-A-146
+  FR-12:
+    title: Time-sensitive facts (dates, prices, availability) help to find but are never confirmed; guest checks the official page
+    source: decision 28.09.2026
+
+  # ── Compliance ─────────────────────────────────────────────
+  CR-01:
+    title: Do not process user-submitted personal data
+    source: DC2-A-1 §3, §11 (DC2-107)
+  CR-02:
+    title: "GDPR: honest about chat logging, no fake deletion"
+    source: DC2-A-1 §11 (DC2-100, DC2-101, DC2-109)
+  CR-03:
+    title: No special-category (health) data
+    source: DC2-A-1 §11
+  CR-04:
+    title: Guests are told they are talking to an AI (EU AI Act Art. 50)
+    source: DC2-A-1 §11, DC2-A-106 (DC2-98)
+  CR-05:
+    title: Answers traceable to their source (provenance)
+    source: DC2-A-1 §11
+
+  # ── Quality ────────────────────────────────────────────────
+  QR-01:
+    title: Answers are concise, readable and well-formatted
+    source: decision 28.09.2026
+  QR-02:
+    title: Complaints are acknowledged calmly and pointed to the documented contact, no promises
+    source: decision 28.09.2026

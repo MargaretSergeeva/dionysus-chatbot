@@ -5,6 +5,9 @@ title: LISTS & RESPONSE FORMAT
 position: 170
 status: supported
 data: general
+requirements:
+- FR-11
+- QR-01
 source: DC2-A-60 CORE 17
 ---
 

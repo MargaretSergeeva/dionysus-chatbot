@@ -10,6 +10,9 @@ gastbot_covers:
   builtins:
   - manual_link_formatting
   reason: Gastbot Links Manager formats links (DC2-A-114)
+requirements:
+- FR-03
+- QR-01
 source: DC2-A-60 CORE 16 (format part), split per DC2-142 (28.09.2026)
 ---
 

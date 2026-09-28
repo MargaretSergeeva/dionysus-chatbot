@@ -7,6 +7,9 @@ status: supported
 data:
 - rheingau_pages
 data_note: no pairings table; pairings only as free text on rheingau.com pages
+requirements:
+- BR-02
+- FR-06
 source: DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)
 deps:
 - DC2-142

@@ -7,6 +7,8 @@ status: supported
 data:
 - rheingau_pages
 data_note: wine catalog has no alcohol-free wines (0 rows, lowest alkohol_pct 7.5); answer points to page 'Alkoholfreier Wein' (page_id fb6568e77028a056)
+requirements:
+- FR-10
 source: DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)
 deps:
 - DC2-50

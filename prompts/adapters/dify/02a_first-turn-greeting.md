@@ -8,6 +8,8 @@ data: general
 gastbot_covers:
   relation: conflict
   reason: Gastbot uses its own greeting variable isFirstAssistantTurn (adapter gastbot-02a)
+requirements:
+- QR-01
 source: DC2-A-84 platform baseline (§2/§18 first-turn greeting), full-build equivalent of the Gastbot variable
 ---
 

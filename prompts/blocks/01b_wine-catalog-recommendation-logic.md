@@ -8,6 +8,9 @@ data:
 - wines
 - wine_dryness
 data_note: dryness labels come from our normalization/enrichment formula; customer changes are added as a new mapping (decision 28.09.2026)
+requirements:
+- BR-02
+- FR-04
 source: DC2-A-60 BLOCKS 01 (catalog part), split per DC2-142 (28.09.2026); dryness thresholds replaced by wine_dryness labels (normalized and enriched wine data, DC2-143)
 deps:
 - DC2-142

@@ -5,6 +5,8 @@ title: SPECIAL CATEGORY DATA (HEALTH) — AVOIDANCE
 position: 220
 status: supported
 data: general
+requirements:
+- CR-03
 source: DC2-A-60 CORE 22
 ---
 

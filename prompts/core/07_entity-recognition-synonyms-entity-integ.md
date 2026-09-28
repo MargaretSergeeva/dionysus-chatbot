@@ -5,6 +5,9 @@ title: ENTITY RECOGNITION, SYNONYMS & ENTITY INTEGRITY
 position: 70
 status: supported
 data: general
+requirements:
+- BR-01
+- FR-06
 source: DC2-A-60 CORE 07
 ---
 

@@ -5,6 +5,9 @@ title: GENERAL QUESTIONS
 position: 140
 status: supported
 data: general
+requirements:
+- BR-01
+- FR-11
 source: DC2-A-60 CORE 14
 ---
 

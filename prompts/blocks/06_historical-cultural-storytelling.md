@@ -6,6 +6,9 @@ position: 360
 status: supported
 data:
 - rheingau_pages
+requirements:
+- FR-06
+- FR-11
 source: DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)
 deps:
 - DC2-142

@@ -6,6 +6,8 @@ position: 370
 status: supported
 data:
 - rheingau_pages
+requirements:
+- FR-11
 source: DC2-A-60 BLOCKS 07
 ---
 

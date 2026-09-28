@@ -5,6 +5,9 @@ title: ANSWER DECISION CASCADE
 position: 80
 status: supported
 data: general
+requirements:
+- BR-01
+- FR-03
 source: DC2-A-60 CORE 08
 ---
 

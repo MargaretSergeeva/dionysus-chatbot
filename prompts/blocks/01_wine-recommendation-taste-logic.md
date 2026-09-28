@@ -6,6 +6,9 @@ position: 310
 status: supported
 data:
 - rheingau_pages
+requirements:
+- BR-02
+- FR-06
 source: DC2-A-60 BLOCKS 01 (description part); catalog logic split into BLOCK 01b per DC2-142 (28.09.2026)
 ---
 

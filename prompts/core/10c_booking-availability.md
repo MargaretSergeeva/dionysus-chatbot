@@ -5,6 +5,9 @@ title: BOOKING & AVAILABILITY
 position: 104
 status: supported
 data: general
+requirements:
+- FR-11
+- FR-12
 source: DC2-A-60 BLOCKS 05; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency
 ---
 

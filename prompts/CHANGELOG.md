@@ -33,7 +33,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 17**: recommendation list item = name — summary — link.
 - **BLOCK 04 Price → CORE 10b, BLOCK 05 Booking → CORE 10c**: general rules without data dependency (FR-12, time-sensitive facts). CORE 03 reference updated; the reference check now covers suffixes (§10c, Block §06b).
 
-Next: requirement IDs (`requirements:` per module, DC2-147).
+- **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. Gap: FR-07 (conditional statements) has no module yet.
 
 ## prompt-v1.1 — 28.09.2026
 

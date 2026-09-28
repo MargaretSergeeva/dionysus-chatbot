@@ -5,6 +5,10 @@ title: null
 position: 0
 status: supported
 data: general
+requirements:
+- BR-01
+- BR-02
+- FR-06
 source: DC2-A-60 preamble
 ---
 

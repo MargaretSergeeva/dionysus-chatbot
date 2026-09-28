@@ -6,6 +6,9 @@ position: 365
 status: supported
 data:
 - historical_anchors
+requirements:
+- FR-06
+- FR-11
 source: DC2-A-60 BLOCKS 06 (anchor part), split per DC2-142 (28.09.2026)
 deps:
 - DC2-142

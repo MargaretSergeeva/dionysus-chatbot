@@ -5,6 +5,8 @@ title: NO UNSUPPORTED COMPARISONS
 position: 130
 status: supported
 data: general
+requirements:
+- FR-06
 source: DC2-A-60 CORE 13
 ---
 

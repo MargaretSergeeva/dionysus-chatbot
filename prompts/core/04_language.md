@@ -10,6 +10,8 @@ gastbot_covers:
   builtins:
   - response_language
   reason: Gastbot answers in German and translates with Reply Translation (DC2-A-112)
+requirements:
+- FR-01
 source: DC2-A-60 CORE 04
 ---
 

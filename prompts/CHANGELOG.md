@@ -8,7 +8,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 |---|---|---|
 | BLOCK 02 Food & wine pairings | Hardcoded pairing list removed; rule only: use pairings the knowledge base documents | No pairings table in Supabase; data belongs in data, not in the prompt (decision 28.09.2026) |
 | BLOCK 03 Alcohol-free | States that the wine catalog has no alcohol-free wines; refers to the page "Alkoholfreier Wein" (`rheingau_pages` fb6568e77028a056) | `wines` has 0 alcohol-free rows (DC2-50, DC2-77); data status none |
-| compact §4 Wine, food and history | Pairing list removed; rule only | Same as BLOCK 02 |
+| compact §4 Wine, food and history | Pairing and anchor lists removed; history only from website content | Same as BLOCK 02 / BLOCK 06 |
 | BLOCK 06 Storytelling | Anchor list removed; rules only; history from page content | Data in Supabase, not in the prompt; works in Gastbot via its RAG |
 | BLOCK 06b Historical anchors (new, full only) | Split from BLOCK 06: prefer rows of `historical_anchors` | Gastbot cannot query the table |
 | BLOCK 09 Wine finder | Food-pairing follow-up: "fixed documented pairings" → "pairings documented in the knowledge base" | Follows BLOCK 02 |

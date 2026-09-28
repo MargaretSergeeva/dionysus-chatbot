@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 20429,
+  "chars": 19352,
   "included": [
     {
       "id": "core-00-preamble",
@@ -46,7 +46,7 @@
     {
       "id": "core-08-answer-decision-cascade",
       "status": "supported",
-      "source": "DC2-A-60 CORE 08"
+      "source": "DC2-A-60 CORE 08, shortened 28.09.2026 (steps covered by CORE 07, 15, 17, 19, 23 removed)"
     },
     {
       "id": "core-09-recommendations-superlatives",

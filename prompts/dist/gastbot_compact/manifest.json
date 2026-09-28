@@ -319,7 +319,19 @@
         "full",
         "gastbot"
       ],
-      "deps": []
+      "deps": [
+        "DC2-142"
+      ]
+    },
+    {
+      "id": "block-06b-historical-anchors",
+      "status": "supported",
+      "targets": [
+        "full"
+      ],
+      "deps": [
+        "DC2-142"
+      ]
     },
     {
       "id": "block-07-transportation",

@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 24398,
+  "chars": 22186,
   "included": [
     {
       "id": "core-00-preamble",
@@ -146,7 +146,7 @@
     {
       "id": "block-06-historical-cultural-storytelling",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 06"
+      "source": "DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-07-transportation",
@@ -180,6 +180,16 @@
         "full"
       ],
       "deps": []
+    },
+    {
+      "id": "block-06b-historical-anchors",
+      "status": "supported",
+      "targets": [
+        "full"
+      ],
+      "deps": [
+        "DC2-142"
+      ]
     },
     {
       "id": "block-09-wine-finder-proactive-follow-up-suggesti",

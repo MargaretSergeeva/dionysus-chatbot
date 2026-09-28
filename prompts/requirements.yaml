@@ -39,10 +39,6 @@ requirements:
   FR-06:
     title: No invented facts — no price, wine or place outside the data
     source: DC2-A-1 §1, §9
-  FR-07:
-    title: Conditional statements keep their exception (price / opening-hours exceptions)
-    source: DC2-A-1 §9, DC2-A-75 risk 6
-    note: no prompt module yet — to check (retrieval/chunking issue, DC2-A-75)
   FR-08:
     title: Exact list questions answered completely (amenities, city)
     source: DC2-A-1 §1, §5

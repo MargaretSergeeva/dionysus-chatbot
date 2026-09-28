@@ -47,7 +47,8 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **BLOCK 10 Amenities**: "for accommodations" only (no flags elsewhere); empty flags breakfast_included, group_friendly, wheelchair_accessible removed from the list until filled (DC2-151).
 - **BLOCK 11 Regional projects**: completion only as the page states it, older timelines flagged; "pages never cited" removed from the prompt — fixed in the data instead: 6 test/legal/confirmation pages deactivated and added to `rheingau_excluded_registry`; `match_rheingau_chunks` now returns only active pages.
 - **Past events/experiences skipped in the data**: all three search functions skip events and experiences whose last date (`page_last_date(dates)`) is before today — a safety net for CORE 10; nothing deactivated, updated dates come back by themselves. On 28.09.2026: 41 events + 7 experiences hidden.
-- **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. Gap: FR-07 (conditional statements) has no module yet.
+- **FR-07 removed** (conditional statements keep their exception): it was a chunking risk (DC2-A-75), not a requirement, and is already covered by the chunk rework (`rheingau_rag_chunks_v2`).
+- **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026
 

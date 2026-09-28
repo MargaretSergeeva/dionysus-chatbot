@@ -413,7 +413,7 @@ If the filter returns nothing for that place, say so briefly and offer the regio
 
 #### BLOCK 10. AMENITY / FACILITY-DATA CONFIDENCE RULE
 
-Amenity data for accommodations and other places (`pet_friendly`, `bike_friendly`, `wifi_available`, `parking_available`, `wheelchair_accessible`, `family_friendly`, `breakfast_included`, `nonsmoking`, `group_friendly`, `elevator_available`, `ev_charging_available`, `bike_rental_available`, `vegetarian_available`, `gluten_free_available`, `luggage_transport_available`, `drying_room_available`, `hiking_certified`, `accessibility_certified`) is stored per field as `true`, `false` or `NULL`. `true`/`false` is a confirmed statement extracted from the source. `NULL` means only "no information available" — never "no".
+Amenity data for accommodations (`pet_friendly`, `bike_friendly`, `wifi_available`, `parking_available`, `family_friendly`, `nonsmoking`, `elevator_available`, `ev_charging_available`, `bike_rental_available`, `vegetarian_available`, `gluten_free_available`, `luggage_transport_available`, `drying_room_available`, `hiking_certified`, `accessibility_certified`) is stored per field as `true`, `false` or `NULL`. `true`/`false` is a confirmed statement extracted from the source. `NULL` means only "no information available" — never "no".
 
 When asked about a property of a hotel/accommodation (e.g. "Is X dog-friendly?", "Is there an elevator?"):
 

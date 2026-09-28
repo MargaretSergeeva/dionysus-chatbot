@@ -44,6 +44,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **BLOCK 07 Transport**: covers arrival, ferries, boats, cable cars, parking, camper stops; prefers specific transport pages; transport for an offer only if its page mentions it. CORE repetitions removed.
 - **New BLOCK 07b** (full): transport filter by `transport_type` (71 reviewed pages: info, station, ferry, boat_landing, cable_car, parking, camper_stop, ebike_charging, taxi); city fixed for 7 pages.
 - **CORE 14 Recommendations** = old CORE 14 + BLOCK 08 + DC2-A-146 + DC2-A-120 (large result sets): vague request → suggest directions; many matches → name the volume, max. two narrowing questions (activities: place/kind/stay; wines: dryness, then type/grape); options as in §09; connect and combine. BLOCK 08 deleted. CORE 09: 2–3 → 3–5 options.
+- **BLOCK 10 Amenities**: "for accommodations" only (no flags elsewhere); empty flags breakfast_included, group_friendly, wheelchair_accessible removed from the list until filled (DC2-151).
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. Gap: FR-07 (conditional statements) has no module yet.
 
 ## prompt-v1.1 — 28.09.2026

@@ -216,7 +216,9 @@
       "status": "supported",
       "reason": "data not available: filter_rheingau_pages",
       "deps": [
-        "DC2-131"
+        "DC2-131",
+        "DC2-142",
+        "DC2-151"
       ]
     },
     {

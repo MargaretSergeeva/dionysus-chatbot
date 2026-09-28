@@ -6,14 +6,17 @@ position: 400
 status: supported
 data:
 - filter_rheingau_pages
+data_note: flags only for the 114 accommodations; breakfast_included, group_friendly, wheelchair_accessible empty (DC2-151) and left out of the list; only pet_friendly has false values
 requirements:
 - FR-08
 source: DC2-A-126 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0)
 deps:
 - DC2-131
+- DC2-142
+- DC2-151
 ---
 
-Amenity data for accommodations and other places (`pet_friendly`, `bike_friendly`, `wifi_available`, `parking_available`, `wheelchair_accessible`, `family_friendly`, `breakfast_included`, `nonsmoking`, `group_friendly`, `elevator_available`, `ev_charging_available`, `bike_rental_available`, `vegetarian_available`, `gluten_free_available`, `luggage_transport_available`, `drying_room_available`, `hiking_certified`, `accessibility_certified`) is stored per field as `true`, `false` or `NULL`. `true`/`false` is a confirmed statement extracted from the source. `NULL` means only "no information available" — never "no".
+Amenity data for accommodations (`pet_friendly`, `bike_friendly`, `wifi_available`, `parking_available`, `family_friendly`, `nonsmoking`, `elevator_available`, `ev_charging_available`, `bike_rental_available`, `vegetarian_available`, `gluten_free_available`, `luggage_transport_available`, `drying_room_available`, `hiking_certified`, `accessibility_certified`) is stored per field as `true`, `false` or `NULL`. `true`/`false` is a confirmed statement extracted from the source. `NULL` means only "no information available" — never "no".
 
 When asked about a property of a hotel/accommodation (e.g. "Is X dog-friendly?", "Is there an elevator?"):
 

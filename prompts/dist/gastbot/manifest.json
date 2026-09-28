@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 20684,
+  "chars": 20970,
   "included": [
     {
       "id": "core-00-preamble",
@@ -86,7 +86,7 @@
     {
       "id": "core-14-general-questions",
       "status": "supported",
-      "source": "DC2-A-60 CORE 14"
+      "source": "DC2-A-60 CORE 14 + BLOCKS 08 + DC2-A-146 (recommendation function) + DC2-A-120 (large result sets), merged 28.09.2026"
     },
     {
       "id": "core-15-link-selection-decision-logic",
@@ -137,11 +137,6 @@
       "id": "block-07-transportation",
       "status": "supported",
       "source": "DC2-A-60 BLOCKS 07"
-    },
-    {
-      "id": "block-08-activities-experiences",
-      "status": "supported",
-      "source": "DC2-A-146 Recommendation function (FR-11), decisions 28.09.2026; replaces DC2-A-60 BLOCKS 08"
     },
     {
       "id": "core-23-final-response-check",

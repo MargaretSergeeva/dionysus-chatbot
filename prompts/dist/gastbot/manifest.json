@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 20348,
+  "chars": 20530,
   "included": [
     {
       "id": "core-00-preamble",
@@ -126,7 +126,7 @@
     {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)"
+      "source": "DC2-A-60 BLOCKS 03; reworked 28.09.2026 (DC2-142): website pages only, \"Alkoholfreier Wein\" first"
     },
     {
       "id": "block-06-historical-cultural-storytelling",
@@ -189,6 +189,14 @@
         "DC2-142",
         "DC2-143",
         "DC2-144"
+      ]
+    },
+    {
+      "id": "block-03b-alcohol-free-filter",
+      "status": "supported",
+      "reason": "data not available: filter_rheingau_pages",
+      "deps": [
+        "DC2-142"
       ]
     },
     {

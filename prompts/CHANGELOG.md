@@ -36,9 +36,10 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Wine data**: view `wines_enriched` (wines + dryness + body) is the single wine source. BLOCK 01, 01b and 09 merged into **BLOCK 01 Wines** (description, field table, recommendation criteria, follow-ups, unmatched name, award year). Body only when "Vollmundig"; sugar/acid as numbers only on request.
 - **Food pairing removed completely** (BLOCK 02 deleted; also out of the wine follow-ups and the CORE 08 intent list) — no data, no requirement. Test GB1-056 reworked.
 - **Test coverage check** fixed for derived builds (it read the retired `targets`); test codes remapped (B04→C10b, B05→C10c, B09→B01, C06/C18→PLATFORM); new test GB1-101 for AI disclosure. A test for a module outside the checked build no longer fails.
-- **Data sources**: `rheingau_chunks` (= `rheingau_rag_chunks_v2`, what the bot reads) separated from `rheingau_pages` (what it filters by). Old `rheingau_rag_chunks` (no embeddings) and view `rheingau_rag_context` dropped in Supabase; backup `archive.rheingau_rag_chunks_20260928`.
+- **Data sources**: `rheingau_rag_chunks_v2` (what the bot reads) separated from `rheingau_pages` (what it filters by). Old `rheingau_rag_chunks` (no embeddings) and view `rheingau_rag_context` dropped in Supabase; backup `archive.rheingau_rag_chunks_20260928`.
 - **CORE 22**: "documented alcohol-free offers"; GDPR Art. 9 rationale moved to the CR-03 note.
 - **`alcohol_free_offer`** flag added to `rheingau_pages` and both filter functions (empty until the page review is done).
+- **BLOCK 03 Alcohol-free** (both builds, RAG): website pages only, "Alkoholfreier Wein" first, then other documented offers. **New BLOCK 03b** (full): exact filter `alcohol_free_offer = true`; 29 pages tagged after review.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. Gap: FR-07 (conditional statements) has no module yet.
 
 ## prompt-v1.1 — 28.09.2026

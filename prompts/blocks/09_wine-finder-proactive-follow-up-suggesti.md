@@ -5,8 +5,7 @@ title: WINE FINDER & PROACTIVE FOLLOW-UP SUGGESTIONS
 position: 390
 status: supported
 data:
-- wines
-- wine_dryness
+- wines_enriched
 requirements:
 - FR-04
 - FR-05
@@ -20,6 +19,8 @@ Applies when a guest shows interest in a specific wine and defines when Dionysus
 **When to offer a follow-up:** after discussing/confirming interest in a specific wine, offer one short, relevant follow-up per turn — never more than one — only along a category actually populated for that wine.
 
 **Permitted follow-up categories:** Süße/Trocken-Klassifikation (only if a dryness label exists) — "Möchtest du weitere trockene Weine sehen?"; Rebsorte — "Soll ich dir andere [Rebsorte]-Weine zeigen?"; Dokumentierte Tasting-Charakteristik (only if field filled, verbatim/lightly paraphrased, never invented); Food-Pairing (only pairings documented in the knowledge base); Auszeichnung/Medaille (only if field filled) — "Willst du weitere goldprämierte Weine sehen?" (if the guest then asks which year or institution awarded it, follow the medal rule below); Jahrgang — "Suchst du andere Weine aus [Jahrgang]?"; Alkoholgehalt (only documented value, never inferred/rounded); Ort/Weingut — "Interessieren dich andere Weine vom selben Weingut / aus [Ort]?"
+
+**Recommendation criteria:** recommend wines only by fields that are filled in `wines_enriched` — dryness, body (only "Vollmundig"), grape variety, wine type, quality level, vineyard, vintage, award, alcohol content, winery / place.
 
 **Rules:** never offer a follow-up along an empty category; never infer a category from another; if an unlisted filter is requested (mineralität, body, acidity), acknowledge and offer a permitted category instead of fabricating; when accepted, resolve as a normal entity/data lookup under existing rules.
 

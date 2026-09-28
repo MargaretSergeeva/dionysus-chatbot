@@ -23,6 +23,15 @@ sources:
     docs: DC2-A-96
     builds: [full]
 
+  wines_enriched:
+    kind: view
+    fields: [weinname, weinname_normalized, synonyms, erzeuger, erzeuger_ort, rebsorte_normalized, weinart_normalized, qualitaetsstufe, lage_weinberg, jahrgang, praemierung, bewertung, alkohol_pct, restzucker_g_l, saeure_g_l, dryness_de, dryness_en, body_de, body_en, quelle_url]
+    note: single source the bot reads for wines = wines + wine_dryness + wine_body (schema/views/wines_enriched.sql); modules use this, not the base tables
+    docs: DC2-A-102
+    builds: [full]
+    planned:
+      gastbot: upload to partner platform Gastbot — platform not working yet
+
   wines:
     kind: table
     fields: [erzeuger, erzeuger_ort, jahrgang, weinname, lage_weinberg, rebsorte_normalized, weinart_normalized, qualitaetsstufe, geschmacksrichtung, praemierung, bewertung, restzucker_g_l, saeure_g_l, alkohol_pct, quelle_url]

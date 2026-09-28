@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 31448,
+  "chars": 32289,
   "included": [
     {
       "id": "core-00-preamble",
@@ -151,7 +151,7 @@
     {
       "id": "block-01b-wine-catalog-recommendation-logic",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 01 (catalog part), split per DC2-142 (28.09.2026); dryness thresholds replaced by wine_dryness labels (normalized and enriched wine data, DC2-143)"
+      "source": "replaces the catalog logic of DC2-A-60 BLOCKS 01; rewritten 28.09.2026 (DC2-142): fields from wines_enriched, body only when Vollmundig"
     },
     {
       "id": "block-02-food-wine-pairings",

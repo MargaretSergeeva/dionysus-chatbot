@@ -188,13 +188,13 @@
     {
       "id": "block-01-wine-recommendation-taste-logic",
       "status": "supported",
-      "reason": "data not available: wines, wine_dryness, wine_body",
+      "reason": "data not available: wines_enriched",
       "deps": []
     },
     {
       "id": "block-01b-wine-catalog-recommendation-logic",
       "status": "supported",
-      "reason": "data not available: wines, wine_dryness, wine_body",
+      "reason": "data not available: wines_enriched",
       "deps": [
         "DC2-142",
         "DC2-143",
@@ -212,7 +212,7 @@
     {
       "id": "block-09-wine-finder-proactive-follow-up-suggesti",
       "status": "supported",
-      "reason": "data not available: wines, wine_dryness",
+      "reason": "data not available: wines_enriched",
       "deps": [
         "DC2-72"
       ]

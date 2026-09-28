@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 31326,
+  "chars": 31677,
   "included": [
     {
       "id": "core-00-preamble",
@@ -181,7 +181,7 @@
     {
       "id": "block-08-activities-experiences",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 08"
+      "source": "DC2-A-146 Recommendation function (FR-11), decisions 28.09.2026; replaces DC2-A-60 BLOCKS 08"
     },
     {
       "id": "block-10-amenity-facility-data-confidence",

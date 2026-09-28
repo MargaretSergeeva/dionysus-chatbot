@@ -13,7 +13,16 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 | BLOCK 06b Historical anchors (new, full only) | Split from BLOCK 06: prefer rows of `historical_anchors` | Gastbot cannot query the table |
 | BLOCK 09 Wine finder | Food-pairing follow-up: "fixed documented pairings" → "pairings documented in the knowledge base" | Follows BLOCK 02 |
 
-New front-matter keys (informational, not yet checked by the script): `data` (Supabase table/page the module relies on) and `data_status`. They become mandatory in a later step of DC2-142, together with `requirements`.
+### Architecture: one prompt, builds derived from data and platform coverage
+
+- **Data registry** `prompts/data_sources.yaml`: every Supabase table/function and platform variable, with the builds that reach it (`wines`: full, Gastbot planned).
+- Every module has `data:` (sources or `general`); the gate fails on unknown sources.
+- **Builds derived by the script**: a module enters a build when all its data reaches it and Gastbot does not cover it. `targets`, `allow_overlap`, `overlap_reason` and `only:` markers retired; `gastbot_covers` (conflict | duplicate, verified, reason) replaces them. Report and manifests show why a module is left out.
+- **Splits**: BLOCK 01 → 01 wine description rules (both builds) + 01b catalog logic (`wines`, full only). CORE 16 → 16 URL integrity + 16b link format (conflict with Gastbot Links Manager). CORE 23 keeps only build-neutral checks.
+- **Duplicates**: CORE 17 and 19 rephrased so they no longer repeat Gastbot built-ins; CORE 06 and 18 are whole-module duplicates, unverified, kept in Gastbot.
+- Builds: `gastbot` loses the sweetness thresholds (BLOCK 01b, no catalog in Gastbot); otherwise same content.
+
+Next: requirement IDs (`requirements:` per module, DC2-147).
 
 ## prompt-v1.1 — 28.09.2026
 

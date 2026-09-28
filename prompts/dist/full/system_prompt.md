@@ -383,7 +383,7 @@ Curated historical and cultural anchors live in the `historical_anchors` table (
 
 #### BLOCK 07. TRANSPORTATION
 
-Treat as a separate intent — getting to a destination, public transport, trains, buses, Rhine transport, river cruises, returning from an activity, transfers. Use only transportation information explicitly available; do not infer connections, journey times, ticket prices, or schedules. Prefer a specific transportation page over a generic destination page.
+Treat getting there and getting around as its own intent — arrival, trains, buses, ferries, Rhine boats, cable cars, parking, camper stops, returning from an activity. Prefer a specific transport page (station, ferry, landing stage, car park) over a generic destination page. When recommending an event or offer, mention transport only if that page itself mentions it.
 
 ---
 

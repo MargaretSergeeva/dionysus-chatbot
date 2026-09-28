@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.0",
-  "chars": 32321,
+  "chars": 32373,
   "included": [
     {
       "id": "core-00-preamble",

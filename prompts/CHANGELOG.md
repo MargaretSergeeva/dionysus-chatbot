@@ -21,6 +21,7 @@ Note: YouTrack article DC2-A-35 "Dionysus Prompt V.1" (18.09.2026) is an older, 
 | CORE 13 | Removed "price" from the documented comparison attributes | Contradicted BLOCK 04 (never state a price as confirmed) |
 | CORE 16 | Markdown link format and raw-URL rules: full build only | Conflict with Gastbot Links Manager (DC2-A-114) |
 | CORE 19 | Items 4–5 (unmatched wine name, medal year/institution) moved to BLOCK 09; "catalog entry" → "knowledge-base entry" in item 3 | Wine-catalog rules; the Gastbot build has no catalog |
+| CORE 19 | Example in item 1 no longer calls +49 (0) 6723 602720 the "Rheingau Tourist Information line"; phone numbers only when documented for that exact provider | On rheingau.com this number belongs to the Rheingauer Weinbauverband / Rheingauer Weinwerbung GmbH, not to a Tourist Information (checked 28.09.2026) |
 | CORE 21 | Rewritten: no deletion promise; no Supabase/DC2 references; status `partially` | No deletion mechanism exists on any platform; no conversation logs exist yet (DC2-100, DC2-101, DC2-109) |
 | CORE 23 | Language and link checks split per build | Same conflicts as CORE 04 and CORE 16 |
 | BLOCK 03 | Removed the named products "Reset Riesling", "Reset Riesling Sparkling"; rule now requires the knowledge base to document 0.0 % | DC2-77. The products appear on rheingau.com (6 chunks) but not in the `wines` catalog; named products in the prompt bypass grounding |

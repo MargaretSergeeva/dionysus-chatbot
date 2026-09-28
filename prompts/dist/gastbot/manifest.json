@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.0",
-  "chars": 24013,
+  "chars": 24065,
   "included": [
     {
       "id": "core-00-preamble",

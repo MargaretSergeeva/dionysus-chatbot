@@ -5,10 +5,10 @@ name: Prompt gate & build
 
 on:
   pull_request:
-    paths: ["prompts/**", "scripts/assemble_prompt.py", "requirements.txt"]
+    paths: ["prompts/**", "evaluation/**", "scripts/assemble_prompt.py", "scripts/check_test_coverage.py", "requirements.txt"]
   push:
     branches: [main]
-    paths: ["prompts/**", "scripts/assemble_prompt.py", "requirements.txt"]
+    paths: ["prompts/**", "evaluation/**", "scripts/assemble_prompt.py", "scripts/check_test_coverage.py", "requirements.txt"]
     tags: ["prompt-v*"]
   workflow_dispatch: {}
 
@@ -30,6 +30,9 @@ jobs:
 
       - name: Committed prompts/dist matches the modules
         run: python scripts/assemble_prompt.py verify
+
+      - name: Every Gastbot module has a test
+        run: python scripts/check_test_coverage.py --target gastbot --tests evaluation/gastbot_v1_questions.csv
 
       - run: cat prompts/dist/status_report.md >> "$GITHUB_STEP_SUMMARY"
 

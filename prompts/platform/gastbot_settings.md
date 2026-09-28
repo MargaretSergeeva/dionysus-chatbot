@@ -25,7 +25,6 @@ The prompt no longer formats links (CORE 16 link format is full-build only). Lin
 
 - Newsletter signup on rheingau.com (CORE 03 redirect)
 - Alkoholfreier Wein page (CORE 19 example)
-- Rheingau Tourist Information contact, +49 (0) 6723 602720 (CORE 19 example)
 
 ## Knowledge
 

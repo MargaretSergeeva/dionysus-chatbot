@@ -1,7 +1,7 @@
 {
   "target": "full",
-  "version": "prompt-v1.1",
-  "chars": 32373,
+  "version": "prompt-v1.2",
+  "chars": 32404,
   "included": [
     {
       "id": "core-00-preamble",
@@ -131,12 +131,12 @@
     {
       "id": "block-02-food-wine-pairings",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 02"
+      "source": "DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 03"
+      "source": "DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-04-price-rules",

@@ -1,6 +1,6 @@
 {
   "target": "gastbot_compact",
-  "version": "prompt-v1.1",
+  "version": "prompt-v1.2",
   "chars": 5344,
   "included": [
     {
@@ -277,7 +277,9 @@
         "full",
         "gastbot"
       ],
-      "deps": []
+      "deps": [
+        "DC2-142"
+      ]
     },
     {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
@@ -288,7 +290,8 @@
       ],
       "deps": [
         "DC2-50",
-        "DC2-77"
+        "DC2-77",
+        "DC2-142"
       ]
     },
     {

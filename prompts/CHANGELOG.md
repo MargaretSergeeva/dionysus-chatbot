@@ -1,5 +1,17 @@
 # Prompt changelog
 
+## prompt-v1.2 — 28.09.2026
+
+Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, not in prompt text. Affects `full` and `gastbot`; `gastbot_compact` unchanged (its §4 still lists the pairings — decide together with the compact-vs-v1.0 test run).
+
+| Module | Change | Why |
+|---|---|---|
+| BLOCK 02 Food & wine pairings | Hardcoded pairing list removed; rule only: use pairings the knowledge base documents | No pairings table in Supabase; data belongs in data, not in the prompt (decision 28.09.2026) |
+| BLOCK 03 Alcohol-free | States that the wine catalog has no alcohol-free wines; refers to the page "Alkoholfreier Wein" (`rheingau_pages` fb6568e77028a056) | `wines` has 0 alcohol-free rows (DC2-50, DC2-77); data status none |
+| BLOCK 09 Wine finder | Food-pairing follow-up: "fixed documented pairings" → "pairings documented in the knowledge base" | Follows BLOCK 02 |
+
+New front-matter keys (informational, not yet checked by the script): `data` (Supabase table/page the module relies on) and `data_status`. They become mandatory in a later step of DC2-142, together with `requirements`.
+
 ## prompt-v1.1 — 28.09.2026
 
 Adds a third build, **`gastbot_compact`** — a short policy version of the Gastbot prompt, written after the Gastbot recommendations DC2-A-136 (short, high-level prompt; few emphatic prohibitions; no branching logic, question classification or "remember" instructions) and DC2-A-137 (intents). `full` and `gastbot` are unchanged from prompt-v1.0.

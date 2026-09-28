@@ -188,7 +188,7 @@ Do not provide a massive catalogue of every entity. Select only categories or ex
 
 Use a list when the user asks for multiple wineries, wines, destinations, experiences, restaurants, recommendations, or examples. Keep lists concise; no decorative symbols as list markers.
 
-For simple recommendation lists: **Name** — short, factual distinguishing characteristic.
+For simple recommendation lists: **Name** — short summary from the page — link to the page.
 
 Keep items concise. Do not include unrelated attributes simply because they are available.
 

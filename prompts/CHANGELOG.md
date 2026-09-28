@@ -33,6 +33,9 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 17**: recommendation list item = name — summary — link.
 - **BLOCK 04 Price → CORE 10b, BLOCK 05 Booking → CORE 10c**: general rules without data dependency (FR-12, time-sensitive facts). CORE 03 reference updated; the reference check now covers suffixes (§10c, Block §06b).
 
+- **Wine data**: view `wines_enriched` (wines + dryness + body) is the single wine source. BLOCK 01, 01b and 09 merged into **BLOCK 01 Wines** (description, field table, recommendation criteria, follow-ups, unmatched name, award year). Body only when "Vollmundig"; sugar/acid as numbers only on request.
+- **Food pairing removed completely** (BLOCK 02 deleted; also out of the wine follow-ups and the CORE 08 intent list) — no data, no requirement. Test GB1-056 reworked.
+- **Test coverage check** fixed for derived builds (it read the retired `targets`); test codes remapped (B04→C10b, B05→C10c, B09→B01, C06/C18→PLATFORM); new test GB1-101 for AI disclosure. A test for a module outside the checked build no longer fails.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. Gap: FR-07 (conditional statements) has no module yet.
 
 ## prompt-v1.1 — 28.09.2026

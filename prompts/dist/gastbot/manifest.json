@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 21328,
+  "chars": 20615,
   "included": [
     {
       "id": "core-00-preamble",
@@ -124,11 +124,6 @@
       "source": "DC2-A-60 CORE 22"
     },
     {
-      "id": "block-02-food-wine-pairings",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)"
-    },
-    {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
       "status": "supported",
       "source": "DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)"
@@ -186,16 +181,11 @@
       "deps": []
     },
     {
-      "id": "block-01-wine-recommendation-taste-logic",
-      "status": "supported",
-      "reason": "data not available: wines_enriched",
-      "deps": []
-    },
-    {
-      "id": "block-01b-wine-catalog-recommendation-logic",
+      "id": "block-01-wines",
       "status": "supported",
       "reason": "data not available: wines_enriched",
       "deps": [
+        "DC2-72",
         "DC2-142",
         "DC2-143",
         "DC2-144"
@@ -207,14 +197,6 @@
       "reason": "data not available: historical_anchors",
       "deps": [
         "DC2-142"
-      ]
-    },
-    {
-      "id": "block-09-wine-finder-proactive-follow-up-suggesti",
-      "status": "supported",
-      "reason": "data not available: wines_enriched",
-      "deps": [
-        "DC2-72"
       ]
     },
     {

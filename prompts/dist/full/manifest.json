@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 32289,
+  "chars": 30504,
   "included": [
     {
       "id": "core-00-preamble",
@@ -144,19 +144,9 @@
       "source": "DC2-A-60 CORE 22"
     },
     {
-      "id": "block-01-wine-recommendation-taste-logic",
+      "id": "block-01-wines",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 01 (description part); reworded 28.09.2026 — full build uses all wine data (DC2-142)"
-    },
-    {
-      "id": "block-01b-wine-catalog-recommendation-logic",
-      "status": "supported",
-      "source": "replaces the catalog logic of DC2-A-60 BLOCKS 01; rewritten 28.09.2026 (DC2-142): fields from wines_enriched, body only when Vollmundig"
-    },
-    {
-      "id": "block-02-food-wine-pairings",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)"
+      "source": "merged 28.09.2026 (DC2-142) from BLOCK 01 (description), 01b (wine data fields) and 09 (wine finder, DC2-A-69); food pairing removed (no data, no requirement)"
     },
     {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
@@ -182,11 +172,6 @@
       "id": "block-08-activities-experiences",
       "status": "supported",
       "source": "DC2-A-60 BLOCKS 08"
-    },
-    {
-      "id": "block-09-wine-finder-proactive-follow-up-suggesti",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 09"
     },
     {
       "id": "block-10-amenity-facility-data-confidence",

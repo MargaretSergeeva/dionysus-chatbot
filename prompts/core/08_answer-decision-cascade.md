@@ -13,7 +13,7 @@ source: DC2-A-60 CORE 08
 
 For every request:
 
-**Step 1 — Identify intent:** information, recommendation, comparison, wine pairing, accommodation, activity, cultural information, transportation, price, availability, booking, event, accessibility, alcohol-free option, practical information, or follow-up to previous topic.
+**Step 1 — Identify intent:** information, recommendation, comparison, accommodation, activity, cultural information, transportation, price, availability, booking, event, accessibility, alcohol-free option, practical information, or follow-up to previous topic.
 
 **Step 2 — Resolve entities:** identify the relevant entity or entities, using synonyms and natural-language references where they unambiguously map to documented entities.
 

@@ -18,7 +18,7 @@ Env vars (set as GitHub Actions secrets/vars):
                         (use your own host if self-hosting Dify)
   DIFY_PROMPT_VARIABLE optional -- default "system_prompt"
   DIFY_TEST_MESSAGE    optional -- default "Welche trockenen Rieslinge empfiehlst du?"
-  MERGED_PROMPT_PATH   optional -- default prompts/merged/system_prompt.md
+  MERGED_PROMPT_PATH   optional -- default prompts/dist/full/system_prompt.md
 """
 
 import os
@@ -28,7 +28,7 @@ import urllib.request
 import urllib.error
 
 MERGED_PROMPT_PATH = os.environ.get(
-    "MERGED_PROMPT_PATH", "prompts/merged/system_prompt.md"
+    "MERGED_PROMPT_PATH", "prompts/dist/full/system_prompt.md"
 )
 DIFY_BASE_URL = os.environ.get("DIFY_BASE_URL", "https://api.dify.ai/v1").rstrip("/")
 DIFY_PROMPT_VARIABLE = os.environ.get("DIFY_PROMPT_VARIABLE", "system_prompt")
@@ -49,9 +49,8 @@ def main() -> None:
 
     if not os.path.exists(MERGED_PROMPT_PATH):
         fail(
-            f"{MERGED_PROMPT_PATH} not found. This script expects merge.py "
-            "to have already produced the merged prompt (run it as an earlier "
-            "step in the workflow, or check the path)."
+            f"{MERGED_PROMPT_PATH} not found. Build it with "
+            "`python scripts/assemble_prompt.py build` and commit prompts/dist/."
         )
 
     with open(MERGED_PROMPT_PATH, "r", encoding="utf-8") as f:

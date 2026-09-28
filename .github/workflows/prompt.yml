@@ -1,0 +1,60 @@
+name: Prompt gate & build
+
+# Validates the prompt modules and checks that the committed prompts/dist is fresh.
+# A tag prompt-vX.Y publishes both builds as a GitHub Release. See prompts/README.md.
+
+on:
+  pull_request:
+    paths: ["prompts/**", "evaluation/**", "scripts/assemble_prompt.py", "scripts/check_test_coverage.py", "requirements.txt"]
+  push:
+    branches: [main]
+    paths: ["prompts/**", "evaluation/**", "scripts/assemble_prompt.py", "scripts/check_test_coverage.py", "requirements.txt"]
+    tags: ["prompt-v*"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # only for releases on tags
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+
+      - name: Gate check (Gastbot conflicts, duplicates, references)
+        run: python scripts/assemble_prompt.py check
+
+      - name: Committed prompts/dist matches the modules
+        run: python scripts/assemble_prompt.py verify
+
+      - name: Every Gastbot module has a test
+        run: |
+          python scripts/check_test_coverage.py --target gastbot --tests evaluation/gastbot_v1_questions.csv
+          python scripts/check_test_coverage.py --target gastbot_compact --tests evaluation/gastbot_v1_questions.csv
+
+      - run: cat prompts/dist/status_report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prompt-dist
+          path: prompts/dist/
+
+      - name: Package release files
+        if: startsWith(github.ref, 'refs/tags/prompt-v')
+        run: |
+          cp prompts/dist/full/system_prompt.md    system_prompt.full.md
+          cp prompts/dist/gastbot/system_prompt.md system_prompt.gastbot.md
+          cp prompts/dist/gastbot_compact/system_prompt.md system_prompt.gastbot_compact.md
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/prompt-v')
+        with:
+          files: |
+            system_prompt.full.md
+            system_prompt.gastbot.md
+            system_prompt.gastbot_compact.md
+            prompts/dist/status_report.md
+            prompts/CHANGELOG.md

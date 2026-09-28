@@ -21,6 +21,7 @@ on:
     paths:
       - "prompts/**"
       - "scripts/dify_smoke_test.py"
+      - "scripts/assemble_prompt.py"
   workflow_dispatch: {}
 
 jobs:
@@ -35,14 +36,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Assemble merged prompt (merge.py)
-        run: |
-          if [ -f merge.py ]; then
-            python merge.py
-          else
-            echo "::warning::merge.py not found at repo root -- skipping assembly. \
-            Expecting prompts/merged/system_prompt.md to already exist, or add merge.py."
-          fi
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check the committed full prompt is fresh
+        run: python scripts/assemble_prompt.py verify
 
       - name: Run Dify smoke test
         env:

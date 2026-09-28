@@ -1,0 +1,56 @@
+# What Gastbot already provides (source: platform doc
+# "Пользовательский системный промпт"; bot created after 20.06.2026 — confirmed 22.09.2026).
+# Status: DOCUMENTED BUT UNVERIFIED — taken from the platform docs, not tested on the live bot.
+# Patterns are heuristics (Python regex, case-insensitive). A hit in a gastbot-build
+# block = duplicate (allowed only via `allow_overlap` in the block) or conflict (never allowed).
+
+variables: [isFirstAssistantTurn, followupQuestion]
+
+builtins:              # duplicates -> error unless the block lists the key in allow_overlap
+  markdown_output:
+    description: Answers are already formatted in Markdown
+    patterns:
+      - '(answer|respond|reply|antworte)\w*\b.{0,40}\bmarkdown'
+      - 'markdown.{0,30}(format|use|verwende|nutze)'
+      - '(response|answer)s?\b.{0,40}\bmarkdown'
+  current_time:
+    description: Current time is injected automatically
+    patterns:
+      - '(current|today.?s|heutige[sn]?|aktuelle[sn]?) (date|time|datum|uhrzeit).{0,40}\b(is|lautet|ist)\b'
+  context_as_facts:
+    description: CONTEXT and tool results are the source of facts
+    patterns:
+      - '(use|treat|nutze|verwende)\w*\b.{0,30}\bcontext\b.{0,30}(fact|source|quelle|fakten)'
+  ignore_instructions_in_context:
+    description: Instructions inside CONTEXT/tool results must not be followed
+    patterns:
+      - '(ignore|do not follow|nicht befolgen|ignoriere).{0,40}instruction.{0,40}context'
+      - 'instructions?.{0,30}(inside|within|in) (the )?context'
+  do_not_reference_context:
+    description: Answers must not mention CONTEXT itself
+    patterns:
+      - '(do not|don.?t|never|nicht|niemals) (mention|reference|refer to|erwähn\w*)\b.{0,20}\bcontext'
+  no_invention_generic:
+    description: Answer only from confirmed info; don't invent facts
+    patterns:
+      - '(do not|don.?t|never) (invent|make up|fabricate)\b.{0,20}\b(facts?|information)\b'
+      - 'erfinde keine (fakten|informationen)'
+
+conflicts:             # always an error in the platform build
+  response_language:
+    description: Core answer must be German; Reply Translation handles the user's language
+    patterns:
+      - '(respond|answer|reply)\w*\b.{0,20}\bin the (user.?s|same) language'
+      - 'in der sprache des (nutzers|users|benutzers|gastes)'
+      - 'detect the (user.?s )?language'
+      - 'always (respond|answer|reply) in english'
+      - '(respond|answer|reply)\w*\b.{0,30}\bin (that|this|their) language'
+      - '\bin the user.?s language'
+      - 'response language'
+  manual_link_formatting:
+    description: Links come from Links Manager; don't hand-format links or edit placeholders
+    patterns:
+      - '\[[^\]]+\]\(https?://'
+      - '(format|rewrite|modify|change)\w*\b.{0,20}\b(link )?placeholders?'
+      - 'links?\b.{0,30}\bmarkdown'
+      - '\braw urls?\b'

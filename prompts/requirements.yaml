@@ -23,7 +23,7 @@ requirements:
   FR-01:
     title: Answers in 6 languages (DE, EN, NL, DA, IT, FR)
     source: DC2-A-1 §3
-    note: Gastbot via Reply Translation (platform-covered)
+    note: At least DE, EN, NL, DA, IT, FR — tested. Full build (Dify) answers in any language the guest uses (CORE 04). Gastbot — languages are a platform setting (Reply Translation); more can be selected from its list, but not all; unsupported languages fall back to German. Links always go to German pages (rheingau.com is German-only).
   FR-02:
     title: Informal "du"
     source: DC2-A-1 §3 (client decision 09.09.2026)

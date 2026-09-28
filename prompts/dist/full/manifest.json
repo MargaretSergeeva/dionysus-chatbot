@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 30851,
+  "chars": 31166,
   "included": [
     {
       "id": "core-00-preamble",
@@ -22,6 +22,11 @@
       "id": "dify-02a-first-turn-greeting",
       "status": "supported",
       "source": "DC2-A-84 platform baseline (§2/§18 first-turn greeting), full-build equivalent of the Gastbot variable"
+    },
+    {
+      "id": "core-02b-ai-disclosure",
+      "status": "supported",
+      "source": "EU AI Act Art. 50 transparency (DC2-A-106, DC2-98); decision 28.09.2026 — separate module, merged into the first-turn greeting for now"
     },
     {
       "id": "core-03-pii-handling-guardrail",

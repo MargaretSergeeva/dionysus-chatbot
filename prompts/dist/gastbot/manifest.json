@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 14650,
+  "chars": 13529,
   "included": [
     {
       "id": "core-00-preamble",
@@ -51,17 +51,7 @@
     {
       "id": "core-10-dates-time",
       "status": "supported",
-      "source": "DC2-A-60 CORE 10"
-    },
-    {
-      "id": "core-10b-price-rules",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 04; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
-    },
-    {
-      "id": "core-10c-booking-availability",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 05; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
+      "source": "DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142)"
     },
     {
       "id": "core-11-practical-information",

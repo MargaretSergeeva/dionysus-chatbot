@@ -61,7 +61,7 @@ requirements:
   CR-01:
     title: Do not process user-submitted personal data
     source: DC2-A-1 §3, §11 (DC2-107)
-    note: Dionysus is a RAG-based information assistant, not a data controller for registration flows — the same "not a booking agent" logic as CORE 10c. Keeping PII entirely out of model input/output avoids creating a GDPR processing obligation the bot isn't built to handle. This guardrail is separate from, and narrower than, the logging transparency and deletion handling (CR-02, CORE 21), which covers Dionysus's own conversation logging. (Moved out of CORE 03 on 28.09.2026.)
+    note: Dionysus is a RAG-based information assistant, not a data controller for registration flows — the same "not a booking agent" logic as CORE 10. Keeping PII entirely out of model input/output avoids creating a GDPR processing obligation the bot isn't built to handle. This guardrail is separate from, and narrower than, the logging transparency and deletion handling (CR-02, CORE 21), which covers Dionysus's own conversation logging. (Moved out of CORE 03 on 28.09.2026.)
   CR-02:
     title: "GDPR: honest about chat logging, no fake deletion"
     source: DC2-A-1 §11 (DC2-100, DC2-101, DC2-109)

@@ -1,0 +1,11 @@
+# Merge gate — which module statuses go into a build (DC2-A-95 step 3, DC2-A-84 status legend).
+# A module enters a build only if its status is listed here AND the build is in its `targets`.
+# Team decision pending (DC2-91): DC2-A-84 treats `partially` as live with a caveat,
+# DC2-A-95 says `supported` only. Remove `partially` here to be strict.
+merge_statuses: [supported, partially]
+
+targets:
+  full:                 # our own stack (Dify, Plan B) — no platform built-ins
+    lint_baseline: false  # instead: fail on Gastbot-only variables
+  gastbot:              # Gastbot custom system prompt field
+    lint_baseline: true   # fail on conflicts; fail on duplicates without allow_overlap

@@ -6,7 +6,7 @@ Dionysus is a RAG-based chatbot for the Rheingau-Taunus destination management p
 
 ## What makes this project distinctive
 
-- **Modular, versioned prompt architecture** — instead of one static system prompt, behavior is built from small, independently-versioned prompt blocks (one file per capability: wine filtering, alcohol-free search, pairing suggestions, etc.), each tagged `supported`/`partial`/`blocked` by data readiness. A merge script assembles only supported blocks into the live prompt — features ship or roll back independently, without touching the rest.
+- **Modular, versioned prompt architecture** — instead of one static system prompt, behavior is built from small, independently-versioned prompt blocks (one file per capability: wine filtering, alcohol-free search, pairing suggestions, etc.), each tagged by data readiness. `scripts/assemble_prompt.py` builds two prompts from the same modules — `full` (Dify) and `gastbot` — so features ship or roll back independently, without touching the rest. See [`prompts/README.md`](prompts/README.md).
 - **Core vs. conditional behavior separation** — always-on behavioral rules (e.g. the PII-handling guardrail) are kept apart from data-dependent prompt blocks, since they don't toggle with data status.
 - **Three-tool PM constellation** — GitHub (code/source of truth), YouTrack DC2 (issues, requirements, phase docs, traceability), Supabase/Postgres+pgvector (curated data + embeddings) — cross-linked by convention (commits reference issue IDs, new files link their YouTrack article and vice versa).
 - **Multilingual retrieval** — DE/EN/NL/DA/IT/FR chatbot answers grounded in semantic search over wine competition data and rheingau.com's own tour/activity content.
@@ -47,7 +47,7 @@ Source sites (Weinfinder, rheingau.com)
 /pipeline/                  cleaning/normalization scripts (Data Preparation)
 /modeling/
   /modeling/schema/         SQL schema + pgvector setup (or keep /schema/ top-level — TBD)
-  /modeling/prompts/        modular prompt blocks (moved from /prompts/)
+/prompts/                   modular prompt modules + generated builds (live, DC2-92: one repo, prompt under /prompts)
 /evaluation/                 testing
 /deployment/
   /deployment/compliance/   EU AI Act & GDPR docs (moved from /docs/ai-act-gdpr.md)

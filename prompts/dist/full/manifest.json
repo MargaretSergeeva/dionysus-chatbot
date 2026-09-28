@@ -1,0 +1,197 @@
+{
+  "target": "full",
+  "version": "prompt-v1.0",
+  "chars": 32321,
+  "included": [
+    {
+      "id": "core-00-preamble",
+      "status": "supported",
+      "source": "DC2-A-60 preamble"
+    },
+    {
+      "id": "core-01-core-priorities-principles",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 01"
+    },
+    {
+      "id": "core-02-role-persona-tone",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 02"
+    },
+    {
+      "id": "dify-02a-first-turn-greeting",
+      "status": "supported",
+      "source": "DC2-A-84 platform baseline (§2/§18 first-turn greeting), full-build equivalent of the Gastbot variable"
+    },
+    {
+      "id": "core-03-pii-handling-guardrail",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 03"
+    },
+    {
+      "id": "core-04-language",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 04"
+    },
+    {
+      "id": "core-05-source-grounding-source-priority",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 05"
+    },
+    {
+      "id": "core-06-source-grounding-baseline-context-only",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 06"
+    },
+    {
+      "id": "core-07-entity-recognition-synonyms-entity-integ",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 07"
+    },
+    {
+      "id": "core-08-answer-decision-cascade",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 08"
+    },
+    {
+      "id": "core-09-recommendations-superlatives",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 09"
+    },
+    {
+      "id": "core-10-dates-time",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 10"
+    },
+    {
+      "id": "core-11-practical-information",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 11"
+    },
+    {
+      "id": "core-12-follow-up-questions-context-continuity",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 12"
+    },
+    {
+      "id": "core-13-no-unsupported-comparisons",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 13"
+    },
+    {
+      "id": "core-14-general-questions",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 14"
+    },
+    {
+      "id": "core-15-link-selection-decision-logic",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 15"
+    },
+    {
+      "id": "core-16-link-selection-baseline-url-integrity",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 16"
+    },
+    {
+      "id": "core-17-lists-response-format",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 17"
+    },
+    {
+      "id": "core-18-response-format-baseline",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 18"
+    },
+    {
+      "id": "core-19-missing-information-proactive-suggestion",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 19"
+    },
+    {
+      "id": "core-20-complaints-negative-experiences",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 20"
+    },
+    {
+      "id": "core-21-logging-transparency-deletion",
+      "status": "partially",
+      "source": "DC2-A-60 CORE 21"
+    },
+    {
+      "id": "core-22-special-category-data-health-avoidance",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 22"
+    },
+    {
+      "id": "block-01-wine-recommendation-taste-logic",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 01"
+    },
+    {
+      "id": "block-02-food-wine-pairings",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 02"
+    },
+    {
+      "id": "block-03-alcohol-free-driver-friendly-safety-over",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 03"
+    },
+    {
+      "id": "block-04-price-rules",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 04"
+    },
+    {
+      "id": "block-05-booking-availability",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 05"
+    },
+    {
+      "id": "block-06-historical-cultural-storytelling",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 06"
+    },
+    {
+      "id": "block-07-transportation",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 07"
+    },
+    {
+      "id": "block-08-activities-experiences",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 08"
+    },
+    {
+      "id": "block-09-wine-finder-proactive-follow-up-suggesti",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 09"
+    },
+    {
+      "id": "block-10-amenity-facility-data-confidence",
+      "status": "supported",
+      "source": "DC2-A-126 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0)"
+    },
+    {
+      "id": "block-11-regional-projects-non-public-pages",
+      "status": "supported",
+      "source": "DC2-A-130 rules 1 and 3 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0). Rule 2 (partner/press/newsletter/jobs) held — out of scope per DC2-A-1, decision 28.09.2026"
+    },
+    {
+      "id": "core-23-final-response-check",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 23"
+    }
+  ],
+  "held_out": [
+    {
+      "id": "gastbot-02a-first-turn-greeting",
+      "status": "supported",
+      "targets": [
+        "gastbot"
+      ],
+      "deps": []
+    }
+  ]
+}

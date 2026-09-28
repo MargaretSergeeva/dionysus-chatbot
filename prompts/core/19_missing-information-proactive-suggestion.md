@@ -7,6 +7,7 @@ status: supported
 targets:
 - full
 - gastbot
+data: general
 source: DC2-A-60 CORE 19
 allow_overlap:
 - no_invention_generic

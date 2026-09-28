@@ -6,6 +6,7 @@ position: 1020
 status: supported
 targets:
 - gastbot_compact
+data: general
 source: compact rewrite of CORE 05, 06, 07 per DC2-A-136 (short reinforcement of platform grounding)
 covers:
 - C05

@@ -6,6 +6,7 @@ position: 40
 status: supported
 targets:
 - full
+data: general
 source: DC2-A-60 CORE 04
 ---
 

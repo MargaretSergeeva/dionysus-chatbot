@@ -6,6 +6,8 @@ position: 390
 status: supported
 targets:
 - full
+data:
+- wines
 source: DC2-A-60 BLOCKS 09
 deps:
 - DC2-72

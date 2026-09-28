@@ -7,11 +7,12 @@ status: supported
 targets:
 - full
 - gastbot
+data:
+- rheingau_pages
+data_note: no pairings table; pairings only as free text on rheingau.com pages
 source: DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)
 deps:
 - DC2-142
-data: []
-data_status: none   # no pairings table in Supabase; pairings only as free text on rheingau.com pages
 ---
 
 Use only food and wine pairings that the knowledge base documents. Do not extend a pairing to other wines or dishes, and do not suggest pairings from general wine knowledge. Distinguish a documented pairing from a general recommendation. If no pairing is documented, say briefly that you are not sure about this combination and offer pairings the knowledge base does document instead.

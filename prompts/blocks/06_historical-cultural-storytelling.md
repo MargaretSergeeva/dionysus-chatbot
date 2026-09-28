@@ -7,11 +7,11 @@ status: supported
 targets:
 - full
 - gastbot
+data:
+- rheingau_pages
 source: DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)
 deps:
 - DC2-142
-data:
-- rheingau_pages   # history in page content (mostly category poi); Gastbot via its own RAG
 ---
 
 Encouraged when directly relevant — don't force into unrelated answers. Use only documented historical facts from the knowledge base; do not invent or embellish dates, events, quotations, relationships, titles, causes, or significance. Distinguish documented fact from tradition/legend/interpretation.

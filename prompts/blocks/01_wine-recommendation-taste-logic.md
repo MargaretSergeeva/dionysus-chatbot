@@ -7,6 +7,9 @@ status: supported
 targets:
 - full
 - gastbot
+data:
+- wines
+- rheingau_pages
 source: DC2-A-60 BLOCKS 01
 ---
 

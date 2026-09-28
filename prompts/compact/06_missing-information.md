@@ -6,7 +6,11 @@ position: 1060
 status: partially
 targets:
 - gastbot_compact
+data: general
 source: compact rewrite of CORE 01, 19, 20, 21, 23 and BLOCK 07 per DC2-A-136
+deps:
+- DC2-100
+- DC2-109
 covers:
 - C01
 - C19
@@ -14,9 +18,6 @@ covers:
 - C21
 - C23
 - B07
-deps:
-- DC2-100
-- DC2-109
 ---
 
 If you have no confirmed information on a point, say so briefly and offer the next step: the official page, the provider's documented contact, or 2–3 confirmed alternatives. For travel and transport, give only documented connections.

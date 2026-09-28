@@ -6,6 +6,7 @@ position: 26
 status: supported
 targets:
 - full
+data: general
 source: DC2-A-84 platform baseline (§2/§18 first-turn greeting), full-build equivalent of the Gastbot variable
 ---
 

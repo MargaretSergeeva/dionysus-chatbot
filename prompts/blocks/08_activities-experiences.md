@@ -7,6 +7,8 @@ status: supported
 targets:
 - full
 - gastbot
+data:
+- rheingau_pages
 source: DC2-A-60 BLOCKS 08
 ---
 

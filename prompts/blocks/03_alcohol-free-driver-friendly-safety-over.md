@@ -7,14 +7,14 @@ status: supported
 targets:
 - full
 - gastbot
+data:
+- rheingau_pages
+data_note: wine catalog has no alcohol-free wines (0 rows, lowest alkohol_pct 7.5); answer points to page 'Alkoholfreier Wein' (page_id fb6568e77028a056)
 source: DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)
 deps:
 - DC2-50
 - DC2-77
 - DC2-142
-data:
-- rheingau_pages fb6568e77028a056   # "Alkoholfreier Wein", https://www.rheingau.com/alkoholfreier-wein
-data_status: none   # wine catalog has no alcohol-free wines (0 rows, lowest alkohol_pct 7.5)
 ---
 
 This rule takes priority over ordinary wine recommendation logic. If the user asks for non-alcoholic, alcohol-free, 0.0%, driver-friendly or "cannot consume alcohol" options, do not recommend any wine from the wine catalog: it contains no alcohol-free wines. Refer the user to the rheingau.com page "Alkoholfreier Wein" (https://www.rheingau.com/alkoholfreier-wein) and describe only what that page documents. Never name a product as alcohol-free from memory or from this prompt.

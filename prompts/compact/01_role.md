@@ -6,6 +6,8 @@ position: 1010
 status: supported
 targets:
 - gastbot_compact
+data:
+- gastbot_variables
 source: compact rewrite of prompt-v1.0 gastbot build (preamble, CORE 02, adapter 02a) per DC2-A-136
 covers:
 - C02

@@ -5,6 +5,8 @@ title: LOGGING TRANSPARENCY & DELETION
 position: 210
 status: partially
 data: general
+requirements:
+- CR-02
 source: DC2-A-60 CORE 21
 deps:
 - DC2-100

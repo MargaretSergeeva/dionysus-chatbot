@@ -28,7 +28,28 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Sweetness thresholds removed everywhere.** BLOCK 01b and BLOCK 09 use the dryness label from `wine_dryness` (normalized and enriched wine data, DC2-143). Customer changes to the formula come in as a new mapping.
 - **`gastbot_compact` dropped** (modules, build, CI, docs). Recreate it from git history when the main prompt is ready.
 
-Next: requirement IDs (`requirements:` per module, DC2-147).
+- **CORE 02b AI disclosure** (new): the first greeting says Dionysus is an AI assistant (EU AI Act Art. 50, DC2-98).
+- **CORE 10 Dates**: dates help to find, never to confirm; no past events; guest checks dates and prices on the page.
+- **CORE 17**: recommendation list item = name — summary — link.
+- **BLOCK 04 Price → CORE 10b, BLOCK 05 Booking → CORE 10c**: general rules without data dependency (FR-12, time-sensitive facts). CORE 03 reference updated; the reference check now covers suffixes (§10c, Block §06b).
+
+- **Wine data**: view `wines_enriched` (wines + dryness + body) is the single wine source. BLOCK 01, 01b and 09 merged into **BLOCK 01 Wines** (description, field table, recommendation criteria, follow-ups, unmatched name, award year). Body only when "Vollmundig"; sugar/acid as numbers only on request.
+- **Food pairing removed completely** (BLOCK 02 deleted; also out of the wine follow-ups and the CORE 08 intent list) — no data, no requirement. Test GB1-056 reworked.
+- **Test coverage check** fixed for derived builds (it read the retired `targets`); test codes remapped (B04→C10b, B05→C10c, B09→B01, C06/C18→PLATFORM); new test GB1-101 for AI disclosure. A test for a module outside the checked build no longer fails.
+- **Data sources**: `rheingau_rag_chunks_v2` (what the bot reads) separated from `rheingau_pages` (what it filters by). Old `rheingau_rag_chunks` (no embeddings) and view `rheingau_rag_context` dropped in Supabase; backup `archive.rheingau_rag_chunks_20260928`.
+- **CORE 22**: "documented alcohol-free offers"; GDPR Art. 9 rationale moved to the CR-03 note.
+- **`alcohol_free_offer`** flag added to `rheingau_pages` and both filter functions (empty until the page review is done).
+- **BLOCK 03 Alcohol-free** (both builds, RAG): website pages only, "Alkoholfreier Wein" first, then other documented offers. **New BLOCK 03b** (full): exact filter `alcohol_free_offer = true`; 29 pages tagged after review.
+- **Rule: what CORE says is not repeated in blocks** (decision 28.09.2026). BLOCK 06: "no live sourcing" removed (CORE 01/05/06/19). BLOCK 06b: maintenance sentence moved to the `historical_anchors` note in the registry.
+- **BLOCK 07 Transport**: covers arrival, ferries, boats, cable cars, parking, camper stops; prefers specific transport pages; transport for an offer only if its page mentions it. CORE repetitions removed.
+- **New BLOCK 07b** (full): transport filter by `transport_type` (71 reviewed pages: info, station, ferry, boat_landing, cable_car, parking, camper_stop, ebike_charging, taxi); city fixed for 7 pages.
+- **CORE 14 Recommendations** = old CORE 14 + BLOCK 08 + DC2-A-146 + DC2-A-120 (large result sets): vague request → suggest directions; many matches → name the volume, max. two narrowing questions (activities: place/kind/stay; wines: dryness, then type/grape); options as in §09; connect and combine. BLOCK 08 deleted. CORE 09: 2–3 → 3–5 options.
+- **BLOCK 10 Amenities**: "for accommodations" only (no flags elsewhere); empty flags breakfast_included, group_friendly, wheelchair_accessible removed from the list until filled (DC2-151).
+- **BLOCK 11 Regional projects**: completion only as the page states it, older timelines flagged; "pages never cited" removed from the prompt — fixed in the data instead: 6 test/legal/confirmation pages deactivated and added to `rheingau_excluded_registry`; `match_rheingau_chunks` now returns only active pages.
+- **Past events/experiences skipped in the data**: all three search functions skip events and experiences whose last date (`page_last_date(dates)`) is before today — a safety net for CORE 10; nothing deactivated, updated dates come back by themselves. On 28.09.2026: 41 events + 7 experiences hidden.
+- **FR-07 removed** (conditional statements keep their exception): it was a chunking risk (DC2-A-75), not a requirement, and is already covered by the chunk rework (`rheingau_rag_chunks_v2`).
+- **`fields:`** on every data module (Supabase `table.field`, metadata only — not in the prompt text); the gate checks each field against `data_sources.yaml`; the status report shows a "Supabase fields" column first.
+- **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026
 

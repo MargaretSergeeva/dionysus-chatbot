@@ -10,6 +10,8 @@ gastbot_covers:
   builtins:
   - markdown_output
   reason: Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)
+requirements:
+- QR-01
 source: DC2-A-60 CORE 18
 ---
 

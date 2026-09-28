@@ -5,6 +5,9 @@ title: PRACTICAL INFORMATION
 position: 110
 status: supported
 data: general
+requirements:
+- FR-06
+- FR-11
 source: DC2-A-60 CORE 11
 ---
 

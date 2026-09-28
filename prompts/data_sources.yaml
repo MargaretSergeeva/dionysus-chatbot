@@ -1,5 +1,6 @@
 # Data registry — which data exists and which build (bot) can reach it (DC2-142).
-# Modules name the data they need in `data:` (or `data: general`).
+# Modules name the data they need in `data:` (or `data: general`) and the exact fields in `fields:` (table.field);
+# every field must be listed here, so a typo fails the gate.
 # A module enters a build only if ALL its data sources list that build in `builds`.
 # To give a bot new data (e.g. wine catalog uploaded to Gastbot): move the build from `planned` to `builds`.
 #
@@ -9,19 +10,35 @@
 supabase_project: uywsaicdejkrozllalez   # "Dionysus Chatbot", eu-west-1
 
 sources:
+  rheingau_rag_chunks_v2:
+    kind: table
+    fields: [chunk_text, section_title, page_id]
+    note: what the bot reads — 9,106 text chunks of rheingau.com with embeddings (Cohere embed-multilingual-v3.0), searched by meaning with match_rheingau_chunks. Gastbot has the same site through its own RAG.
+    docs: DC2-A-96, DC2-A-102
+    builds: [full, gastbot]
+
   rheingau_pages:
     kind: table
-    fields: [title, summary, content, category, city, dates, phones, emails, partner_links, prices_raw, source_url]
-    note: crawled rheingau.com content (1,922 pages) + chunks rheingau_rag_chunks*; Gastbot has the same site through its own RAG
+    fields: [page_id, title, source_url, category, page_type, city, dates, phones, emails, partner_links, prices_raw, is_active, project_status, expected_completion, alcohol_free_offer, transport_type, pet_friendly, bike_friendly, wifi_available, parking_available, wheelchair_accessible, family_friendly, breakfast_included, nonsmoking, group_friendly, elevator_available, ev_charging_available, bike_rental_available, vegetarian_available, gluten_free_available, luggage_transport_available, drying_room_available, hiking_certified, accessibility_certified]
+    note: what the bot filters by — one row per page (1,922), metadata only; read through filter_rheingau_pages / match_rheingau_chunks_filtered, joined to rheingau_rag_chunks_v2 by page_id
     docs: DC2-A-102
-    builds: [full, gastbot]
+    builds: [full]
 
   filter_rheingau_pages:
     kind: function
-    fields: [amenity flags (pet_friendly, wifi_available, …), category, city, project_status, expected_completion]
-    note: structured filter over rheingau_pages (DC2-131, DC2-132); also match_rheingau_chunks_filtered (hybrid)
+    fields: [amenity flags (pet_friendly, wifi_available, …), alcohol_free_offer, transport_type, category, city, project_status, expected_completion]
+    note: exact filter over rheingau_pages (DC2-131, DC2-132); hybrid = match_rheingau_chunks_filtered (filter pages, then rank chunks by meaning)
     docs: DC2-A-96
     builds: [full]
+
+  wines_enriched:
+    kind: view
+    fields: [weinname, weinname_normalized, synonyms, erzeuger, erzeuger_ort, rebsorte_normalized, weinart_normalized, qualitaetsstufe, lage_weinberg, jahrgang, praemierung, bewertung, alkohol_pct, restzucker_g_l, saeure_g_l, dryness_de, dryness_en, body_de, body_en, quelle_url]
+    note: single source the bot reads for wines = wines + wine_dryness + wine_body (schema/views/wines_enriched.sql); modules use this, not the base tables
+    docs: DC2-A-102
+    builds: [full]
+    planned:
+      gastbot: upload to partner platform Gastbot — platform not working yet
 
   wines:
     kind: table
@@ -57,7 +74,7 @@ sources:
   historical_anchors:
     kind: table
     fields: [name, city, category, historical_fact, key_year, related_wine, usage_note, source_page_id, verified]
-    note: 10 verified anchors, each linked to a rheingau_pages page
+    note: 10 verified anchors, each linked to a rheingau_pages page. Adding, correcting or retiring an anchor is a content-maintenance task (verify against the linked page), not something the bot does.
     docs: DC2-A-102
     builds: [full]
 

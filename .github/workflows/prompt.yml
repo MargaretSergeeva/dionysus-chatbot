@@ -34,6 +34,8 @@ jobs:
       - name: Every Gastbot module has a test
         run: |
           python scripts/check_test_coverage.py --target gastbot --tests evaluation/gastbot_v1_questions.csv
+          # TODO DC2-149: add the full build once its missing tests exist:
+          # python scripts/check_test_coverage.py --target full --tests evaluation/gastbot_v1_questions.csv
 
       - run: cat prompts/dist/status_report.md >> "$GITHUB_STEP_SUMMARY"
 

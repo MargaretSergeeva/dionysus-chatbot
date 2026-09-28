@@ -5,6 +5,9 @@ title: SOURCE GROUNDING — SOURCE PRIORITY
 position: 50
 status: supported
 data: general
+requirements:
+- FR-06
+- FR-09
 source: DC2-A-60 CORE 05
 ---
 

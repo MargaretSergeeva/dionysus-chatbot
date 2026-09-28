@@ -4,7 +4,7 @@
 Test sets live in evaluation/<target>_*_questions.csv. The `modules` column lists module codes
 separated by ';':  C04 = core '04', B03 = 'BLOCK 03', A02a = adapter '02a',
 PLATFORM:<builtin> = a Gastbot built-in from prompts/platform/gastbot_baseline.yaml.
-Compact modules (gastbot_compact) are counted by the codes in their `covers` list.
+Codes come from the module id: core-* → C<label>, block-* → B<label>, adapter → A<label> (e.g. C10b, B01, A02a).
 
 Fails when a module of the build has no test, or when a test names an unknown code.
 
@@ -17,17 +17,17 @@ import csv
 import sys
 from pathlib import Path
 
-from assemble_prompt import PROMPTS, TARGETS, load_modules, load_yaml, select
+from assemble_prompt import PROMPTS, TARGETS, load_yaml, run_check, select
 
 PLATFORM_CODES = {"reply_translation", "do_not_translate", "links_manager", "current_time"}
 
 
-def module_code(label: str) -> str:
-    if label.startswith("BLOCK "):
-        return "B" + label.removeprefix("BLOCK ")
-    if label[:2].isdigit() and len(label) > 2:
-        return "A" + label
-    return "C" + label
+def module_code(module) -> str:
+    if module.id.startswith("core-"):
+        return "C" + module.label
+    if module.id.startswith("block-"):
+        return "B" + module.label.removeprefix("BLOCK ")
+    return "A" + module.label
 
 
 def main() -> int:
@@ -37,13 +37,11 @@ def main() -> int:
     args = parser.parse_args()
 
     gate = load_yaml(path=PROMPTS / "gate.yaml")
-    modules = [m for m in select(modules=load_modules(), target=args.target, gate=gate) if m.label or m.covers]
-    build_codes = {}
-    for m in modules:
-        for code in (m.covers or [module_code(label=m.label)]):
-            if code in build_codes:
-                raise SystemExit(f"code {code} is covered by two modules: {build_codes[code].id}, {m.id}")
-            build_codes[code] = m
+    baseline = load_yaml(path=PROMPTS / "platform" / "gastbot_baseline.yaml")
+    modules = [m for m in select(modules=run_check(gate=gate, baseline=baseline), target=args.target, gate=gate) if m.label]
+    build_codes = {module_code(module=m): m for m in modules}
+    all_codes = {module_code(module=m) for m in run_check(gate=gate, baseline=baseline) if m.label}
+    platform_codes = PLATFORM_CODES | set(baseline["builtins"]) | set(baseline["conflicts"])
 
     with args.tests.open(encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
@@ -52,12 +50,13 @@ def main() -> int:
     for row in rows:
         for code in filter(None, row["modules"].split(";")):
             if code.startswith("PLATFORM:"):
-                if code.removeprefix("PLATFORM:") not in PLATFORM_CODES:
+                if code.removeprefix("PLATFORM:") not in platform_codes:
                     errors.append(f"{row['id']}: unknown platform code '{code}'")
                 continue
             if code not in build_codes:
-                errors.append(f"{row['id']}: module '{code}' is not in the {args.target} build")
-                continue
+                if code not in all_codes:
+                    errors.append(f"{row['id']}: unknown module code '{code}'")
+                continue   # module exists but is not in this build (e.g. no data yet) — test counts for the other build
             counts[code] += 1
 
     errors += [f"module {code} ({build_codes[code].title}) has no test" for code, n in counts.items() if n == 0]

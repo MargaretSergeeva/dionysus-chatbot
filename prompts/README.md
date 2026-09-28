@@ -26,6 +26,7 @@ The main prompt is one set of modules (`core/`, `blocks/`, `adapters/`). The scr
 prompts/
   VERSION                     current prompt version (git tag prompt-vX.Y)
   gate.yaml                   which statuses merge; which build is linted how
+  requirements.yaml           requirement IDs (BR/FR/CR/QR) — machine-readable list behind DC2-A-84
   data_sources.yaml           data registry: Supabase tables/functions + platform data, and which build reaches them
   core/                       CORE 01–23 — platform-independent behavior (§23 is always last)
   blocks/                     BLOCK 01–11 — domain and data-dependent rules
@@ -49,6 +50,7 @@ position: 40                   # order in the assembled prompt
 status: supported              # supported | partially | blocked | unknown | draft
 data: general                  # or a list of sources from data_sources.yaml, e.g. [wines]
 data_note: ''                  # optional: data gaps worth knowing
+requirements: [FR-01]          # IDs from requirements.yaml, at least one
 gastbot_covers:                # only if Gastbot already does this
   relation: conflict           # conflict | duplicate
   builtins: [response_language]  # keys from platform/gastbot_baseline.yaml the text repeats

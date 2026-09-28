@@ -5,6 +5,8 @@ title: ROLE, PERSONA & TONE
 position: 20
 status: supported
 data: general
+requirements:
+- FR-02
 source: DC2-A-60 CORE 02
 ---
 

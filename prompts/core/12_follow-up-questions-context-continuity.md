@@ -5,6 +5,8 @@ title: FOLLOW-UP QUESTIONS & CONTEXT CONTINUITY
 position: 120
 status: supported
 data: general
+requirements:
+- BR-01
 source: DC2-A-60 CORE 12
 ---
 

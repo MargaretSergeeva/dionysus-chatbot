@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 21239,
+  "chars": 20970,
   "included": [
     {
       "id": "core-00-preamble",
@@ -22,6 +22,11 @@
       "id": "gastbot-02a-first-turn-greeting",
       "status": "supported",
       "source": "DC2-A-84 platform baseline (§2/§18 first-turn greeting → isFirstAssistantTurn), DC2-A-112"
+    },
+    {
+      "id": "core-02b-ai-disclosure",
+      "status": "supported",
+      "source": "EU AI Act Art. 50 transparency (DC2-A-106, DC2-98); decision 28.09.2026 — separate module, merged into the first-turn greeting for now"
     },
     {
       "id": "core-03-pii-handling-guardrail",
@@ -54,6 +59,16 @@
       "source": "DC2-A-60 CORE 10"
     },
     {
+      "id": "core-10b-price-rules",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 04; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
+    },
+    {
+      "id": "core-10c-booking-availability",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 05; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
+    },
+    {
       "id": "core-11-practical-information",
       "status": "supported",
       "source": "DC2-A-60 CORE 11"
@@ -71,7 +86,7 @@
     {
       "id": "core-14-general-questions",
       "status": "supported",
-      "source": "DC2-A-60 CORE 14"
+      "source": "DC2-A-60 CORE 14 + BLOCKS 08 + DC2-A-146 (recommendation function) + DC2-A-120 (large result sets), merged 28.09.2026"
     },
     {
       "id": "core-15-link-selection-decision-logic",
@@ -109,29 +124,9 @@
       "source": "DC2-A-60 CORE 22"
     },
     {
-      "id": "block-01-wine-recommendation-taste-logic",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 01 (description part); catalog logic split into BLOCK 01b per DC2-142 (28.09.2026)"
-    },
-    {
-      "id": "block-02-food-wine-pairings",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)"
-    },
-    {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)"
-    },
-    {
-      "id": "block-04-price-rules",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 04"
-    },
-    {
-      "id": "block-05-booking-availability",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 05"
+      "source": "DC2-A-60 BLOCKS 03; reworked 28.09.2026 (DC2-142): website pages only, \"Alkoholfreier Wein\" first"
     },
     {
       "id": "block-06-historical-cultural-storytelling",
@@ -142,11 +137,6 @@
       "id": "block-07-transportation",
       "status": "supported",
       "source": "DC2-A-60 BLOCKS 07"
-    },
-    {
-      "id": "block-08-activities-experiences",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 08"
     },
     {
       "id": "core-23-final-response-check",
@@ -186,12 +176,22 @@
       "deps": []
     },
     {
-      "id": "block-01b-wine-catalog-recommendation-logic",
+      "id": "block-01-wines",
       "status": "supported",
-      "reason": "data not available: wines, wine_dryness",
+      "reason": "data not available: wines_enriched",
       "deps": [
+        "DC2-72",
         "DC2-142",
-        "DC2-143"
+        "DC2-143",
+        "DC2-144"
+      ]
+    },
+    {
+      "id": "block-03b-alcohol-free-filter",
+      "status": "supported",
+      "reason": "data not available: filter_rheingau_pages",
+      "deps": [
+        "DC2-142"
       ]
     },
     {
@@ -203,11 +203,12 @@
       ]
     },
     {
-      "id": "block-09-wine-finder-proactive-follow-up-suggesti",
+      "id": "block-07b-transport-filter",
       "status": "supported",
-      "reason": "data not available: wines, wine_dryness",
+      "reason": "data not available: filter_rheingau_pages",
       "deps": [
-        "DC2-72"
+        "DC2-142",
+        "DC2-150"
       ]
     },
     {
@@ -215,7 +216,9 @@
       "status": "supported",
       "reason": "data not available: filter_rheingau_pages",
       "deps": [
-        "DC2-131"
+        "DC2-131",
+        "DC2-142",
+        "DC2-151"
       ]
     },
     {

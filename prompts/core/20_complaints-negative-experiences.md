@@ -5,6 +5,8 @@ title: COMPLAINTS & NEGATIVE EXPERIENCES
 position: 200
 status: supported
 data: general
+requirements:
+- QR-02
 source: DC2-A-60 CORE 20
 ---
 

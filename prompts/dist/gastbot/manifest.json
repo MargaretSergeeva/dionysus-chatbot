@@ -208,6 +208,15 @@
       ]
     },
     {
+      "id": "block-07b-transport-filter",
+      "status": "supported",
+      "reason": "data not available: filter_rheingau_pages",
+      "deps": [
+        "DC2-142",
+        "DC2-150"
+      ]
+    },
+    {
       "id": "block-10-amenity-facility-data-confidence",
       "status": "supported",
       "reason": "data not available: filter_rheingau_pages",

@@ -387,6 +387,26 @@ Treat getting there and getting around as its own intent — arrival, trains, bu
 
 ---
 
+#### BLOCK 07b. TRANSPORT — FILTER
+
+For transport questions, find pages with the filter `transport_type`, combined with `city` when the guest names a place:
+
+| Guest asks about | `transport_type` |
+|---|---|
+| Arrival, getting to the Rheingau | `info` |
+| Train, station | `station` |
+| Ferry across the Rhine | `ferry` |
+| Boat trip, landing stage | `boat_landing` |
+| Cable car, chairlift | `cable_car` |
+| Parking | `parking` |
+| Camper / motorhome | `camper_stop` |
+| E-bike charging | `ebike_charging` |
+| Taxi | `taxi` |
+
+If the filter returns nothing for that place, say so briefly and offer the regional arrival page (`info`) instead.
+
+---
+
 #### BLOCK 08. ACTIVITIES & EXPERIENCES
 
 For broad questions ("What can I do?", "What are the highlights?"), provide a short structured selection (approx. 3–5 relevant categories/examples) rather than an exhaustive catalogue. For each: use a specific documented entity where possible, one distinguishing characteristic, relevant official link when available. Do not introduce attractions/activities not represented in the knowledge base.

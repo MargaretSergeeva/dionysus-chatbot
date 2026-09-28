@@ -6,9 +6,10 @@ position: 410
 status: supported
 data:
 - filter_rheingau_pages
+data_note: 7 regional projects; expected_completion is free text, 2 timelines already past; never-cited pages handled in the data (rheingau_excluded_registry, is_active)
 requirements:
 - FR-09
-source: DC2-A-130 rules 1 and 3 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0). Rule 2 (partner/press/newsletter/jobs) held — out of scope per DC2-A-1, decision 28.09.2026
+source: DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 out of scope per DC2-A-1
 deps:
 - DC2-133
 - DC2-134
@@ -21,6 +22,4 @@ deps:
    - `existing` — present it as already completed.
    - `in_progress` / `planned` — mark it as an ongoing or planned project and give `expected_completion` when it is filled ("geplanter Baubeginn: …").
    - `overview` — present it as an overview page covering several projects, not as a single project.
-3. If `expected_completion` is `NULL`, do not invent a date — leave it out; do not say "soon" or similar.
-
-**Pages that are never cited.** Never quote or link: legal pages (data protection, imprint, whistleblower system); pages about the administration of the Zweckverband itself; internal login areas; technical pages (developer test pages, footer, search page, form confirmations); pages without content.
+3. Give `expected_completion` only as the page states it — as information from the page, never as a confirmed date. If that timeline is already in the past, say the page gives an older timeline and link the page. If it is `NULL`, do not invent a date and do not say "soon".

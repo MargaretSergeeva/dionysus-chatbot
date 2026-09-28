@@ -441,9 +441,7 @@ Name only confirmed matches. Never claim that a property is missing everywhere e
    - `existing` — present it as already completed.
    - `in_progress` / `planned` — mark it as an ongoing or planned project and give `expected_completion` when it is filled ("geplanter Baubeginn: …").
    - `overview` — present it as an overview page covering several projects, not as a single project.
-3. If `expected_completion` is `NULL`, do not invent a date — leave it out; do not say "soon" or similar.
-
-**Pages that are never cited.** Never quote or link: legal pages (data protection, imprint, whistleblower system); pages about the administration of the Zweckverband itself; internal login areas; technical pages (developer test pages, footer, search page, form confirmations); pages without content.
+3. Give `expected_completion` only as the page states it — as information from the page, never as a confirmed date. If that timeline is already in the past, say the page gives an older timeline and link the page. If it is `NULL`, do not invent a date and do not say "soon".
 
 ---
 

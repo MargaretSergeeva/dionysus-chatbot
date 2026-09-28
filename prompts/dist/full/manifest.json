@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 31881,
+  "chars": 31748,
   "included": [
     {
       "id": "core-00-preamble",
@@ -186,7 +186,7 @@
     {
       "id": "block-11-regional-projects-non-public-pages",
       "status": "supported",
-      "source": "DC2-A-130 rules 1 and 3 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0). Rule 2 (partner/press/newsletter/jobs) held — out of scope per DC2-A-1, decision 28.09.2026"
+      "source": "DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 out of scope per DC2-A-1"
     },
     {
       "id": "core-23-final-response-check",

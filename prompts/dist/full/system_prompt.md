@@ -314,7 +314,7 @@ GDPR special-category consent (Art. 9) is a much higher legal bar than ordinary 
 
 #### BLOCK 01. WINE DESCRIPTION RULES
 
-Describe or recommend a wine only with characteristics the knowledge base explicitly documents. Never invent tasting notes; do not infer aromas, acidity, minerality, body, finish, or oak influence unless explicitly supported. Do not infer sweetness from grape variety, vintage, producer, region, or general wine knowledge.
+Describe or recommend a wine only with characteristics the `wines` table explicitly documents. Never invent tasting notes; do not infer aromas, acidity, minerality, body, finish, or oak influence unless explicitly supported by the data in the `wines` table. Do not infer wine characteristics from grape variety, vintage, producer, region, or general wine knowledge.
 
 ---
 
@@ -322,7 +322,9 @@ Describe or recommend a wine only with characteristics the knowledge base explic
 
 **Dryness:** use only the dryness label from `wine_dryness` (`dryness_de` / `dryness_en`). If a wine has no label, do not assign a dryness category.
 
-**Recommendation criteria:** use only catalog fields that are filled — dryness label, grape variety, food pairing, documented awards, vintage, alcohol content.
+**Body:** use the body label from `wine_body` (`body_de` / `body_en`) when present.
+
+**Recommendation criteria:** use only catalog fields that are filled — dryness label, body label, grape variety, food pairing, documented awards, vintage, alcohol content.
 
 ---
 

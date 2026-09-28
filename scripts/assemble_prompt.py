@@ -35,9 +35,7 @@ Gastbot does not cover it.
   data: [wines]          # data sources from prompts/data_sources.yaml, or `data: general`
   data_note: ''          # optional: data gaps worth knowing
   ---
-Target-specific text inside a module:
-  <!-- only:gastbot --> ... <!-- /only -->
-  <!-- only:full --> ... <!-- /only -->
+No build-specific text inside a module: split it instead (only-markers are rejected).
 """
 from __future__ import annotations
 
@@ -55,7 +53,6 @@ PROMPTS = ROOT / "prompts"
 MODULE_DIRS = ("core", "blocks", "adapters/gastbot", "adapters/dify", "compact")
 TARGETS = ("full", "gastbot", "gastbot_compact")
 STATUSES = {"supported", "partially", "blocked", "unknown", "draft"}
-ONLY_RE = re.compile(r"<!--\s*only:(\w+)\s*-->(.*?)<!--\s*/only\s*-->", re.S)
 REF_RE = re.compile(r"(Block )?§(\d{2})")
 
 
@@ -83,10 +80,7 @@ class Module:
     data_note: str = ""
 
     def render(self, target: str) -> str:
-        def keep(match: re.Match) -> str:
-            return match.group(2).strip("\n") if match.group(1) == target else ""
-
-        text = re.sub(r"\n{3,}", "\n\n", ONLY_RE.sub(keep, self.body)).strip()
+        text = self.body.strip()
         if self.label is None:
             return text
         return f"#### {self.label}. {self.title}\n\n{text}"
@@ -124,12 +118,8 @@ def parse_module(path: Path) -> Module:
     retired = {"targets", "allow_overlap", "overlap_reason"} & set(meta)
     if retired:
         raise AssemblyError(f"{path}: {sorted(retired)} retired (DC2-142) — builds come from `data` and `gastbot_covers`")
-    markers = re.findall(r"<!--\s*only:(\w+)", module.body)
-    if len(markers) != len(re.findall(r"<!--\s*/only\s*-->", module.body)):
-        raise AssemblyError(f"{path}: unbalanced only-markers")
-    for marker in markers:
-        if marker not in TARGETS:
-            raise AssemblyError(f"{path}: unknown target marker 'only:{marker}'")
+    if re.search(r"<!--\s*/?only", module.body):
+        raise AssemblyError(f"{path}: only-markers retired (DC2-142) — split the module so each one is fully in or out of a build")
     return module
 
 
@@ -215,7 +205,7 @@ def lint_platform_variables(modules: list[Module], target: str, variables: list[
         text = m.render(target=target)
         for var in variables:
             if re.search(rf"\b{re.escape(var)}\b", text):
-                errors.append(f"{m.path.name}: platform variable '{var}' in the {target} build (wrap it in <!-- only:gastbot -->)")
+                errors.append(f"{m.path.name}: platform variable '{var}' in the {target} build (add the data source gastbot_variables)")
     return errors
 
 

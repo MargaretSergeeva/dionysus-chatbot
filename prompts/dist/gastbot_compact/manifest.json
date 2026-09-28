@@ -150,6 +150,12 @@
       "deps": []
     },
     {
+      "id": "core-16b-link-format",
+      "status": "supported",
+      "reason": "other family",
+      "deps": []
+    },
+    {
       "id": "core-17-lists-response-format",
       "status": "supported",
       "reason": "other family",

@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 30934,
+  "chars": 30937,
   "included": [
     {
       "id": "core-00-preamble",
@@ -91,7 +91,12 @@
     {
       "id": "core-16-link-selection-baseline-url-integrity",
       "status": "supported",
-      "source": "DC2-A-60 CORE 16"
+      "source": "DC2-A-60 CORE 16 (URL part); link format split into 16b per DC2-142"
+    },
+    {
+      "id": "core-16b-link-format",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 16 (format part), split per DC2-142 (28.09.2026)"
     },
     {
       "id": "core-17-lists-response-format",
@@ -191,7 +196,7 @@
     {
       "id": "core-23-final-response-check",
       "status": "supported",
-      "source": "DC2-A-60 CORE 23"
+      "source": "DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-142"
     }
   ],
   "held_out": [

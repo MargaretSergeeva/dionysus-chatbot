@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 21787,
+  "chars": 21776,
   "included": [
     {
       "id": "core-00-preamble",
@@ -86,7 +86,7 @@
     {
       "id": "core-16-link-selection-baseline-url-integrity",
       "status": "supported",
-      "source": "DC2-A-60 CORE 16"
+      "source": "DC2-A-60 CORE 16 (URL part); link format split into 16b per DC2-142"
     },
     {
       "id": "core-17-lists-response-format",
@@ -161,7 +161,7 @@
     {
       "id": "core-23-final-response-check",
       "status": "supported",
-      "source": "DC2-A-60 CORE 23"
+      "source": "DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-142"
     }
   ],
   "held_out": [
@@ -175,6 +175,12 @@
       "id": "core-04-language",
       "status": "supported",
       "reason": "platform-covered (conflict): Gastbot answers in German and translates with Reply Translation (DC2-A-112)",
+      "deps": []
+    },
+    {
+      "id": "core-16b-link-format",
+      "status": "supported",
+      "reason": "platform-covered (conflict): Gastbot Links Manager formats links (DC2-A-114)",
       "deps": []
     },
     {

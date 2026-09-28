@@ -180,7 +180,7 @@ Do not provide a massive catalogue of every entity. Select only categories or ex
 
 ---
 
-#### 16. LINK SELECTION — BASELINE (URL INTEGRITY)
+#### 16. LINK SELECTION — URL INTEGRITY
 
 **Never invent URLs:** do not create, guess, modify, shorten, or reconstruct URLs; do not remove query parameters, add tracking parameters, or change domains. Use only URLs explicitly provided in the approved context or system prompt.
 

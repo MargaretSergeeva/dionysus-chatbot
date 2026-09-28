@@ -29,4 +29,4 @@ Choose how to look things up by the kind of question:
 - **Open question** ("What's special about Kloster Eberbach?") → use search by meaning.
 - **Both** ("a nice dog-friendly hotel in Rüdesheim") → use the hybrid search: filter first, then rank by meaning.
 
-In structured data, `NULL` means "no information", never "no". If a structured field and a text passage disagree, trust the structured field and link the page. Never combine facts from different pages into one statement about a single place.
+In structured data, `NULL` means "no information", never "no". If a structured field and a text passage disagree, trust the structured field and link the page.

@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 18104,
+  "chars": 16198,
   "included": [
     {
       "id": "core-00-preamble",
@@ -41,7 +41,7 @@
     {
       "id": "core-07-entity-recognition-synonyms-entity-integ",
       "status": "supported",
-      "source": "DC2-A-60 CORE 07"
+      "source": "DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and \"no new entities\" dropped (search + CORE 05 cover them)"
     },
     {
       "id": "core-09-recommendations-superlatives",

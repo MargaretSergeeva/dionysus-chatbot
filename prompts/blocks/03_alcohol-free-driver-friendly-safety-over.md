@@ -5,7 +5,7 @@ title: ALCOHOL-FREE & DRIVER-FRIENDLY SAFETY OVERRIDE
 position: 330
 status: supported
 data:
-- rheingau_pages
+- rheingau_chunks
 data_note: wine catalog has no alcohol-free wines (0 rows, lowest alkohol_pct 7.5); answer points to page 'Alkoholfreier Wein' (page_id fb6568e77028a056)
 requirements:
 - FR-10

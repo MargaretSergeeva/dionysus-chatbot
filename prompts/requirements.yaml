@@ -69,6 +69,7 @@ requirements:
   CR-03:
     title: No special-category (health) data
     source: DC2-A-1 §11
+    note: GDPR Art. 9 special-category consent is a much higher legal bar than ordinary processing. A feature that does not need health data avoids engaging with it structurally instead of building a consent flow to justify collecting it. (Rationale moved out of CORE 22 on 28.09.2026.)
   CR-04:
     title: Guests are told they are talking to an AI (EU AI Act Art. 50)
     source: DC2-A-1 §11, DC2-A-106 (DC2-98)

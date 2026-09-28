@@ -5,7 +5,7 @@ title: HISTORICAL & CULTURAL STORYTELLING
 position: 360
 status: supported
 data:
-- rheingau_pages
+- rheingau_chunks
 requirements:
 - FR-06
 - FR-11

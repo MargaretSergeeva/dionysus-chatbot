@@ -5,7 +5,7 @@ title: ACTIVITIES & EXPERIENCES
 position: 380
 status: supported
 data:
-- rheingau_pages
+- rheingau_chunks
 requirements:
 - FR-11
 source: DC2-A-60 BLOCKS 08

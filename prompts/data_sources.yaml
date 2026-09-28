@@ -9,17 +9,25 @@
 supabase_project: uywsaicdejkrozllalez   # "Dionysus Chatbot", eu-west-1
 
 sources:
+  rheingau_chunks:
+    kind: search
+    table: rheingau_rag_chunks_v2
+    fields: [chunk_text, section_title, page_id]
+    note: what the bot reads — 9,106 text chunks of rheingau.com with embeddings (Cohere embed-multilingual-v3.0), searched by meaning with match_rheingau_chunks. Gastbot has the same site through its own RAG.
+    docs: DC2-A-96, DC2-A-102
+    builds: [full, gastbot]
+
   rheingau_pages:
     kind: table
-    fields: [title, summary, content, category, city, dates, phones, emails, partner_links, prices_raw, source_url]
-    note: crawled rheingau.com content (1,922 pages) + chunks rheingau_rag_chunks*; Gastbot has the same site through its own RAG
+    fields: [title, source_url, category, city, dates, phones, emails, partner_links, prices_raw, amenity flags]
+    note: what the bot filters by — one row per page (1,922), metadata only; read through filter_rheingau_pages / match_rheingau_chunks_filtered, joined to chunks by page_id
     docs: DC2-A-102
-    builds: [full, gastbot]
+    builds: [full]
 
   filter_rheingau_pages:
     kind: function
     fields: [amenity flags (pet_friendly, wifi_available, …), category, city, project_status, expected_completion]
-    note: structured filter over rheingau_pages (DC2-131, DC2-132); also match_rheingau_chunks_filtered (hybrid)
+    note: exact filter over rheingau_pages (DC2-131, DC2-132); hybrid = match_rheingau_chunks_filtered (filter pages, then rank chunks by meaning)
     docs: DC2-A-96
     builds: [full]
 

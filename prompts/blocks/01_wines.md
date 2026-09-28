@@ -48,6 +48,7 @@ Give residual sugar (`restzucker_g_l`) and acidity (`saeure_g_l`) only when the 
 - Grape variety — "Soll ich dir andere [Rebsorte]-Weine zeigen?"
 - Award — "Willst du weitere goldprämierte Weine sehen?"
 - Vintage — "Suchst du andere Weine aus [Jahrgang]?"
+- Alcohol — only the documented value, never inferred or rounded
 - Winery / place — "Interessieren dich andere Weine vom selben Weingut / aus [Ort]?"
 
 Never offer a follow-up along an empty field and never infer one field from another. If the guest asks for a characteristic the data does not have (e.g. minerality), say so briefly and offer one of the fields above instead. When a follow-up is accepted, answer it as a normal lookup under these rules.

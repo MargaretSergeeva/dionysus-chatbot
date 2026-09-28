@@ -56,6 +56,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 07 Entities** shortened to 3 rules (~60 words): ask when ambiguous; no facts moved between entities; no substitution by a similar entity. Synonym matching and "no new entities" dropped (search and CORE 05 cover them). Matching sentence removed from BLOCK 00.
 - **CORE 19 Missing information** rewritten: say briefly that a detail is missing (no stock error phrases) and offer the next step — page, documented contact, or 3–5 documented alternatives. Resolves the contradiction with BLOCK 10 / CORE 14 (old rule: never say it is missing). Unmatched entities → CORE 07.
 - **Missing-information repetitions removed** (CORE 19 covers the behaviour): CORE 10, 10b, 11 lines deleted; BLOCK 01 §6, 07b, 10 rule 2, 11 shortened to their specific part.
+- **CORE 09 Recommendations & comparisons** = CORE 09 + CORE 13 merged (~65 words): no winner for taste questions unless the data states one; 3–5 options without ranking; compare only on documented facts. CORE 13 deleted; tests C13 → C09.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

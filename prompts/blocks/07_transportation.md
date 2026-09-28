@@ -4,9 +4,6 @@ label: BLOCK 07
 title: TRANSPORTATION
 position: 370
 status: supported
-targets:
-- full
-- gastbot
 data:
 - rheingau_pages
 source: DC2-A-60 BLOCKS 07

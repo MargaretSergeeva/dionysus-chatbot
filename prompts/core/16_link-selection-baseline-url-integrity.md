@@ -4,9 +4,6 @@ label: '16'
 title: LINK SELECTION — BASELINE (URL INTEGRITY)
 position: 160
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 16
 ---

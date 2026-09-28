@@ -4,9 +4,6 @@ label: '13'
 title: NO UNSUPPORTED COMPARISONS
 position: 130
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 13
 ---

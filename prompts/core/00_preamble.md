@@ -4,9 +4,6 @@ label: null
 title: null
 position: 0
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 preamble
 ---

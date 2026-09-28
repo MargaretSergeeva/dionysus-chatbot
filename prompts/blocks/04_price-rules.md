@@ -4,9 +4,6 @@ label: BLOCK 04
 title: PRICE RULES
 position: 340
 status: supported
-targets:
-- full
-- gastbot
 data:
 - rheingau_pages
 source: DC2-A-60 BLOCKS 04

@@ -4,8 +4,6 @@ label: 02a
 title: FIRST-TURN GREETING
 position: 25
 status: supported
-targets:
-- gastbot
 data:
 - gastbot_variables
 source: DC2-A-84 platform baseline (§2/§18 first-turn greeting → isFirstAssistantTurn), DC2-A-112

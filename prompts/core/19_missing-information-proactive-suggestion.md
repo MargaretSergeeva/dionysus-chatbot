@@ -4,14 +4,14 @@ label: '19'
 title: MISSING INFORMATION & PROACTIVE SUGGESTIONS
 position: 190
 status: supported
-targets:
-- full
-- gastbot
 data: general
+gastbot_covers:
+  relation: duplicate
+  builtins:
+  - no_invention_generic
+  verified: false
+  reason: Gastbot built-in is documented but unverified; kept as fallback until a live test confirms it (decision 28.09.2026)
 source: DC2-A-60 CORE 19
-allow_overlap:
-- no_invention_generic
-overlap_reason: Gastbot builtin is DOCUMENTED BUT UNVERIFIED; kept as fallback until a live test confirms it (decision 28.09.2026)
 ---
 
 1. **Never output fixed error strings — pivot gracefully to what is known.** Do NOT state that information cannot be provided or is missing from the database/sources. Directly guide the user to the most specific documented page or contact, e.g.: "To inquire about current pricing, stockists, or direct ordering, you can visit the official Rheingau non-alcoholic wine page at Alkoholfreier Wein." Give a phone number only if the knowledge base documents it for that exact provider.

@@ -4,8 +4,6 @@ label: '3'
 title: KEY RULES
 position: 1030
 status: supported
-targets:
-- gastbot_compact
 data: general
 source: compact rewrite of CORE 03, 08, 09, 10, 11, 13, 15, 16, 22 and BLOCK 03, 04, 05 per DC2-A-136
 covers:

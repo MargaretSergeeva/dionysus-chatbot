@@ -21,11 +21,16 @@ Module file = prompts/{core,blocks,adapters/*,compact}/NN_slug.md with YAML fron
   title: LANGUAGE
   position: 40           # global order in the assembled prompt
   status: supported      # supported | partially | blocked | unknown | draft
-  targets: [full]        # builds that include the module
   source: DC2-A-60 CORE 04
   deps: []               # YouTrack issues the module's data depends on
-  allow_overlap: []      # Gastbot baseline builtins this module repeats on purpose
-  overlap_reason: ''     # required when allow_overlap is set
+  gastbot_covers:        # only if Gastbot already does this (prompts/platform/gastbot_baseline.yaml)
+    relation: conflict   # conflict → never in Gastbot builds; duplicate → in until verified: true
+    builtins: []         # baseline keys the text repeats on purpose
+    verified: false
+    reason: ''
+Builds are derived: full/gastbot for core, blocks, adapters; gastbot_compact for compact.
+A module enters a build when all its `data` reaches the build (data_sources.yaml) and
+Gastbot does not cover it.
   covers: []             # compact modules only: codes of the modules they replace (C05, B03, A02a)
   data: [wines]          # data sources from prompts/data_sources.yaml, or `data: general`
   data_note: ''          # optional: data gaps worth knowing
@@ -66,12 +71,13 @@ class Module:
     title: str | None
     position: int
     status: str
-    targets: list[str]
     source: str
     body: str
+    family: str                                   # main (core/blocks/adapters) or compact
     deps: list[str] = field(default_factory=list)
-    allow_overlap: list[str] = field(default_factory=list)
-    overlap_reason: str = ""
+    gastbot_covers: dict = field(default_factory=dict)
+    targets: list[str] = field(default_factory=list)          # derived, never written by hand
+    excluded: dict[str, str] = field(default_factory=dict)    # build -> reason it is left out
     covers: list[str] = field(default_factory=list)
     data: list[str] = field(default_factory=list)   # [] = general (needs no data)
     data_note: str = ""
@@ -104,23 +110,20 @@ def parse_module(path: Path) -> Module:
         title=meta["title"],
         position=int(meta["position"]),
         status=meta["status"],
-        targets=list(meta["targets"]),
         source=meta["source"],
         body=body.strip("\n"),
+        family="compact" if path.parent.name == "compact" else "main",
         deps=list(meta.get("deps") or []),
-        allow_overlap=list(meta.get("allow_overlap") or []),
-        overlap_reason=meta.get("overlap_reason") or "",
+        gastbot_covers=parse_gastbot_covers(path=path, value=meta.get("gastbot_covers")),
         covers=list(meta.get("covers") or []),
         data=parse_data(path=path, value=meta.get("data")),
         data_note=meta.get("data_note") or "",
     )
     if module.status not in STATUSES:
         raise AssemblyError(f"{path}: status '{module.status}' not in {sorted(STATUSES)}")
-    unknown_targets = set(module.targets) - set(TARGETS)
-    if unknown_targets:
-        raise AssemblyError(f"{path}: unknown targets {sorted(unknown_targets)}")
-    if module.allow_overlap and not module.overlap_reason:
-        raise AssemblyError(f"{path}: allow_overlap set without overlap_reason")
+    retired = {"targets", "allow_overlap", "overlap_reason"} & set(meta)
+    if retired:
+        raise AssemblyError(f"{path}: {sorted(retired)} retired (DC2-142) — builds come from `data` and `gastbot_covers`")
     markers = re.findall(r"<!--\s*only:(\w+)", module.body)
     if len(markers) != len(re.findall(r"<!--\s*/only\s*-->", module.body)):
         raise AssemblyError(f"{path}: unbalanced only-markers")
@@ -128,6 +131,31 @@ def parse_module(path: Path) -> Module:
         if marker not in TARGETS:
             raise AssemblyError(f"{path}: unknown target marker 'only:{marker}'")
     return module
+
+
+def parse_gastbot_covers(path: Path, value) -> dict:
+    if not value:
+        return {}
+    if value.get("relation") not in {"conflict", "duplicate"} or not value.get("reason"):
+        raise AssemblyError(f"{path}: gastbot_covers needs relation (conflict|duplicate) and reason")
+    return {"relation": value["relation"], "builtins": list(value.get("builtins") or []),
+            "verified": bool(value.get("verified")), "reason": value["reason"]}
+
+
+def derive_targets(modules: list[Module], registry: dict) -> None:
+    """A module enters a build when all its data reaches the build and Gastbot does not cover it."""
+    sources = registry["sources"]
+    for m in modules:
+        candidates = ["gastbot_compact"] if m.family == "compact" else ["full", "gastbot"]
+        for build in candidates:
+            missing = [d for d in m.data if build not in sources.get(d, {}).get("builds", [])]
+            cov = m.gastbot_covers
+            if missing:
+                m.excluded[build] = "data not available: " + ", ".join(missing)
+            elif build != "full" and cov and (cov["relation"] == "conflict" or cov["verified"]):
+                m.excluded[build] = f"platform-covered ({cov['relation']}): {cov['reason']}"
+            else:
+                m.targets.append(build)
 
 
 def parse_data(path: Path, value) -> list[str]:
@@ -176,8 +204,8 @@ def lint_baseline(modules: list[Module], target: str, baseline: dict) -> list[st
                 snippet = text[max(0, hit.start() - 20): hit.end() + 20].replace("\n", " ")
                 if kind == "conflicts":
                     errors.append(f"{m.path.name}: CONFLICTS with {target} '{key}' ({spec['description']}) → …{snippet}…")
-                elif key not in m.allow_overlap:
-                    errors.append(f"{m.path.name}: DUPLICATES {target} builtin '{key}' ({spec['description']}) → …{snippet}…")
+                elif key not in m.gastbot_covers.get("builtins", []):
+                    errors.append(f"{m.path.name}: DUPLICATES {target} builtin '{key}' ({spec['description']}) → …{snippet}… (declare it in gastbot_covers)")
     return errors
 
 
@@ -204,7 +232,10 @@ def lint_references(modules: list[Module], target: str) -> list[str]:
 
 def run_check(gate: dict, baseline: dict) -> list[Module]:
     modules = load_modules()
-    errors = lint_data(modules=modules, registry=load_yaml(path=PROMPTS / "data_sources.yaml"))
+    registry = load_yaml(path=PROMPTS / "data_sources.yaml")
+    errors = lint_data(modules=modules, registry=registry)
+    if not errors:
+        derive_targets(modules=modules, registry=registry)
     for target in TARGETS:
         included = select(modules=modules, target=target, gate=gate)
         errors += lint_references(modules=included, target=target)
@@ -225,7 +256,9 @@ def render_build(modules: list[Module], target: str, gate: dict, version: str) -
         "version": version,
         "chars": len(prompt),
         "included": [{"id": m.id, "status": m.status, "source": m.source} for m in included],
-        "held_out": [{"id": m.id, "status": m.status, "targets": m.targets, "deps": m.deps}
+        "held_out": [{"id": m.id, "status": m.status,
+                      "reason": m.excluded.get(target) or ("status not merged" if target in m.targets else "other family"),
+                      "deps": m.deps}
                      for m in modules if m not in included],
     }
     return prompt, manifest
@@ -252,7 +285,7 @@ def render_report(modules: list[Module], gate: dict, version: str) -> str:
              "|---|---|---|---|---|---|---|---|---|"]
     for m in modules:
         name = f"{m.label}. {m.title}" if m.label else m.id
-        marks = ["✅" if m.id in included[t] else "—" for t in TARGETS]
+        marks = ["✅" if m.id in included[t] else ("⛔ " + m.excluded[t] if t in m.excluded else "—") for t in TARGETS]
         data = ", ".join(f"`{d}`" for d in m.data) or "general"
         lines.append(f"| {m.position} | {name} | {m.status} | {data} | {m.source} | {', '.join(m.deps) or '—'} | {' | '.join(marks)} |")
     return "\n".join(lines) + "\n"

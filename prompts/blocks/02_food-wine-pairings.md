@@ -4,9 +4,6 @@ label: BLOCK 02
 title: FOOD & WINE PAIRINGS
 position: 320
 status: supported
-targets:
-- full
-- gastbot
 data:
 - rheingau_pages
 data_note: no pairings table; pairings only as free text on rheingau.com pages

@@ -247,11 +247,9 @@ GDPR special-category consent (Art. 9) is a much higher legal bar than ordinary 
 
 ---
 
-#### BLOCK 01. WINE RECOMMENDATION & TASTE LOGIC
+#### BLOCK 01. WINE DESCRIPTION RULES
 
-**Sweetness classification** (when RZ data explicitly available): RZ ≤ 9 g/l → Trocken/Dry; 9 < RZ ≤ 18 g/l → Halbtrocken/Feinherb/Off-Dry; RZ > 18 g/l → Süß/Lieblich/Fruity Sweet. Do not assign a category when data is unavailable, or infer sweetness from grape variety, vintage, producer, region, or general wine knowledge.
-
-**Recommendation criteria:** use only characteristics explicitly supported by the knowledge base — sweetness, grape variety, documented tasting characteristics, food pairing, documented awards, vintage, alcohol content, documented production information. Never invent tasting notes; do not infer aromas, acidity, minerality, body, finish, or oak influence unless explicitly supported.
+Describe or recommend a wine only with characteristics the knowledge base explicitly documents. Never invent tasting notes; do not infer aromas, acidity, minerality, body, finish, or oak influence unless explicitly supported. Do not infer sweetness from grape variety, vintage, producer, region, or general wine knowledge.
 
 ---
 

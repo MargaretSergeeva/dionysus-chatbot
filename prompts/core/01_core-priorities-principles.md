@@ -4,9 +4,6 @@ label: '01'
 title: CORE PRIORITIES & PRINCIPLES
 position: 10
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 01
 ---

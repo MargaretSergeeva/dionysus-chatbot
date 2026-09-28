@@ -4,9 +4,6 @@ label: '23'
 title: FINAL RESPONSE CHECK
 position: 9990
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 23
 ---

@@ -4,9 +4,6 @@ label: '21'
 title: LOGGING TRANSPARENCY & DELETION
 position: 210
 status: partially
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 21
 deps:

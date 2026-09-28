@@ -4,8 +4,6 @@ label: '5'
 title: STYLE
 position: 1050
 status: supported
-targets:
-- gastbot_compact
 data: general
 source: compact rewrite of CORE 12, 14, 17, 18 and BLOCK 08 per DC2-A-136 (soft format guidance)
 covers:

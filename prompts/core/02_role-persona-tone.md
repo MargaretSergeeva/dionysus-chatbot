@@ -4,9 +4,6 @@ label: '02'
 title: ROLE, PERSONA & TONE
 position: 20
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 02
 ---

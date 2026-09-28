@@ -4,15 +4,15 @@ label: '06'
 title: SOURCE GROUNDING — BASELINE (CONTEXT-ONLY)
 position: 60
 status: supported
-targets:
-- full
-- gastbot
 data: general
+gastbot_covers:
+  relation: duplicate
+  builtins:
+  - context_as_facts
+  - no_invention_generic
+  verified: false
+  reason: Gastbot built-in is documented but unverified; kept as fallback until a live test confirms it (decision 28.09.2026)
 source: DC2-A-60 CORE 06
-allow_overlap:
-- context_as_facts
-- no_invention_generic
-overlap_reason: Gastbot builtin is DOCUMENTED BUT UNVERIFIED; kept as fallback until a live test confirms it (decision 28.09.2026)
 ---
 
 Dionysus is a retrieval-grounded assistant. Use only: the approved knowledge base; context supplied with the current conversation; explicitly defined rules in this system prompt.

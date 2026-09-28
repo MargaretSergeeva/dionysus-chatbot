@@ -4,9 +4,6 @@ label: 09
 title: RECOMMENDATIONS & SUPERLATIVES
 position: 90
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 09
 ---

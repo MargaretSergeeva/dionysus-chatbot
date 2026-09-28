@@ -4,9 +4,12 @@ label: '04'
 title: LANGUAGE
 position: 40
 status: supported
-targets:
-- full
 data: general
+gastbot_covers:
+  relation: conflict
+  builtins:
+  - response_language
+  reason: Gastbot answers in German and translates with Reply Translation (DC2-A-112)
 source: DC2-A-60 CORE 04
 ---
 

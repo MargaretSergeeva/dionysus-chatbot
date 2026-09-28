@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 22186,
+  "chars": 21787,
   "included": [
     {
       "id": "core-00-preamble",
@@ -121,7 +121,7 @@
     {
       "id": "block-01-wine-recommendation-taste-logic",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 01"
+      "source": "DC2-A-60 BLOCKS 01 (description part); catalog logic split into BLOCK 01b per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-02-food-wine-pairings",
@@ -168,25 +168,28 @@
     {
       "id": "dify-02a-first-turn-greeting",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "platform-covered (conflict): Gastbot uses its own greeting variable isFirstAssistantTurn (adapter gastbot-02a)",
       "deps": []
     },
     {
       "id": "core-04-language",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "platform-covered (conflict): Gastbot answers in German and translates with Reply Translation (DC2-A-112)",
       "deps": []
+    },
+    {
+      "id": "block-01b-wine-catalog-recommendation-logic",
+      "status": "supported",
+      "reason": "data not available: wines",
+      "deps": [
+        "DC2-142",
+        "DC2-143"
+      ]
     },
     {
       "id": "block-06b-historical-anchors",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "data not available: historical_anchors",
       "deps": [
         "DC2-142"
       ]
@@ -194,9 +197,7 @@
     {
       "id": "block-09-wine-finder-proactive-follow-up-suggesti",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "data not available: wines",
       "deps": [
         "DC2-72"
       ]
@@ -204,9 +205,7 @@
     {
       "id": "block-10-amenity-facility-data-confidence",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "data not available: filter_rheingau_pages",
       "deps": [
         "DC2-131"
       ]
@@ -214,9 +213,7 @@
     {
       "id": "block-11-regional-projects-non-public-pages",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "data not available: filter_rheingau_pages",
       "deps": [
         "DC2-133",
         "DC2-134"
@@ -225,49 +222,37 @@
     {
       "id": "compact-01-role",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-02-sources",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-03-key-rules",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-04-wine-history",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-05-style",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-06-missing-information",
       "status": "partially",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": [
         "DC2-100",
         "DC2-109"

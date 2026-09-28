@@ -4,9 +4,6 @@ label: BLOCK 06
 title: HISTORICAL & CULTURAL STORYTELLING
 position: 360
 status: supported
-targets:
-- full
-- gastbot
 data:
 - rheingau_pages
 source: DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)

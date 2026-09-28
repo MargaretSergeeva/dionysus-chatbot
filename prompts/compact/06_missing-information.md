@@ -4,8 +4,6 @@ label: '6'
 title: WHEN INFORMATION IS MISSING
 position: 1060
 status: partially
-targets:
-- gastbot_compact
 data: general
 source: compact rewrite of CORE 01, 19, 20, 21, 23 and BLOCK 07 per DC2-A-136
 deps:

@@ -4,8 +4,6 @@ label: '4'
 title: WINE, FOOD AND HISTORY
 position: 1040
 status: supported
-targets:
-- gastbot_compact
 data:
 - rheingau_pages
 source: compact rewrite of BLOCK 01, 02, 06 per DC2-A-136 (anchor and pairing lists removed per DC2-142; history from website content)

@@ -4,9 +4,6 @@ label: '14'
 title: GENERAL QUESTIONS
 position: 140
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 14
 ---

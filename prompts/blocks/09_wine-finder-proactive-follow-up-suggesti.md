@@ -4,8 +4,6 @@ label: BLOCK 09
 title: WINE FINDER & PROACTIVE FOLLOW-UP SUGGESTIONS
 position: 390
 status: supported
-targets:
-- full
 data:
 - wines
 source: DC2-A-60 BLOCKS 09

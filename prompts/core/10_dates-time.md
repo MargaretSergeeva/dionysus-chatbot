@@ -4,9 +4,6 @@ label: '10'
 title: DATES & TIME
 position: 100
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 10
 ---

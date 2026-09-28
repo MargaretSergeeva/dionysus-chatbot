@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 30885,
+  "chars": 30934,
   "included": [
     {
       "id": "core-00-preamble",
@@ -126,7 +126,12 @@
     {
       "id": "block-01-wine-recommendation-taste-logic",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 01"
+      "source": "DC2-A-60 BLOCKS 01 (description part); catalog logic split into BLOCK 01b per DC2-142 (28.09.2026)"
+    },
+    {
+      "id": "block-01b-wine-catalog-recommendation-logic",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 01 (catalog part), split per DC2-142 (28.09.2026); sweetness thresholds to be replaced by wine_dryness (DC2-143)"
     },
     {
       "id": "block-02-food-wine-pairings",
@@ -193,57 +198,43 @@
     {
       "id": "gastbot-02a-first-turn-greeting",
       "status": "supported",
-      "targets": [
-        "gastbot"
-      ],
+      "reason": "data not available: gastbot_variables",
       "deps": []
     },
     {
       "id": "compact-01-role",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-02-sources",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-03-key-rules",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-04-wine-history",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-05-style",
       "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": []
     },
     {
       "id": "compact-06-missing-information",
       "status": "partially",
-      "targets": [
-        "gastbot_compact"
-      ],
+      "reason": "other family",
       "deps": [
         "DC2-100",
         "DC2-109"

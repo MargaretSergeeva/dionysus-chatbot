@@ -4,9 +4,6 @@ label: '12'
 title: FOLLOW-UP QUESTIONS & CONTEXT CONTINUITY
 position: 120
 status: supported
-targets:
-- full
-- gastbot
 data: general
 source: DC2-A-60 CORE 12
 ---

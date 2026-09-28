@@ -4,9 +4,7 @@ label: 08
 title: ANSWER DECISION CASCADE
 position: 80
 status: supported
-targets:
-- full
-- gastbot
+data: general
 source: DC2-A-60 CORE 08
 ---
 

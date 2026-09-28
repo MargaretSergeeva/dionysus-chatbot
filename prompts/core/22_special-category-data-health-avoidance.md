@@ -4,9 +4,7 @@ label: '22'
 title: SPECIAL CATEGORY DATA (HEALTH) — AVOIDANCE
 position: 220
 status: supported
-targets:
-- full
-- gastbot
+data: general
 source: DC2-A-60 CORE 22
 ---
 

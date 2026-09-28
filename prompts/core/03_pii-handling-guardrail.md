@@ -4,9 +4,7 @@ label: '03'
 title: PII-HANDLING GUARDRAIL
 position: 30
 status: supported
-targets:
-- full
-- gastbot
+data: general
 source: DC2-A-60 CORE 03
 ---
 

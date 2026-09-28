@@ -1,5 +1,35 @@
 # Prompt changelog
 
+## prompt-v1.2 — 28.09.2026
+
+Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, not in prompt text.
+
+| Module | Change | Why |
+|---|---|---|
+| BLOCK 02 Food & wine pairings | Hardcoded pairing list removed; rule only: use pairings the knowledge base documents | No pairings table in Supabase; data belongs in data, not in the prompt (decision 28.09.2026) |
+| BLOCK 03 Alcohol-free | States that the wine catalog has no alcohol-free wines; refers to the page "Alkoholfreier Wein" (`rheingau_pages` fb6568e77028a056) | `wines` has 0 alcohol-free rows (DC2-50, DC2-77); data status none |
+| compact §4 Wine, food and history | Pairing and anchor lists removed; history only from website content | Same as BLOCK 02 / BLOCK 06 |
+| BLOCK 06 Storytelling | Anchor list removed; rules only; history from page content | Data in Supabase, not in the prompt; works in Gastbot via its RAG |
+| BLOCK 06b Historical anchors (new, full only) | Split from BLOCK 06: prefer rows of `historical_anchors` | Gastbot cannot query the table |
+| BLOCK 09 Wine finder | Food-pairing follow-up: "fixed documented pairings" → "pairings documented in the knowledge base" | Follows BLOCK 02 |
+
+### Architecture: one prompt, builds derived from data and platform coverage
+
+- **Data registry** `prompts/data_sources.yaml`: every Supabase table/function and platform variable, with the builds that reach it (`wines`: full, Gastbot planned).
+- Every module has `data:` (sources or `general`); the gate fails on unknown sources.
+- **Builds derived by the script**: a module enters a build when all its data reaches it and Gastbot does not cover it. `targets`, `allow_overlap`, `overlap_reason` and `only:` markers retired; `gastbot_covers` (conflict | duplicate, verified, reason) replaces them. Report and manifests show why a module is left out.
+- **Splits**: BLOCK 01 → 01 wine description rules (both builds) + 01b catalog logic (`wines`, full only). CORE 16 → 16 URL integrity + 16b link format (conflict with Gastbot Links Manager). CORE 23 keeps only build-neutral checks.
+- **Duplicates**: CORE 17 and 19 rephrased so they no longer repeat Gastbot built-ins; CORE 06 and 18 are whole-module duplicates, unverified, kept in Gastbot.
+- Builds: `gastbot` loses the sweetness thresholds (BLOCK 01b, no catalog in Gastbot); otherwise same content.
+
+### Decisions 28.09.2026 (evening)
+
+- **Duplicates of Gastbot built-ins are left out of the Gastbot build**, like conflicts (`verified` retired). Leaving them out is the live test of the built-in; if it fails, remove `gastbot_covers`. CORE 06 and 18 leave the Gastbot build; CORE 01 and 19 no longer reference §06.
+- **Sweetness thresholds removed everywhere.** BLOCK 01b and BLOCK 09 use the dryness label from `wine_dryness` (normalized and enriched wine data, DC2-143). Customer changes to the formula come in as a new mapping.
+- **`gastbot_compact` dropped** (modules, build, CI, docs). Recreate it from git history when the main prompt is ready.
+
+Next: requirement IDs (`requirements:` per module, DC2-147).
+
 ## prompt-v1.1 — 28.09.2026
 
 Adds a third build, **`gastbot_compact`** — a short policy version of the Gastbot prompt, written after the Gastbot recommendations DC2-A-136 (short, high-level prompt; few emphatic prohibitions; no branching logic, question classification or "remember" instructions) and DC2-A-137 (intents). `full` and `gastbot` are unchanged from prompt-v1.0.

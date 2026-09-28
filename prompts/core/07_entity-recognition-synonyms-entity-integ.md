@@ -4,9 +4,7 @@ label: '07'
 title: ENTITY RECOGNITION, SYNONYMS & ENTITY INTEGRITY
 position: 70
 status: supported
-targets:
-- full
-- gastbot
+data: general
 source: DC2-A-60 CORE 07
 ---
 

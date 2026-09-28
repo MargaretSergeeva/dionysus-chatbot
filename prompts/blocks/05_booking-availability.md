@@ -4,9 +4,8 @@ label: BLOCK 05
 title: BOOKING & AVAILABILITY
 position: 350
 status: supported
-targets:
-- full
-- gastbot
+data:
+- rheingau_pages
 source: DC2-A-60 BLOCKS 05
 ---
 

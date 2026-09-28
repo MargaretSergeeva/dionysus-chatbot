@@ -4,9 +4,8 @@ label: BLOCK 08
 title: ACTIVITIES & EXPERIENCES
 position: 380
 status: supported
-targets:
-- full
-- gastbot
+data:
+- rheingau_pages
 source: DC2-A-60 BLOCKS 08
 ---
 

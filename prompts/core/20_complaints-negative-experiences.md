@@ -4,9 +4,7 @@ label: '20'
 title: COMPLAINTS & NEGATIVE EXPERIENCES
 position: 200
 status: supported
-targets:
-- full
-- gastbot
+data: general
 source: DC2-A-60 CORE 20
 ---
 

@@ -1,36 +1,36 @@
 #!/usr/bin/env python3
 """Dionysus prompt assembler — data-gated, platform-aware (DC2-A-95, DC2-A-84, DC2-91, DC2-122).
 
-One set of prompt modules, three builds:
+One set of prompt modules, two builds:
   full             — every supported module; our own stack (Dify, Plan B)
   gastbot          — modules targeted at Gastbot; linted against the Gastbot baseline
                      (conflicts always fail; duplicates fail unless the module allows them)
-  gastbot_compact  — short policy version for Gastbot (DC2-A-136: short, high-level prompt);
-                     same baseline lint; each module lists the modules it replaces in `covers`
 
 Commands
   check                          validate modules + lint both builds
-  build  [--target full|gastbot|gastbot_compact|all]   write prompts/dist/<target>/system_prompt.md + manifest.json
+  build  [--target full|gastbot|all]   write prompts/dist/<target>/system_prompt.md + manifest.json
   verify                         fail if the committed prompts/dist differs from a fresh build
   report                         write prompts/dist/status_report.md
 
-Module file = prompts/{core,blocks,adapters/*,compact}/NN_slug.md with YAML front matter:
+Module file = prompts/{core,blocks,adapters/*}/NN_slug.md with YAML front matter:
   ---
   id: core-04-language
   label: '04'            # heading label: '04' (core) or 'BLOCK 03' (block); null = no heading
   title: LANGUAGE
   position: 40           # global order in the assembled prompt
   status: supported      # supported | partially | blocked | unknown | draft
-  targets: [full]        # builds that include the module
   source: DC2-A-60 CORE 04
   deps: []               # YouTrack issues the module's data depends on
-  allow_overlap: []      # Gastbot baseline builtins this module repeats on purpose
-  overlap_reason: ''     # required when allow_overlap is set
-  covers: []             # compact modules only: codes of the modules they replace (C05, B03, A02a)
+  gastbot_covers:        # only if Gastbot already does this (prompts/platform/gastbot_baseline.yaml)
+    relation: conflict   # conflict (Gastbot does it differently) | duplicate (Gastbot does the same) — both: never in gastbot
+    builtins: []         # baseline keys the text repeats
+    reason: ''
+A module enters a build when all its `data` reaches the build (data_sources.yaml) and
+Gastbot does not cover it.
+  data: [wines]          # data sources from prompts/data_sources.yaml, or `data: general`
+  data_note: ''          # optional: data gaps worth knowing
   ---
-Target-specific text inside a module:
-  <!-- only:gastbot --> ... <!-- /only -->
-  <!-- only:full --> ... <!-- /only -->
+No build-specific text inside a module: split it instead (only-markers are rejected).
 """
 from __future__ import annotations
 
@@ -45,10 +45,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 PROMPTS = ROOT / "prompts"
-MODULE_DIRS = ("core", "blocks", "adapters/gastbot", "adapters/dify", "compact")
-TARGETS = ("full", "gastbot", "gastbot_compact")
+MODULE_DIRS = ("core", "blocks", "adapters/gastbot", "adapters/dify")
+TARGETS = ("full", "gastbot")
 STATUSES = {"supported", "partially", "blocked", "unknown", "draft"}
-ONLY_RE = re.compile(r"<!--\s*only:(\w+)\s*-->(.*?)<!--\s*/only\s*-->", re.S)
 REF_RE = re.compile(r"(Block )?§(\d{2})")
 
 
@@ -64,19 +63,18 @@ class Module:
     title: str | None
     position: int
     status: str
-    targets: list[str]
     source: str
     body: str
     deps: list[str] = field(default_factory=list)
-    allow_overlap: list[str] = field(default_factory=list)
-    overlap_reason: str = ""
+    gastbot_covers: dict = field(default_factory=dict)
+    targets: list[str] = field(default_factory=list)          # derived, never written by hand
+    excluded: dict[str, str] = field(default_factory=dict)    # build -> reason it is left out
     covers: list[str] = field(default_factory=list)
+    data: list[str] = field(default_factory=list)   # [] = general (needs no data)
+    data_note: str = ""
 
     def render(self, target: str) -> str:
-        def keep(match: re.Match) -> str:
-            return match.group(2).strip("\n") if match.group(1) == target else ""
-
-        text = re.sub(r"\n{3,}", "\n\n", ONLY_RE.sub(keep, self.body)).strip()
+        text = self.body.strip()
         if self.label is None:
             return text
         return f"#### {self.label}. {self.title}\n\n{text}"
@@ -100,28 +98,61 @@ def parse_module(path: Path) -> Module:
         title=meta["title"],
         position=int(meta["position"]),
         status=meta["status"],
-        targets=list(meta["targets"]),
         source=meta["source"],
         body=body.strip("\n"),
         deps=list(meta.get("deps") or []),
-        allow_overlap=list(meta.get("allow_overlap") or []),
-        overlap_reason=meta.get("overlap_reason") or "",
+        gastbot_covers=parse_gastbot_covers(path=path, value=meta.get("gastbot_covers")),
         covers=list(meta.get("covers") or []),
+        data=parse_data(path=path, value=meta.get("data")),
+        data_note=meta.get("data_note") or "",
     )
     if module.status not in STATUSES:
         raise AssemblyError(f"{path}: status '{module.status}' not in {sorted(STATUSES)}")
-    unknown_targets = set(module.targets) - set(TARGETS)
-    if unknown_targets:
-        raise AssemblyError(f"{path}: unknown targets {sorted(unknown_targets)}")
-    if module.allow_overlap and not module.overlap_reason:
-        raise AssemblyError(f"{path}: allow_overlap set without overlap_reason")
-    markers = re.findall(r"<!--\s*only:(\w+)", module.body)
-    if len(markers) != len(re.findall(r"<!--\s*/only\s*-->", module.body)):
-        raise AssemblyError(f"{path}: unbalanced only-markers")
-    for marker in markers:
-        if marker not in TARGETS:
-            raise AssemblyError(f"{path}: unknown target marker 'only:{marker}'")
+    retired = {"targets", "allow_overlap", "overlap_reason"} & set(meta)
+    if retired:
+        raise AssemblyError(f"{path}: {sorted(retired)} retired (DC2-142) — builds come from `data` and `gastbot_covers`")
+    if re.search(r"<!--\s*/?only", module.body):
+        raise AssemblyError(f"{path}: only-markers retired (DC2-142) — split the module so each one is fully in or out of a build")
     return module
+
+
+def parse_gastbot_covers(path: Path, value) -> dict:
+    if not value:
+        return {}
+    if value.get("relation") not in {"conflict", "duplicate"} or not value.get("reason"):
+        raise AssemblyError(f"{path}: gastbot_covers needs relation (conflict|duplicate) and reason")
+    return {"relation": value["relation"], "builtins": list(value.get("builtins") or []),
+            "reason": value["reason"]}
+
+
+def derive_targets(modules: list[Module], registry: dict) -> None:
+    """A module enters a build when all its data reaches the build and Gastbot does not cover it."""
+    sources = registry["sources"]
+    for m in modules:
+        candidates = list(TARGETS)
+        for build in candidates:
+            missing = [d for d in m.data if build not in sources.get(d, {}).get("builds", [])]
+            cov = m.gastbot_covers
+            if missing:
+                m.excluded[build] = "data not available: " + ", ".join(missing)
+            elif build != "full" and cov:
+                m.excluded[build] = f"platform-covered ({cov['relation']}): {cov['reason']}"
+            else:
+                m.targets.append(build)
+
+
+def parse_data(path: Path, value) -> list[str]:
+    if value == "general":
+        return []
+    if not value or not isinstance(value, list):
+        raise AssemblyError(f"{path}: `data` missing — list the data sources from prompts/data_sources.yaml or write `data: general`")
+    return list(value)
+
+
+def lint_data(modules: list[Module], registry: dict) -> list[str]:
+    sources = registry["sources"]
+    return [f"{m.path.name}: data source '{d}' is not in prompts/data_sources.yaml"
+            for m in modules for d in m.data if d not in sources]
 
 
 def load_modules() -> list[Module]:
@@ -156,8 +187,8 @@ def lint_baseline(modules: list[Module], target: str, baseline: dict) -> list[st
                 snippet = text[max(0, hit.start() - 20): hit.end() + 20].replace("\n", " ")
                 if kind == "conflicts":
                     errors.append(f"{m.path.name}: CONFLICTS with {target} '{key}' ({spec['description']}) → …{snippet}…")
-                elif key not in m.allow_overlap:
-                    errors.append(f"{m.path.name}: DUPLICATES {target} builtin '{key}' ({spec['description']}) → …{snippet}…")
+                elif key not in m.gastbot_covers.get("builtins", []):
+                    errors.append(f"{m.path.name}: DUPLICATES {target} builtin '{key}' ({spec['description']}) → …{snippet}… (declare it in gastbot_covers)")
     return errors
 
 
@@ -167,7 +198,7 @@ def lint_platform_variables(modules: list[Module], target: str, variables: list[
         text = m.render(target=target)
         for var in variables:
             if re.search(rf"\b{re.escape(var)}\b", text):
-                errors.append(f"{m.path.name}: platform variable '{var}' in the {target} build (wrap it in <!-- only:gastbot -->)")
+                errors.append(f"{m.path.name}: platform variable '{var}' in the {target} build (add the data source gastbot_variables)")
     return errors
 
 
@@ -184,7 +215,10 @@ def lint_references(modules: list[Module], target: str) -> list[str]:
 
 def run_check(gate: dict, baseline: dict) -> list[Module]:
     modules = load_modules()
-    errors = []
+    registry = load_yaml(path=PROMPTS / "data_sources.yaml")
+    errors = lint_data(modules=modules, registry=registry)
+    if not errors:
+        derive_targets(modules=modules, registry=registry)
     for target in TARGETS:
         included = select(modules=modules, target=target, gate=gate)
         errors += lint_references(modules=included, target=target)
@@ -205,7 +239,9 @@ def render_build(modules: list[Module], target: str, gate: dict, version: str) -
         "version": version,
         "chars": len(prompt),
         "included": [{"id": m.id, "status": m.status, "source": m.source} for m in included],
-        "held_out": [{"id": m.id, "status": m.status, "targets": m.targets, "deps": m.deps}
+        "held_out": [{"id": m.id, "status": m.status,
+                      "reason": m.excluded.get(target) or "status not merged",
+                      "deps": m.deps}
                      for m in modules if m not in included],
     }
     return prompt, manifest
@@ -228,12 +264,13 @@ def render_report(modules: list[Module], gate: dict, version: str) -> str:
     included = {t: {m.id for m in select(modules=modules, target=t, gate=gate)} for t in TARGETS}
     lines = [f"# Prompt module status — {version}", "",
              "Generated by `scripts/assemble_prompt.py report`. Do not edit by hand.", "",
-             "| Pos | Module | Status | Source | Deps | full | gastbot | gastbot_compact |",
+             "| Pos | Module | Status | Data | Source | Deps | full | gastbot |",
              "|---|---|---|---|---|---|---|---|"]
     for m in modules:
         name = f"{m.label}. {m.title}" if m.label else m.id
-        marks = ["✅" if m.id in included[t] else "—" for t in TARGETS]
-        lines.append(f"| {m.position} | {name} | {m.status} | {m.source} | {', '.join(m.deps) or '—'} | {' | '.join(marks)} |")
+        marks = ["✅" if m.id in included[t] else ("⛔ " + m.excluded[t] if t in m.excluded else "—") for t in TARGETS]
+        data = ", ".join(f"`{d}`" for d in m.data) or "general"
+        lines.append(f"| {m.position} | {name} | {m.status} | {data} | {m.source} | {', '.join(m.deps) or '—'} | {' | '.join(marks)} |")
     return "\n".join(lines) + "\n"
 
 

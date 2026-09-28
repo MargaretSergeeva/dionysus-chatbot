@@ -4,8 +4,8 @@ label: BLOCK 10
 title: AMENITY / FACILITY-DATA CONFIDENCE RULE
 position: 400
 status: supported
-targets:
-- full
+data:
+- filter_rheingau_pages
 source: DC2-A-126 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0)
 deps:
 - DC2-131

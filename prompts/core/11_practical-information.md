@@ -4,9 +4,7 @@ label: '11'
 title: PRACTICAL INFORMATION
 position: 110
 status: supported
-targets:
-- full
-- gastbot
+data: general
 source: DC2-A-60 CORE 11
 ---
 

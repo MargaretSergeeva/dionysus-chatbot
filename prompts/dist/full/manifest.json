@@ -1,7 +1,7 @@
 {
   "target": "full",
-  "version": "prompt-v1.1",
-  "chars": 32373,
+  "version": "prompt-v1.2",
+  "chars": 30851,
   "included": [
     {
       "id": "core-00-preamble",
@@ -91,7 +91,12 @@
     {
       "id": "core-16-link-selection-baseline-url-integrity",
       "status": "supported",
-      "source": "DC2-A-60 CORE 16"
+      "source": "DC2-A-60 CORE 16 (URL part); link format split into 16b per DC2-142"
+    },
+    {
+      "id": "core-16b-link-format",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 16 (format part), split per DC2-142 (28.09.2026)"
     },
     {
       "id": "core-17-lists-response-format",
@@ -126,17 +131,22 @@
     {
       "id": "block-01-wine-recommendation-taste-logic",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 01"
+      "source": "DC2-A-60 BLOCKS 01 (description part); catalog logic split into BLOCK 01b per DC2-142 (28.09.2026)"
+    },
+    {
+      "id": "block-01b-wine-catalog-recommendation-logic",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 01 (catalog part), split per DC2-142 (28.09.2026); dryness thresholds replaced by wine_dryness labels (normalized and enriched wine data, DC2-143)"
     },
     {
       "id": "block-02-food-wine-pairings",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 02"
+      "source": "DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 03"
+      "source": "DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-04-price-rules",
@@ -151,7 +161,12 @@
     {
       "id": "block-06-historical-cultural-storytelling",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 06"
+      "source": "DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)"
+    },
+    {
+      "id": "block-06b-historical-anchors",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 06 (anchor part), split per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-07-transportation",
@@ -181,68 +196,15 @@
     {
       "id": "core-23-final-response-check",
       "status": "supported",
-      "source": "DC2-A-60 CORE 23"
+      "source": "DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-142"
     }
   ],
   "held_out": [
     {
       "id": "gastbot-02a-first-turn-greeting",
       "status": "supported",
-      "targets": [
-        "gastbot"
-      ],
+      "reason": "data not available: gastbot_variables",
       "deps": []
-    },
-    {
-      "id": "compact-01-role",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-02-sources",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-03-key-rules",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-04-wine-history",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-05-style",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-06-missing-information",
-      "status": "partially",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": [
-        "DC2-100",
-        "DC2-109"
-      ]
     }
   ]
 }

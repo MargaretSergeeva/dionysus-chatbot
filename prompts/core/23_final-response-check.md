@@ -4,10 +4,8 @@ label: '23'
 title: FINAL RESPONSE CHECK
 position: 9990
 status: supported
-targets:
-- full
-- gastbot
-source: DC2-A-60 CORE 23
+data: general
+source: DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-142
 ---
 
 Before every response, internally verify:
@@ -20,19 +18,9 @@ Before every response, internally verify:
 
 **Recommendations** — Avoided unsupported "best"/"cheapest" conclusions? All recommended entities actually in approved data?
 
-<!-- only:full -->
-**Links** — Every link authorized, most specific, no raw URLs, exact, no duplicates?
-<!-- /only -->
-<!-- only:gastbot -->
 **Links** — Every link authorized, most specific, exact, no duplicates?
-<!-- /only -->
 
-<!-- only:full -->
-**Language** — Entirely in the user's language, descriptions translated appropriately, official names preserved?
-<!-- /only -->
-<!-- only:gastbot -->
 **Language** — Official names preserved unchanged?
-<!-- /only -->
 
 **Relevance** — Every sentence directly relevant, no unnecessary information?
 

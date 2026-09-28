@@ -1,0 +1,69 @@
+# Data registry — which data exists and which build (bot) can reach it (DC2-142).
+# Modules name the data they need in `data:` (or `data: general`).
+# A module enters a build only if ALL its data sources list that build in `builds`.
+# To give a bot new data (e.g. wine catalog uploaded to Gastbot): move the build from `planned` to `builds`.
+#
+# Builds: full = our own stack (Dify + Supabase, Plan B)
+#         gastbot = partner platform Gastbot (no Supabase access; own RAG over rheingau.com)
+
+supabase_project: uywsaicdejkrozllalez   # "Dionysus Chatbot", eu-west-1
+
+sources:
+  rheingau_pages:
+    kind: table
+    fields: [title, summary, content, category, city, dates, phones, emails, partner_links, prices_raw, source_url]
+    note: crawled rheingau.com content (1,922 pages) + chunks rheingau_rag_chunks*; Gastbot has the same site through its own RAG
+    docs: DC2-A-102
+    builds: [full, gastbot]
+
+  filter_rheingau_pages:
+    kind: function
+    fields: [amenity flags (pet_friendly, wifi_available, …), category, city, project_status, expected_completion]
+    note: structured filter over rheingau_pages (DC2-131, DC2-132); also match_rheingau_chunks_filtered (hybrid)
+    docs: DC2-A-96
+    builds: [full]
+
+  wines:
+    kind: table
+    fields: [erzeuger, erzeuger_ort, jahrgang, weinname, lage_weinberg, rebsorte_normalized, weinart_normalized, qualitaetsstufe, geschmacksrichtung, praemierung, bewertung, restzucker_g_l, saeure_g_l, alkohol_pct, quelle_url]
+    note: wine catalog, 763 wines
+    docs: DC2-A-102
+    builds: [full]
+    planned:
+      gastbot: upload to partner platform Gastbot — platform not working yet
+
+  wine_dryness:
+    kind: table
+    fields: [wein_id, dryness_de, dryness_en, basis]
+    docs: DC2-A-138
+    builds: [full]
+    planned:
+      gastbot: together with wines
+
+  wine_body:
+    kind: table
+    fields: [wein_id, full_bodied, body_de, body_en, basis, status]
+    docs: DC2-A-139
+    builds: [full]
+    planned:
+      gastbot: together with wines
+
+  wine_humor:
+    kind: table
+    fields: [category, text_de, text_en, attribution, source_url, usage_note, verified]
+    docs: DC2-A-140
+    builds: [full]
+
+  historical_anchors:
+    kind: table
+    fields: [name, city, category, historical_fact, key_year, related_wine, usage_note, source_page_id, verified]
+    note: 10 verified anchors, each linked to a rheingau_pages page
+    docs: DC2-A-102
+    builds: [full]
+
+  gastbot_variables:
+    kind: platform
+    fields: [isFirstAssistantTurn, followupQuestion]
+    note: variables injected by the Gastbot platform
+    docs: DC2-A-84
+    builds: [gastbot]

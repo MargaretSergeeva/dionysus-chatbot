@@ -9,5 +9,3 @@ targets:
     lint_baseline: false  # instead: fail on Gastbot-only variables
   gastbot:              # Gastbot custom system prompt field
     lint_baseline: true   # fail on conflicts; fail on duplicates without allow_overlap
-  gastbot_compact:      # short policy version for Gastbot (DC2-A-136), candidate v1.1
-    lint_baseline: true

@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
-  "version": "prompt-v1.1",
-  "chars": 24065,
+  "version": "prompt-v1.2",
+  "chars": 21239,
   "included": [
     {
       "id": "core-00-preamble",
@@ -32,11 +32,6 @@
       "id": "core-05-source-grounding-source-priority",
       "status": "supported",
       "source": "DC2-A-60 CORE 05"
-    },
-    {
-      "id": "core-06-source-grounding-baseline-context-only",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 06"
     },
     {
       "id": "core-07-entity-recognition-synonyms-entity-integ",
@@ -86,17 +81,12 @@
     {
       "id": "core-16-link-selection-baseline-url-integrity",
       "status": "supported",
-      "source": "DC2-A-60 CORE 16"
+      "source": "DC2-A-60 CORE 16 (URL part); link format split into 16b per DC2-142"
     },
     {
       "id": "core-17-lists-response-format",
       "status": "supported",
       "source": "DC2-A-60 CORE 17"
-    },
-    {
-      "id": "core-18-response-format-baseline",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 18"
     },
     {
       "id": "core-19-missing-information-proactive-suggestion",
@@ -121,17 +111,17 @@
     {
       "id": "block-01-wine-recommendation-taste-logic",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 01"
+      "source": "DC2-A-60 BLOCKS 01 (description part); catalog logic split into BLOCK 01b per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-02-food-wine-pairings",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 02"
+      "source": "DC2-A-60 BLOCKS 02; hardcoded pairing list removed per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 03"
+      "source": "DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-04-price-rules",
@@ -146,7 +136,7 @@
     {
       "id": "block-06-historical-cultural-storytelling",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 06"
+      "source": "DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-07-transportation",
@@ -161,32 +151,61 @@
     {
       "id": "core-23-final-response-check",
       "status": "supported",
-      "source": "DC2-A-60 CORE 23"
+      "source": "DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-142"
     }
   ],
   "held_out": [
     {
       "id": "dify-02a-first-turn-greeting",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "platform-covered (conflict): Gastbot uses its own greeting variable isFirstAssistantTurn (adapter gastbot-02a)",
       "deps": []
     },
     {
       "id": "core-04-language",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "platform-covered (conflict): Gastbot answers in German and translates with Reply Translation (DC2-A-112)",
       "deps": []
+    },
+    {
+      "id": "core-06-source-grounding-baseline-context-only",
+      "status": "supported",
+      "reason": "platform-covered (duplicate): Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)",
+      "deps": []
+    },
+    {
+      "id": "core-16b-link-format",
+      "status": "supported",
+      "reason": "platform-covered (conflict): Gastbot Links Manager formats links (DC2-A-114)",
+      "deps": []
+    },
+    {
+      "id": "core-18-response-format-baseline",
+      "status": "supported",
+      "reason": "platform-covered (duplicate): Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)",
+      "deps": []
+    },
+    {
+      "id": "block-01b-wine-catalog-recommendation-logic",
+      "status": "supported",
+      "reason": "data not available: wines, wine_dryness",
+      "deps": [
+        "DC2-142",
+        "DC2-143"
+      ]
+    },
+    {
+      "id": "block-06b-historical-anchors",
+      "status": "supported",
+      "reason": "data not available: historical_anchors",
+      "deps": [
+        "DC2-142"
+      ]
     },
     {
       "id": "block-09-wine-finder-proactive-follow-up-suggesti",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "data not available: wines, wine_dryness",
       "deps": [
         "DC2-72"
       ]
@@ -194,9 +213,7 @@
     {
       "id": "block-10-amenity-facility-data-confidence",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "data not available: filter_rheingau_pages",
       "deps": [
         "DC2-131"
       ]
@@ -204,63 +221,10 @@
     {
       "id": "block-11-regional-projects-non-public-pages",
       "status": "supported",
-      "targets": [
-        "full"
-      ],
+      "reason": "data not available: filter_rheingau_pages",
       "deps": [
         "DC2-133",
         "DC2-134"
-      ]
-    },
-    {
-      "id": "compact-01-role",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-02-sources",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-03-key-rules",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-04-wine-history",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-05-style",
-      "status": "supported",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": []
-    },
-    {
-      "id": "compact-06-missing-information",
-      "status": "partially",
-      "targets": [
-        "gastbot_compact"
-      ],
-      "deps": [
-        "DC2-100",
-        "DC2-109"
       ]
     }
   ]

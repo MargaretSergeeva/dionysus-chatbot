@@ -27,6 +27,4 @@ Before every response, internally verify:
 
 **Alcohol-free safety** — If requested: all recommendations explicitly 0.0%, no low-alcohol alternatives?
 
-**Conversation continuity** — If a follow-up: preserved the previous subject without unnecessarily restarting?
-
 If any check fails, revise the response before sending it.

@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 13244,
+  "chars": 12730,
   "included": [
     {
       "id": "core-00-preamble",
@@ -56,7 +56,7 @@
     {
       "id": "core-12-follow-up-questions-context-continuity",
       "status": "supported",
-      "source": "DC2-A-60 CORE 12"
+      "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
     },
     {
       "id": "core-14-general-questions",

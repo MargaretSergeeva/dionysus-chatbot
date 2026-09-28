@@ -28,6 +28,11 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Sweetness thresholds removed everywhere.** BLOCK 01b and BLOCK 09 use the dryness label from `wine_dryness` (normalized and enriched wine data, DC2-143). Customer changes to the formula come in as a new mapping.
 - **`gastbot_compact` dropped** (modules, build, CI, docs). Recreate it from git history when the main prompt is ready.
 
+- **CORE 02b AI disclosure** (new): the first greeting says Dionysus is an AI assistant (EU AI Act Art. 50, DC2-98).
+- **CORE 10 Dates**: dates help to find, never to confirm; no past events; guest checks dates and prices on the page.
+- **CORE 17**: recommendation list item = name — summary — link.
+- **BLOCK 04 Price → CORE 10b, BLOCK 05 Booking → CORE 10c**: general rules without data dependency (FR-12, time-sensitive facts). CORE 03 reference updated; the reference check now covers suffixes (§10c, Block §06b).
+
 Next: requirement IDs (`requirements:` per module, DC2-147).
 
 ## prompt-v1.1 — 28.09.2026

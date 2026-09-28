@@ -48,7 +48,7 @@ PROMPTS = ROOT / "prompts"
 MODULE_DIRS = ("core", "blocks", "adapters/gastbot", "adapters/dify")
 TARGETS = ("full", "gastbot")
 STATUSES = {"supported", "partially", "blocked", "unknown", "draft"}
-REF_RE = re.compile(r"(Block )?§(\d{2})")
+REF_RE = re.compile(r"(Block )?§(\d{2}[a-z]?)")  # §10, §10c, Block §06b
 
 
 class AssemblyError(Exception):

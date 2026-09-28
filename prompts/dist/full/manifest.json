@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 31323,
+  "chars": 31308,
   "included": [
     {
       "id": "core-00-preamble",
@@ -67,6 +67,16 @@
       "id": "core-10-dates-time",
       "status": "supported",
       "source": "DC2-A-60 CORE 10"
+    },
+    {
+      "id": "core-10b-price-rules",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 04; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
+    },
+    {
+      "id": "core-10c-booking-availability",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 05; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
     },
     {
       "id": "core-11-practical-information",
@@ -152,16 +162,6 @@
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
       "status": "supported",
       "source": "DC2-A-60 BLOCKS 03; reworked per DC2-142 (28.09.2026)"
-    },
-    {
-      "id": "block-04-price-rules",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 04"
-    },
-    {
-      "id": "block-05-booking-availability",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 05"
     },
     {
       "id": "block-06-historical-cultural-storytelling",

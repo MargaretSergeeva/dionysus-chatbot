@@ -83,6 +83,7 @@ LANGUAGE sql STABLE AS $$
     rp.accessibility_certified, rp.alcohol_free_offer, rp.transport_type
   FROM rheingau_pages rp
   WHERE rp.is_active
+    AND (rp.category NOT IN ('event','experience') OR public.page_last_date(rp.dates) IS NULL OR public.page_last_date(rp.dates) >= current_date)  -- DC2-142: no past events/experiences
     AND (p_category IS NULL OR rp.category = p_category)
     AND (p_page_type IS NULL OR rp.page_type = p_page_type)
     AND (p_city IS NULL OR rp.city = p_city)

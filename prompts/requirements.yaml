@@ -41,8 +41,9 @@ requirements:
     title: No invented facts — no price, wine or place outside the data
     source: DC2-A-1 §1, §9
   FR-08:
-    title: Exact list questions answered completely (amenities, city)
-    source: DC2-A-1 §1, §5
+    title: Questions with exact constraints (place, date, category, amenities, wine attributes) are answered from structured data — completely and without contradictions; semantic search only adds descriptions
+    source: DC2-A-1 §1, §5; DC2-A-96 routing; widened 28.09.2026 (DC2-142)
+    note: Mitigates the RAG risk in DC2-A-75 (similar but wrong or incomplete results). Full build only — Gastbot has semantic search only (DC2-148).
   FR-09:
     title: Scope is rheingau.com + provided data only, no live third-party lookups
     source: DC2-A-1 §1, §6 (team decision 24.09.2026, DC2-84)

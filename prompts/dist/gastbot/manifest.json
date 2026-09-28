@@ -171,6 +171,16 @@
       "deps": []
     },
     {
+      "id": "block-00-retrieval-sql-and-search",
+      "status": "supported",
+      "reason": "data not available: filter_rheingau_pages, wines_enriched",
+      "deps": [
+        "DC2-131",
+        "DC2-132",
+        "DC2-142"
+      ]
+    },
+    {
       "id": "block-01-wines",
       "status": "supported",
       "reason": "data not available: wines_enriched",

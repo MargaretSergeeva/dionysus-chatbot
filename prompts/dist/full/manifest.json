@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 28426,
+  "chars": 28897,
   "included": [
     {
       "id": "core-00-preamble",
@@ -137,6 +137,11 @@
       "id": "core-22-special-category-data-health-avoidance",
       "status": "supported",
       "source": "DC2-A-60 CORE 22"
+    },
+    {
+      "id": "block-00-retrieval-sql-and-search",
+      "status": "supported",
+      "source": "DC2-A-96 routing (DC2-131, DC2-132); decision 28.09.2026 (DC2-142) — risk note in DC2-A-75"
     },
     {
       "id": "block-01-wines",

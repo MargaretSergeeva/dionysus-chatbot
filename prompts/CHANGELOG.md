@@ -51,6 +51,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **`fields:`** on every data module (Supabase `table.field`, metadata only — not in the prompt text); the gate checks each field against `data_sources.yaml`; the status report shows a "Supabase fields" column first.
 - **Text pass (conciseness):** CORE 04 Language ~330 → ~80 words (any language, names unchanged); CORE 02 repeated sentence removed; CORE 03 rationale moved to the CR-01 note; FR-01 note on languages per build.
 - **CORE 08 (answer cascade) deleted**: its steps were already in CORE 07, 15, 17, 19, 23 (and DC2-A-136 advises against step-by-step logic); "answer the actual question first" moved to **CORE 17**, link preference order to **CORE 15**; tests C08 → C17. **FR-03** reworded (link only where the answer has a source) and merged with **CR-05** (removed).
+- **New BLOCK 00 Retrieval — SQL and search** (full): constraint questions → filter/SQL, open → search by meaning, both → hybrid; `NULL` = no information; structured field wins over text; no merging facts across pages. **FR-08** widened accordingly. BLOCK 03b trimmed to its field mapping.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

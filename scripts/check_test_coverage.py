@@ -4,6 +4,7 @@
 Test sets live in evaluation/<target>_*_questions.csv. The `modules` column lists module codes
 separated by ';':  C04 = core '04', B03 = 'BLOCK 03', A02a = adapter '02a',
 PLATFORM:<builtin> = a Gastbot built-in from prompts/platform/gastbot_baseline.yaml.
+Compact modules (gastbot_compact) are counted by the codes in their `covers` list.
 
 Fails when a module of the build has no test, or when a test names an unknown code.
 
@@ -36,8 +37,13 @@ def main() -> int:
     args = parser.parse_args()
 
     gate = load_yaml(path=PROMPTS / "gate.yaml")
-    modules = [m for m in select(modules=load_modules(), target=args.target, gate=gate) if m.label]
-    build_codes = {module_code(label=m.label): m for m in modules}
+    modules = [m for m in select(modules=load_modules(), target=args.target, gate=gate) if m.label or m.covers]
+    build_codes = {}
+    for m in modules:
+        for code in (m.covers or [module_code(label=m.label)]):
+            if code in build_codes:
+                raise SystemExit(f"code {code} is covered by two modules: {build_codes[code].id}, {m.id}")
+            build_codes[code] = m
 
     with args.tests.open(encoding="utf-8") as f:
         rows = list(csv.DictReader(f))

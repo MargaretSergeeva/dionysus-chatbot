@@ -35,16 +35,18 @@ Every module of a build must have at least one test. CI checks this:
 
 ```bash
 python scripts/check_test_coverage.py --target gastbot --tests evaluation/gastbot_v1_questions.csv
+python scripts/check_test_coverage.py --target gastbot_compact --tests evaluation/gastbot_v1_questions.csv
 ```
 
 When a module is added or its status becomes `supported`, add tests for it in the same PR — otherwise CI fails. This links testing to the prompt modules: a new module ships only with its tests.
 
 ## Running the tests (until DC2-138 automates it)
 
-Gastbot has no API access for us yet, so v1.0 is tested by hand:
+Gastbot has no API access for us yet, so the tests run by hand — **on both Gastbot builds** (`gastbot` v1.0 and `gastbot_compact` v1.1), with the same questions:
 
 1. Open a new chat for each row (multi-turn rows: send the `context` turns first).
-2. Record the answer and a verdict (`pass` / `fail` + short reason) in a copy of the CSV named `runs/gastbot_v1_<YYYY-MM-DD>.csv` with extra columns `actual_answer`, `verdict`, `notes`.
+2. Record the answer and a verdict (`pass` / `fail` + short reason) in a copy of the CSV named `runs/<build>_<YYYY-MM-DD>.csv` (e.g. `runs/gastbot_compact_2026-10-02.csv`) with extra columns `actual_answer`, `verdict`, `notes`.
 3. For each fail, note whether retrieval (wrong/missing page) or generation (right page, wrong answer) failed (DC2-A-27 §5).
+4. Compare pass rates per category and per module; keep the better build.
 
 The Dify build (`full`) will run the same questions automatically via the Dify API once DC2-138 … DC2-140 are done.

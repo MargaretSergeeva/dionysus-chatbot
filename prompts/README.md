@@ -5,12 +5,15 @@ Process: YouTrack **DC2-A-95** (Prompt Iterative Assembly). Traceability: **DC2-
 
 Until prompt-v1.0 the live prompt lived only in YouTrack (**DC2-A-60** + child articles). From prompt-v1.0 on, this folder is the source of truth; DC2-A-60 links here.
 
-## Two builds from one set of modules
+## Three builds from one repository
 
 | Build | Used by | Includes |
 |---|---|---|
 | `full` | our own stack — Dify (Plan B) | every merged module, incl. language rules, wine catalog (`wines`), SQL tool rules |
-| `gastbot` | Gastbot custom system prompt field | only modules targeted at Gastbot; linted against `platform/gastbot_baseline.yaml` |
+| `gastbot` | Gastbot custom system prompt field (v1.0) | modules of `core/`, `blocks/`, `adapters/gastbot` targeted at Gastbot; linted against `platform/gastbot_baseline.yaml` |
+| `gastbot_compact` | Gastbot, candidate v1.1 | 6 short policy modules in `compact/` (DC2-A-136); same lint; `covers` maps them to the v1.0 modules |
+
+`gastbot` and `gastbot_compact` are compared with the same 100 tests; the better one stays.
 
 Gastbot V.1 scope: rheingau.com content through Gastbot's own RAG only — no wine catalog, no SQL filters.
 A module leaves the Gastbot build only when it **conflicts** with Gastbot (answer language, link formatting).
@@ -26,11 +29,13 @@ prompts/
   blocks/                     BLOCK 01–11 — domain and data-dependent rules
   adapters/gastbot/           Gastbot-only text (platform variables)
   adapters/dify/              full-build equivalents of Gastbot-only text
+  compact/                    short Gastbot policy (gastbot_compact build)
   platform/gastbot_baseline.yaml   Gastbot built-ins + conflict patterns
   platform/gastbot_settings.md     Gastbot settings that are configuration, not prompt text
   dist/                       generated — never edit by hand
     full/system_prompt.md, full/manifest.json
     gastbot/system_prompt.md, gastbot/manifest.json
+    gastbot_compact/system_prompt.md, gastbot_compact/manifest.json
     status_report.md
 ```
 
@@ -47,6 +52,7 @@ source: DC2-A-60 CORE 04       # where the text comes from
 deps: []                       # YouTrack issues the data depends on
 allow_overlap: []              # Gastbot built-ins repeated on purpose
 overlap_reason: ''             # required with allow_overlap
+covers: []                     # compact modules: v1.0 module codes they replace
 ```
 
 Text for one build only: `<!-- only:gastbot --> … <!-- /only -->` or `<!-- only:full --> … <!-- /only -->`.
@@ -67,9 +73,9 @@ python scripts/assemble_prompt.py verify    # CI: fail if prompts/dist is stale
 2. Edit the module (or add one). Update DC2-A-84 when a data status changes.
 3. Run `build`, commit the modules **and** `prompts/dist/`, reference the issue in the commit message.
 4. Open a PR. CI (`Prompt gate & build`) must pass.
-5. After merge, a release is a tag: `git tag prompt-vX.Y && git push origin prompt-vX.Y` — CI attaches both prompts to a GitHub Release.
+5. After merge, a release is a tag: `git tag prompt-vX.Y && git push origin prompt-vX.Y` — CI attaches all three prompts to a GitHub Release.
 
 ## Deploy
 
-- **Gastbot:** paste `prompts/dist/gastbot/system_prompt.md` into the custom system prompt field; apply `platform/gastbot_settings.md`.
+- **Gastbot:** paste `prompts/dist/gastbot_compact/system_prompt.md` (candidate) or `prompts/dist/gastbot/system_prompt.md` into the custom system prompt field; apply `platform/gastbot_settings.md`. Advanced routing stays off (RAG only).
 - **Dify:** `prompts/dist/full/system_prompt.md` is the system prompt; the smoke test (`.github/workflows/dify-smoke-test.yml`) sends it on every push to `main`.

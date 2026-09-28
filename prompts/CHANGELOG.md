@@ -1,5 +1,22 @@
 # Prompt changelog
 
+## prompt-v1.1 — 28.09.2026
+
+Adds a third build, **`gastbot_compact`** — a short policy version of the Gastbot prompt, written after the Gastbot recommendations DC2-A-136 (short, high-level prompt; few emphatic prohibitions; no branching logic, question classification or "remember" instructions) and DC2-A-137 (intents). `full` and `gastbot` are unchanged from prompt-v1.0.
+
+| | `gastbot` (v1.0) | `gastbot_compact` (v1.1) |
+|---|---|---|
+| Size | ~24,000 chars (~6,000 tokens) | ~5,300 chars (~1,300 tokens) |
+| Sections | 31 | 6 (role → sources → key rules → wine/food/history → style → missing information) |
+| `Never` / `Do not` | 27 / 40 | 1 / 4 |
+| Cross-references `§NN` | 24 | 0 |
+| "Critical" markers | 1 | 3 (facts only from content, alcohol-free, personal data) |
+
+- Same behaviour policy, same 100 tests: each compact module lists the v1.0 modules it replaces (`covers`); `check_test_coverage.py` counts them.
+- Dropped as too fine-grained for the platform: the step-by-step answer cascade (CORE 08), the long final checklist (CORE 23 → one sentence), the duplicate-link rule (CORE 15), the retention sentence (CORE 21), the GDPR rationale (CORE 22).
+- Changed on purpose: when information is missing, compact says so briefly and offers the next step. v1.0 CORE 19 item 1 forbids saying that information is missing — this contradicts the test set and DC2-A-126; the test run decides.
+- Plan: run `evaluation/gastbot_v1_questions.csv` on both Gastbot builds; keep the better one, remove the other in the next version.
+
 ## prompt-v1.0 — 28.09.2026
 
 First version under version control. Base: **DC2-A-60** as of 25.09.2026 (CORE 01–23, BLOCKS 01–09; DC2-A-69 and DC2-A-70 already merged there) plus its unmerged child articles **DC2-A-126** and **DC2-A-130**.

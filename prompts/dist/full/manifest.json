@@ -1,6 +1,6 @@
 {
   "target": "full",
-  "version": "prompt-v1.0",
+  "version": "prompt-v1.1",
   "chars": 32373,
   "included": [
     {
@@ -192,6 +192,57 @@
         "gastbot"
       ],
       "deps": []
+    },
+    {
+      "id": "compact-01-role",
+      "status": "supported",
+      "targets": [
+        "gastbot_compact"
+      ],
+      "deps": []
+    },
+    {
+      "id": "compact-02-sources",
+      "status": "supported",
+      "targets": [
+        "gastbot_compact"
+      ],
+      "deps": []
+    },
+    {
+      "id": "compact-03-key-rules",
+      "status": "supported",
+      "targets": [
+        "gastbot_compact"
+      ],
+      "deps": []
+    },
+    {
+      "id": "compact-04-wine-history",
+      "status": "supported",
+      "targets": [
+        "gastbot_compact"
+      ],
+      "deps": []
+    },
+    {
+      "id": "compact-05-style",
+      "status": "supported",
+      "targets": [
+        "gastbot_compact"
+      ],
+      "deps": []
+    },
+    {
+      "id": "compact-06-missing-information",
+      "status": "partially",
+      "targets": [
+        "gastbot_compact"
+      ],
+      "deps": [
+        "DC2-100",
+        "DC2-109"
+      ]
     }
   ]
 }

@@ -32,7 +32,9 @@ jobs:
         run: python scripts/assemble_prompt.py verify
 
       - name: Every Gastbot module has a test
-        run: python scripts/check_test_coverage.py --target gastbot --tests evaluation/gastbot_v1_questions.csv
+        run: |
+          python scripts/check_test_coverage.py --target gastbot --tests evaluation/gastbot_v1_questions.csv
+          python scripts/check_test_coverage.py --target gastbot_compact --tests evaluation/gastbot_v1_questions.csv
 
       - run: cat prompts/dist/status_report.md >> "$GITHUB_STEP_SUMMARY"
 
@@ -46,11 +48,13 @@ jobs:
         run: |
           cp prompts/dist/full/system_prompt.md    system_prompt.full.md
           cp prompts/dist/gastbot/system_prompt.md system_prompt.gastbot.md
+          cp prompts/dist/gastbot_compact/system_prompt.md system_prompt.gastbot_compact.md
       - uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/prompt-v')
         with:
           files: |
             system_prompt.full.md
             system_prompt.gastbot.md
+            system_prompt.gastbot_compact.md
             prompts/dist/status_report.md
             prompts/CHANGELOG.md

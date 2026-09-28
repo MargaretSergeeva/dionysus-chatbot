@@ -1,11 +1,11 @@
-# Gastbot settings for prompt-v1.0
+# Gastbot settings for prompt-v1.0 / v1.1
 
 Configuration that belongs in Gastbot, not in the prompt text. Source: Gastbot docs in YouTrack (DC2-A-112 custom system prompt, DC2-A-113 knowledge sections/RAG, DC2-A-114 Links Manager, DC2-A-136 model recommendations, DC2-A-137 intents/routing — the last two added 28.09.2026).
 Status of every item: **DOCUMENTED BUT UNVERIFIED** — nobody on the team has confirmed it on the live bot yet (DC2-89, DC2-90).
 
 ## Custom system prompt
 
-- Paste `prompts/dist/gastbot/system_prompt.md` as is. Precondition: the bot was created after 20.06.2026 (confirmed 22.09.2026, DC2-A-84).
+- Paste `prompts/dist/gastbot_compact/system_prompt.md` (v1.1 candidate, recommended by DC2-A-136) or `prompts/dist/gastbot/system_prompt.md` (v1.0) as is — run the tests on both. Precondition: the bot was created after 20.06.2026 (confirmed 22.09.2026, DC2-A-84).
 - The prompt uses the platform variable `isFirstAssistantTurn` (module 02a). Enter it as written — the platform substitutes it.
 - `followupQuestion` is **not** used in v1.0 (open decision, DC2-A-84).
 
@@ -35,7 +35,7 @@ The prompt no longer formats links (CORE 16 link format is full-build only). Lin
 
 ## Prompt size and style (DC2-A-136)
 
-The platform recommends a short, high-level prompt: role, sources, key limits, style, fallback; few emphatic prohibitions; no branching logic, question classification or "remember" instructions; strict logic belongs to the platform. prompt-v1.0 `gastbot` is ~24,000 characters with 67 prohibitions (`Never`/`Do not`), 45 conditions and 24 cross-references — **well above that guidance**. Plan: a compact Gastbot build (candidate v1.1) tested against v1.0 with the same 100 tests (`evaluation/`).
+The platform recommends a short, high-level prompt: role, sources, key limits, style, fallback; few emphatic prohibitions; no branching logic, question classification or "remember" instructions; strict logic belongs to the platform. prompt-v1.0 `gastbot` is ~24,000 characters with 67 prohibitions (`Never`/`Do not`), 45 conditions and 24 cross-references — **well above that guidance**. Done in prompt-v1.1: `gastbot_compact` (~5,300 characters, 5 prohibitions, no cross-references). Test both builds with the same 100 tests (`evaluation/`).
 
 ## Knowledge
 

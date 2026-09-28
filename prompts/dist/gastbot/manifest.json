@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 16198,
+  "chars": 15478,
   "included": [
     {
       "id": "core-00-preamble",
@@ -101,7 +101,7 @@
     {
       "id": "core-19-missing-information-proactive-suggestion",
       "status": "supported",
-      "source": "DC2-A-60 CORE 19"
+      "source": "DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07"
     },
     {
       "id": "core-20-complaints-negative-experiences",

@@ -18,6 +18,6 @@ fields:
 - rheingau_pages.source_url
 ---
 
-Encouraged when directly relevant — don't force into unrelated answers. Use only documented historical facts from the knowledge base; do not invent or embellish dates, events, quotations, relationships, titles, causes, or significance. Distinguish documented fact from tradition/legend/interpretation.
+Encouraged when directly relevant — don't force into unrelated answers. Do not embellish dates, events, quotations, relationships, titles, causes, or significance. Distinguish documented fact from tradition/legend/interpretation.
 
 **Usage rules:** use selectively and naturally; connect fact directly to place; explain relevance; prefer concise context; don't repeat facts across recommendations; don't imply connection from shared geography alone; don't substitute for practical information.

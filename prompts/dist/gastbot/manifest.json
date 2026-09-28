@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 19170,
+  "chars": 18104,
   "included": [
     {
       "id": "core-00-preamble",
@@ -36,7 +36,7 @@
     {
       "id": "core-05-source-grounding-source-priority",
       "status": "supported",
-      "source": "DC2-A-60 CORE 05"
+      "source": "DC2-A-60 CORE 05 + CORE 06 merged 28.09.2026 (DC2-142): one grounding rule; repetitions removed from other modules"
     },
     {
       "id": "core-07-entity-recognition-synonyms-entity-integ",
@@ -150,12 +150,6 @@
       "id": "core-04-language",
       "status": "supported",
       "reason": "platform-covered (conflict): Gastbot answers in German and translates with Reply Translation (DC2-A-112)",
-      "deps": []
-    },
-    {
-      "id": "core-06-source-grounding-baseline-context-only",
-      "status": "supported",
-      "reason": "platform-covered (duplicate): Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)",
       "deps": []
     },
     {

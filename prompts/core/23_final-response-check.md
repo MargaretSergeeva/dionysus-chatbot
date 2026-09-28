@@ -13,8 +13,6 @@ source: DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-1
 
 Before every response, internally verify:
 
-**Source integrity** — Is every factual claim supported? Did I use general model knowledge, transfer an attribute, or invent a missing detail?
-
 **Entity integrity** — Correctly resolved terminology, accounted for synonyms, asked for clarification on ambiguity, avoided undocumented entities?
 
 **Intent** — Answered the actual intent, distinguished info/booking/availability/pricing/current-status, applied applicable overrides?

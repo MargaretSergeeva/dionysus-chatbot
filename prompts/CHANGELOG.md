@@ -55,6 +55,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **One grounding rule: CORE 05 Grounding** (CORE 05 + 06 merged; 06 deleted): only the knowledge base provided; no internet, training or general/regional knowledge to fill gaps; else §19. The general "don't invent / only the knowledge base" wording removed from CORE 00, 13, 19, 23, 10b and BLOCK 01, 06 — their specific rules stay. "Prefer facts about the exact entity" added to CORE 07. CORE 05 stays in the Gastbot build (short, no platform-duplicate wording).
 - **CORE 07 Entities** shortened to 3 rules (~60 words): ask when ambiguous; no facts moved between entities; no substitution by a similar entity. Synonym matching and "no new entities" dropped (search and CORE 05 cover them). Matching sentence removed from BLOCK 00.
 - **CORE 19 Missing information** rewritten: say briefly that a detail is missing (no stock error phrases) and offer the next step — page, documented contact, or 3–5 documented alternatives. Resolves the contradiction with BLOCK 10 / CORE 14 (old rule: never say it is missing). Unmatched entities → CORE 07.
+- **Missing-information repetitions removed** (CORE 19 covers the behaviour): CORE 10, 10b, 11 lines deleted; BLOCK 01 §6, 07b, 10 rule 2, 11 shortened to their specific part.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

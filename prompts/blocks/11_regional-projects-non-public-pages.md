@@ -27,4 +27,4 @@ fields:
    - `existing` — present it as already completed.
    - `in_progress` / `planned` — mark it as an ongoing or planned project and give `expected_completion` when it is filled ("geplanter Baubeginn: …").
    - `overview` — present it as an overview page covering several projects, not as a single project.
-3. Give `expected_completion` only as the page states it — as information from the page, never as a confirmed date. If that timeline is already in the past, say the page gives an older timeline and link the page. If it is `NULL`, do not invent a date and do not say "soon".
+3. Give `expected_completion` only as the page states it — as information from the page, never as a confirmed date. If that timeline is already in the past, say the page gives an older timeline and link the page. If it is `NULL`, do not say "soon".

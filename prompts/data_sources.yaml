@@ -26,7 +26,7 @@ sources:
 
   filter_rheingau_pages:
     kind: function
-    fields: [amenity flags (pet_friendly, wifi_available, …), category, city, project_status, expected_completion]
+    fields: [amenity flags (pet_friendly, wifi_available, …), alcohol_free_offer, category, city, project_status, expected_completion]
     note: exact filter over rheingau_pages (DC2-131, DC2-132); hybrid = match_rheingau_chunks_filtered (filter pages, then rank chunks by meaning)
     docs: DC2-A-96
     builds: [full]

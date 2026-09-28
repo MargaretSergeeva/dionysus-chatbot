@@ -10,8 +10,7 @@ gastbot_covers:
   builtins:
   - context_as_facts
   - no_invention_generic
-  verified: false
-  reason: Gastbot built-in is documented but unverified; kept as fallback until a live test confirms it (decision 28.09.2026)
+  reason: Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)
 source: DC2-A-60 CORE 06
 ---
 

@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
 """Dionysus prompt assembler — data-gated, platform-aware (DC2-A-95, DC2-A-84, DC2-91, DC2-122).
 
-One set of prompt modules, three builds:
+One set of prompt modules, two builds:
   full             — every supported module; our own stack (Dify, Plan B)
   gastbot          — modules targeted at Gastbot; linted against the Gastbot baseline
                      (conflicts always fail; duplicates fail unless the module allows them)
-  gastbot_compact  — short policy version for Gastbot (DC2-A-136: short, high-level prompt);
-                     same baseline lint; each module lists the modules it replaces in `covers`
 
 Commands
   check                          validate modules + lint both builds
-  build  [--target full|gastbot|gastbot_compact|all]   write prompts/dist/<target>/system_prompt.md + manifest.json
+  build  [--target full|gastbot|all]   write prompts/dist/<target>/system_prompt.md + manifest.json
   verify                         fail if the committed prompts/dist differs from a fresh build
   report                         write prompts/dist/status_report.md
 
-Module file = prompts/{core,blocks,adapters/*,compact}/NN_slug.md with YAML front matter:
+Module file = prompts/{core,blocks,adapters/*}/NN_slug.md with YAML front matter:
   ---
   id: core-04-language
   label: '04'            # heading label: '04' (core) or 'BLOCK 03' (block); null = no heading
@@ -24,14 +22,11 @@ Module file = prompts/{core,blocks,adapters/*,compact}/NN_slug.md with YAML fron
   source: DC2-A-60 CORE 04
   deps: []               # YouTrack issues the module's data depends on
   gastbot_covers:        # only if Gastbot already does this (prompts/platform/gastbot_baseline.yaml)
-    relation: conflict   # conflict → never in Gastbot builds; duplicate → in until verified: true
-    builtins: []         # baseline keys the text repeats on purpose
-    verified: false
+    relation: conflict   # conflict (Gastbot does it differently) | duplicate (Gastbot does the same) — both: never in gastbot
+    builtins: []         # baseline keys the text repeats
     reason: ''
-Builds are derived: full/gastbot for core, blocks, adapters; gastbot_compact for compact.
 A module enters a build when all its `data` reaches the build (data_sources.yaml) and
 Gastbot does not cover it.
-  covers: []             # compact modules only: codes of the modules they replace (C05, B03, A02a)
   data: [wines]          # data sources from prompts/data_sources.yaml, or `data: general`
   data_note: ''          # optional: data gaps worth knowing
   ---
@@ -50,8 +45,8 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 PROMPTS = ROOT / "prompts"
-MODULE_DIRS = ("core", "blocks", "adapters/gastbot", "adapters/dify", "compact")
-TARGETS = ("full", "gastbot", "gastbot_compact")
+MODULE_DIRS = ("core", "blocks", "adapters/gastbot", "adapters/dify")
+TARGETS = ("full", "gastbot")
 STATUSES = {"supported", "partially", "blocked", "unknown", "draft"}
 REF_RE = re.compile(r"(Block )?§(\d{2})")
 
@@ -70,7 +65,6 @@ class Module:
     status: str
     source: str
     body: str
-    family: str                                   # main (core/blocks/adapters) or compact
     deps: list[str] = field(default_factory=list)
     gastbot_covers: dict = field(default_factory=dict)
     targets: list[str] = field(default_factory=list)          # derived, never written by hand
@@ -106,7 +100,6 @@ def parse_module(path: Path) -> Module:
         status=meta["status"],
         source=meta["source"],
         body=body.strip("\n"),
-        family="compact" if path.parent.name == "compact" else "main",
         deps=list(meta.get("deps") or []),
         gastbot_covers=parse_gastbot_covers(path=path, value=meta.get("gastbot_covers")),
         covers=list(meta.get("covers") or []),
@@ -129,20 +122,20 @@ def parse_gastbot_covers(path: Path, value) -> dict:
     if value.get("relation") not in {"conflict", "duplicate"} or not value.get("reason"):
         raise AssemblyError(f"{path}: gastbot_covers needs relation (conflict|duplicate) and reason")
     return {"relation": value["relation"], "builtins": list(value.get("builtins") or []),
-            "verified": bool(value.get("verified")), "reason": value["reason"]}
+            "reason": value["reason"]}
 
 
 def derive_targets(modules: list[Module], registry: dict) -> None:
     """A module enters a build when all its data reaches the build and Gastbot does not cover it."""
     sources = registry["sources"]
     for m in modules:
-        candidates = ["gastbot_compact"] if m.family == "compact" else ["full", "gastbot"]
+        candidates = list(TARGETS)
         for build in candidates:
             missing = [d for d in m.data if build not in sources.get(d, {}).get("builds", [])]
             cov = m.gastbot_covers
             if missing:
                 m.excluded[build] = "data not available: " + ", ".join(missing)
-            elif build != "full" and cov and (cov["relation"] == "conflict" or cov["verified"]):
+            elif build != "full" and cov:
                 m.excluded[build] = f"platform-covered ({cov['relation']}): {cov['reason']}"
             else:
                 m.targets.append(build)
@@ -247,7 +240,7 @@ def render_build(modules: list[Module], target: str, gate: dict, version: str) -
         "chars": len(prompt),
         "included": [{"id": m.id, "status": m.status, "source": m.source} for m in included],
         "held_out": [{"id": m.id, "status": m.status,
-                      "reason": m.excluded.get(target) or ("status not merged" if target in m.targets else "other family"),
+                      "reason": m.excluded.get(target) or "status not merged",
                       "deps": m.deps}
                      for m in modules if m not in included],
     }
@@ -271,8 +264,8 @@ def render_report(modules: list[Module], gate: dict, version: str) -> str:
     included = {t: {m.id for m in select(modules=modules, target=t, gate=gate)} for t in TARGETS}
     lines = [f"# Prompt module status — {version}", "",
              "Generated by `scripts/assemble_prompt.py report`. Do not edit by hand.", "",
-             "| Pos | Module | Status | Data | Source | Deps | full | gastbot | gastbot_compact |",
-             "|---|---|---|---|---|---|---|---|---|"]
+             "| Pos | Module | Status | Data | Source | Deps | full | gastbot |",
+             "|---|---|---|---|---|---|---|---|"]
     for m in modules:
         name = f"{m.label}. {m.title}" if m.label else m.id
         marks = ["✅" if m.id in included[t] else ("⛔ " + m.excluded[t] if t in m.excluded else "—") for t in TARGETS]

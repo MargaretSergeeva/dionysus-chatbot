@@ -2,7 +2,7 @@
 
 ## prompt-v1.2 — 28.09.2026
 
-Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, not in prompt text. Affects all three builds.
+Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, not in prompt text.
 
 | Module | Change | Why |
 |---|---|---|
@@ -21,6 +21,12 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Splits**: BLOCK 01 → 01 wine description rules (both builds) + 01b catalog logic (`wines`, full only). CORE 16 → 16 URL integrity + 16b link format (conflict with Gastbot Links Manager). CORE 23 keeps only build-neutral checks.
 - **Duplicates**: CORE 17 and 19 rephrased so they no longer repeat Gastbot built-ins; CORE 06 and 18 are whole-module duplicates, unverified, kept in Gastbot.
 - Builds: `gastbot` loses the sweetness thresholds (BLOCK 01b, no catalog in Gastbot); otherwise same content.
+
+### Decisions 28.09.2026 (evening)
+
+- **Duplicates of Gastbot built-ins are left out of the Gastbot build**, like conflicts (`verified` retired). Leaving them out is the live test of the built-in; if it fails, remove `gastbot_covers`. CORE 06 and 18 leave the Gastbot build; CORE 01 and 19 no longer reference §06.
+- **Sweetness thresholds removed everywhere.** BLOCK 01b and BLOCK 09 use the dryness label from `wine_dryness` (normalized and enriched wine data, DC2-143). Customer changes to the formula come in as a new mapping.
+- **`gastbot_compact` dropped** (modules, build, CI, docs). Recreate it from git history when the main prompt is ready.
 
 Next: requirement IDs (`requirements:` per module, DC2-147).
 

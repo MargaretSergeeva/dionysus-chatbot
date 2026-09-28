@@ -5,19 +5,18 @@ Process: YouTrack **DC2-A-95** (Prompt Iterative Assembly). Traceability: **DC2-
 
 Until prompt-v1.0 the live prompt lived only in YouTrack (**DC2-A-60** + child articles). From prompt-v1.0 on, this folder is the source of truth; DC2-A-60 links here.
 
-## One prompt, three builds
+## One prompt, two builds
 
-The main prompt is one set of modules (`core/`, `blocks/`, `adapters/`). The script derives two builds from it; `compact/` is a separate family, parked until the main prompt is ready.
+The main prompt is one set of modules (`core/`, `blocks/`, `adapters/`). The script derives two builds from it. The short Gastbot build (`gastbot_compact`, prompt-v1.1) was dropped in prompt-v1.2; recreate it from git history once the main prompt is ready.
 
 | Build | Used by | Gets a module when |
 |---|---|---|
 | `full` | our own stack — Dify + Supabase (Plan B) | all its `data` reaches `full` |
 | `gastbot` | partner platform Gastbot, custom system prompt field | all its `data` reaches `gastbot` **and** Gastbot does not already do it (`gastbot_covers`) |
-| `gastbot_compact` | Gastbot, short candidate (DC2-A-136) — parked | module is in `compact/` and its data reaches the build |
 
 **Two reasons a module is left out of Gastbot** — both shown in `dist/status_report.md` and the manifests:
 - **Data not available** — `prompts/data_sources.yaml` lists which build reaches which data. Gastbot has rheingau.com through its own RAG, but no Supabase tables yet. When a table reaches Gastbot (e.g. the wine catalog is uploaded to the platform), move `gastbot` from `planned` to `builds` — the modules follow, no text changes.
-- **Platform-covered** — `gastbot_covers.relation: conflict` (Gastbot does it differently: answer language, link format, greeting) → never in Gastbot. `relation: duplicate` (Gastbot does the same) → stays in until a live test confirms the built-in, then `verified: true`. The Gastbot baseline is documented, not verified (decision 28.09.2026).
+- **Platform-covered** — `gastbot_covers.relation: conflict` (Gastbot does it differently: answer language, link format, greeting) → never in Gastbot. `relation: duplicate` (Gastbot does the same) → also never in Gastbot: leaving it out is how the live test shows whether Gastbot really provides it. If the test fails, remove `gastbot_covers` and the module goes back in (decision 28.09.2026).
 
 **No build-specific text inside a module.** If only part of a module is covered by Gastbot, split the module (e.g. CORE 16 → 16 URL integrity + 16b link format). The script rejects `only:` markers.
 
@@ -32,13 +31,11 @@ prompts/
   blocks/                     BLOCK 01–11 — domain and data-dependent rules
   adapters/gastbot/           Gastbot-only text (platform variables)
   adapters/dify/              full-build equivalents of Gastbot-only text
-  compact/                    short Gastbot policy (gastbot_compact build)
   platform/gastbot_baseline.yaml   Gastbot built-ins + conflict patterns
   platform/gastbot_settings.md     Gastbot settings that are configuration, not prompt text
   dist/                       generated — never edit by hand
     full/system_prompt.md, full/manifest.json
     gastbot/system_prompt.md, gastbot/manifest.json
-    gastbot_compact/system_prompt.md, gastbot_compact/manifest.json
     status_report.md
 ```
 
@@ -55,11 +52,9 @@ data_note: ''                  # optional: data gaps worth knowing
 gastbot_covers:                # only if Gastbot already does this
   relation: conflict           # conflict | duplicate
   builtins: [response_language]  # keys from platform/gastbot_baseline.yaml the text repeats
-  verified: false              # duplicate only: true = confirmed live → left out of Gastbot
   reason: Reply Translation (DC2-A-112)
 source: DC2-A-60 CORE 04       # where the text comes from
 deps: []                       # YouTrack issues the data depends on
-covers: []                     # compact modules: v1.0 module codes they replace
 ```
 
 Builds are never written by hand. `targets`, `allow_overlap`, `overlap_reason` and `only:` markers are retired (DC2-142).
@@ -84,5 +79,5 @@ python scripts/assemble_prompt.py verify    # CI: fail if prompts/dist is stale
 
 ## Deploy
 
-- **Gastbot:** paste `prompts/dist/gastbot_compact/system_prompt.md` (candidate) or `prompts/dist/gastbot/system_prompt.md` into the custom system prompt field; apply `platform/gastbot_settings.md`. Advanced routing stays off (RAG only).
+- **Gastbot:** paste `prompts/dist/gastbot/system_prompt.md` into the custom system prompt field; apply `platform/gastbot_settings.md`. Advanced routing stays off (RAG only).
 - **Dify:** `prompts/dist/full/system_prompt.md` is the system prompt; the smoke test (`.github/workflows/dify-smoke-test.yml`) sends it on every push to `main`.

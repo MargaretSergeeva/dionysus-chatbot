@@ -4,7 +4,7 @@
 # To give a bot new data (e.g. wine catalog uploaded to Gastbot): move the build from `planned` to `builds`.
 #
 # Builds: full = our own stack (Dify + Supabase, Plan B)
-#         gastbot, gastbot_compact = partner platform Gastbot (no Supabase access; own RAG over rheingau.com)
+#         gastbot = partner platform Gastbot (no Supabase access; own RAG over rheingau.com)
 
 supabase_project: uywsaicdejkrozllalez   # "Dionysus Chatbot", eu-west-1
 
@@ -14,7 +14,7 @@ sources:
     fields: [title, summary, content, category, city, dates, phones, emails, partner_links, prices_raw, source_url]
     note: crawled rheingau.com content (1,922 pages) + chunks rheingau_rag_chunks*; Gastbot has the same site through its own RAG
     docs: DC2-A-102
-    builds: [full, gastbot, gastbot_compact]
+    builds: [full, gastbot]
 
   filter_rheingau_pages:
     kind: function
@@ -66,4 +66,4 @@ sources:
     fields: [isFirstAssistantTurn, followupQuestion]
     note: variables injected by the Gastbot platform
     docs: DC2-A-84
-    builds: [gastbot, gastbot_compact]
+    builds: [gastbot]

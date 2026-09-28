@@ -5,7 +5,7 @@ Status of every item: **DOCUMENTED BUT UNVERIFIED** — nobody on the team has c
 
 ## Custom system prompt
 
-- Paste `prompts/dist/gastbot_compact/system_prompt.md` (v1.1 candidate, recommended by DC2-A-136) or `prompts/dist/gastbot/system_prompt.md` (v1.0) as is — run the tests on both. Precondition: the bot was created after 20.06.2026 (confirmed 22.09.2026, DC2-A-84).
+- Paste `prompts/dist/gastbot/system_prompt.md` as is. Precondition: the bot was created after 20.06.2026 (confirmed 22.09.2026, DC2-A-84).
 - The prompt uses the platform variable `isFirstAssistantTurn` (module 02a). Enter it as written — the platform substitutes it.
 - `followupQuestion` is **not** used in v1.0 (open decision, DC2-A-84).
 
@@ -35,7 +35,7 @@ The prompt no longer formats links (CORE 16 link format is full-build only). Lin
 
 ## Prompt size and style (DC2-A-136)
 
-The platform recommends a short, high-level prompt: role, sources, key limits, style, fallback; few emphatic prohibitions; no branching logic, question classification or "remember" instructions; strict logic belongs to the platform. prompt-v1.0 `gastbot` is ~24,000 characters with 67 prohibitions (`Never`/`Do not`), 45 conditions and 24 cross-references — **well above that guidance**. Done in prompt-v1.1: `gastbot_compact` (~5,300 characters, 5 prohibitions, no cross-references). Test both builds with the same 100 tests (`evaluation/`).
+The platform recommends a short, high-level prompt: role, sources, key limits, style, fallback; few emphatic prohibitions; no branching logic, question classification or "remember" instructions; strict logic belongs to the platform. prompt-v1.0 `gastbot` is ~24,000 characters with 67 prohibitions (`Never`/`Do not`), 45 conditions and 24 cross-references — **well above that guidance**. prompt-v1.1 had a short build `gastbot_compact` (~5,300 characters); dropped in prompt-v1.2 until the main prompt is ready — recreate it then from git history (tag/commit before DC2-142).
 
 ## Knowledge
 

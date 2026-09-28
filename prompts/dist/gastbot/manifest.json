@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 21768,
+  "chars": 21239,
   "included": [
     {
       "id": "core-00-preamble",
@@ -32,11 +32,6 @@
       "id": "core-05-source-grounding-source-priority",
       "status": "supported",
       "source": "DC2-A-60 CORE 05"
-    },
-    {
-      "id": "core-06-source-grounding-baseline-context-only",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 06"
     },
     {
       "id": "core-07-entity-recognition-synonyms-entity-integ",
@@ -92,11 +87,6 @@
       "id": "core-17-lists-response-format",
       "status": "supported",
       "source": "DC2-A-60 CORE 17"
-    },
-    {
-      "id": "core-18-response-format-baseline",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 18"
     },
     {
       "id": "core-19-missing-information-proactive-suggestion",
@@ -178,15 +168,27 @@
       "deps": []
     },
     {
+      "id": "core-06-source-grounding-baseline-context-only",
+      "status": "supported",
+      "reason": "platform-covered (duplicate): Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)",
+      "deps": []
+    },
+    {
       "id": "core-16b-link-format",
       "status": "supported",
       "reason": "platform-covered (conflict): Gastbot Links Manager formats links (DC2-A-114)",
       "deps": []
     },
     {
+      "id": "core-18-response-format-baseline",
+      "status": "supported",
+      "reason": "platform-covered (duplicate): Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)",
+      "deps": []
+    },
+    {
       "id": "block-01b-wine-catalog-recommendation-logic",
       "status": "supported",
-      "reason": "data not available: wines",
+      "reason": "data not available: wines, wine_dryness",
       "deps": [
         "DC2-142",
         "DC2-143"
@@ -203,7 +205,7 @@
     {
       "id": "block-09-wine-finder-proactive-follow-up-suggesti",
       "status": "supported",
-      "reason": "data not available: wines",
+      "reason": "data not available: wines, wine_dryness",
       "deps": [
         "DC2-72"
       ]
@@ -223,45 +225,6 @@
       "deps": [
         "DC2-133",
         "DC2-134"
-      ]
-    },
-    {
-      "id": "compact-01-role",
-      "status": "supported",
-      "reason": "other family",
-      "deps": []
-    },
-    {
-      "id": "compact-02-sources",
-      "status": "supported",
-      "reason": "other family",
-      "deps": []
-    },
-    {
-      "id": "compact-03-key-rules",
-      "status": "supported",
-      "reason": "other family",
-      "deps": []
-    },
-    {
-      "id": "compact-04-wine-history",
-      "status": "supported",
-      "reason": "other family",
-      "deps": []
-    },
-    {
-      "id": "compact-05-style",
-      "status": "supported",
-      "reason": "other family",
-      "deps": []
-    },
-    {
-      "id": "compact-06-missing-information",
-      "status": "partially",
-      "reason": "other family",
-      "deps": [
-        "DC2-100",
-        "DC2-109"
       ]
     }
   ]

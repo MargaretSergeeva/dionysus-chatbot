@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 9963,
+  "chars": 12915,
   "included": [
     {
       "id": "core-00-preamble",
@@ -37,6 +37,16 @@
       "id": "core-07-entity-recognition-synonyms-entity-integ",
       "status": "supported",
       "issues": []
+    },
+    {
+      "id": "block-01-wines",
+      "status": "supported",
+      "issues": [
+        "DC2-72",
+        "DC2-143",
+        "DC2-144",
+        "DC2-A-69"
+      ]
     },
     {
       "id": "block-07-transportation",
@@ -131,21 +141,10 @@
     {
       "id": "block-00-retrieval-sql-and-search",
       "status": "supported",
-      "reason": "data not available: rheingau_pages, wines_enriched",
+      "reason": "data not available: rheingau_pages",
       "issues": [
         "DC2-131",
         "DC2-132"
-      ]
-    },
-    {
-      "id": "block-01-wines",
-      "status": "supported",
-      "reason": "data not available: wines_enriched",
-      "issues": [
-        "DC2-72",
-        "DC2-143",
-        "DC2-144",
-        "DC2-A-69"
       ]
     },
     {

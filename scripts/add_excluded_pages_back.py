@@ -7,7 +7,7 @@ rheingau_pages -> rheingau_rag_chunks_v2 (with Cohere embeddings).
 Run on a machine that can reach rheingau.com (the cloud workspace cannot).
 
   export SUPABASE_URL=https://uywsaicdejkrozllalez.supabase.co
-  export SUPABASE_SERVICE_KEY=...        # service role key
+  export SUPABASE_SERVICE_KEY=...        # secret key (sb_secret_...) or legacy service_role key
   export COHERE_API_KEY=...
   pip install requests beautifulsoup4
 
@@ -45,7 +45,9 @@ def env(name):
 
 
 def sb_headers(key, extra=None):
-    h = {"apikey": key, "Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    h = {"apikey": key, "Content-Type": "application/json"}
+    if key.startswith("eyJ"):  # legacy service_role JWT; new sb_secret_ keys go in apikey only
+        h["Authorization"] = f"Bearer {key}"
     h.update(extra or {})
     return h
 

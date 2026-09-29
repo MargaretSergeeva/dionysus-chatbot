@@ -318,7 +318,7 @@ def render_report(modules: list[Module], gate: dict, version: str) -> str:
               "| ID | Requirement | Modules | full | gastbot |", "|---|---|---|---|---|"]
     for rid, req in catalog.items():
         covering = [m for m in modules if rid in m.requirements]
-        names = ", ".join(m.label or m.id for m in covering)
+        names = ", ".join(dict.fromkeys(m.label or m.id for m in covering))
         if not covering:
             names = "— (met outside the prompt)" if req.get("prompt") is False else "⚠️ no module yet"
         marks = ["✅" if any(m.id in included[t] for m in covering) else "—" for t in TARGETS]

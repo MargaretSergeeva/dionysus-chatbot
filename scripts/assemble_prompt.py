@@ -12,26 +12,26 @@ Commands
   verify                         fail if the committed prompts/dist differs from a fresh build
   report                         write prompts/dist/status_report.md
 
-Module file = prompts/modules/<section>/<label>_slug.md (or prompts/adapters/<build>/) with YAML front matter:
+Module file = prompts/modules/<section>/<label>_slug.md (or prompts/adapters/<build>/) with YAML front matter.
+The label ('2.8') and the order in the prompt come from the FILE NAME: <section>.<module>_slug.md,
+position = section*1000 + module*10 (+1 for prompts/adapters/dify); `00_` = preamble (no heading); `6_` = final check.
   ---
   id: core-04-language   # stable identifier, never renumbered
-  label: '1.4'           # section.module, e.g. '2.4'; the section name comes from prompts/sections.yaml; null = no heading
   title: LANGUAGE
-  position: 40           # global order in the assembled prompt
   status: supported      # supported | partially | blocked | unknown | draft
-  source: DC2-A-60 CORE 04
-  deps: []               # YouTrack issues the module's data depends on
+  data: [rheingau_pages] # Supabase tables/views (prompts/data_sources.yaml), or `data: general`
+  via: [filter_rheingau_pages]   # optional: Supabase functions the full build calls to read that data
+  fields: [rheingau_pages.city]  # table.field this module uses (metadata only; required when data is a table/view)
+  requirements: [FR-04]  # IDs from prompts/requirements.yaml (at least one)
+  issues: [DC2-131, DC2-A-96]    # YouTrack issues / articles connected to this module only (optional)
   gastbot_covers:        # only if Gastbot already does this (prompts/platform/gastbot_baseline.yaml)
     relation: conflict   # conflict (Gastbot does it differently) | duplicate (Gastbot does the same) — both: never in gastbot
     builtins: []         # baseline keys the text repeats
     reason: ''
-A module enters a build when all its `data` reaches the build (data_sources.yaml) and
-Gastbot does not cover it.
-  data: [wines]          # data sources from prompts/data_sources.yaml, or `data: general`
-  data_note: ''          # optional: data gaps worth knowing
-  requirements: [FR-04]  # IDs from prompts/requirements.yaml (at least one)
-  fields: [wines_enriched.jahrgang]  # Supabase table.field this module uses (metadata only; required when data is a table/view/function)
   ---
+A module enters a build when all its `data` reaches the build (data_sources.yaml) and
+Gastbot does not cover it. `via` is documentation and is checked against the registry, it does not gate a build.
+History of where a module's text comes from: prompts/CHANGELOG.md, "Module history".
 No build-specific text inside a module: split it instead (only-markers are rejected).
 """
 from __future__ import annotations
@@ -65,15 +65,13 @@ class Module:
     title: str | None
     position: int
     status: str
-    source: str
     body: str
-    deps: list[str] = field(default_factory=list)
+    issues: list[str] = field(default_factory=list)
+    via: list[str] = field(default_factory=list)
     gastbot_covers: dict = field(default_factory=dict)
     targets: list[str] = field(default_factory=list)          # derived, never written by hand
     excluded: dict[str, str] = field(default_factory=dict)    # build -> reason it is left out
-    covers: list[str] = field(default_factory=list)
     data: list[str] = field(default_factory=list)   # [] = general (needs no data)
-    data_note: str = ""
     requirements: list[str] = field(default_factory=list)
     fields: list[str] = field(default_factory=list)   # table.field in Supabase (metadata, not prompt text)
 
@@ -96,20 +94,23 @@ def parse_module(path: Path) -> Module:
         raise AssemblyError(f"{path}: missing front matter")
     _, front, body = raw.split("---\n", 2)
     meta = yaml.safe_load(front)
+    moved = {"label", "position", "source", "deps", "data_note", "covers"} & set(meta)
+    if moved:
+        raise AssemblyError(f"{path}: {sorted(moved)} no longer belong in the header — label/position come from the file name, "
+                            "history is in CHANGELOG 'Module history', deps are `issues`")
+    label, position = label_and_position(path=path)
     module = Module(
         path=path,
         id=meta["id"],
-        label=meta["label"],
+        label=label,
         title=meta["title"],
-        position=int(meta["position"]),
+        position=position,
         status=meta["status"],
-        source=meta["source"],
         body=body.strip("\n"),
-        deps=list(meta.get("deps") or []),
+        issues=list(meta.get("issues") or []),
+        via=list(meta.get("via") or []),
         gastbot_covers=parse_gastbot_covers(path=path, value=meta.get("gastbot_covers")),
-        covers=list(meta.get("covers") or []),
         data=parse_data(path=path, value=meta.get("data")),
-        data_note=meta.get("data_note") or "",
         requirements=list(meta.get("requirements") or []),
         fields=list(meta.get("fields") or []),
     )
@@ -121,6 +122,20 @@ def parse_module(path: Path) -> Module:
     if re.search(r"<!--\s*/?only", module.body):
         raise AssemblyError(f"{path}: only-markers retired (DC2-142) — split the module so each one is fully in or out of a build")
     return module
+
+
+def label_and_position(path: Path) -> tuple[str | None, int]:
+    """<section>.<module>_slug.md -> label 'S.N', position S*1000+N*10 (+1 in adapters/dify); 00_ = preamble; N_ = section-level (final check)."""
+    name = path.name
+    if name.startswith("00_"):
+        return None, 0
+    if m := re.match(r"(\d+)\.(\d+)_", name):
+        label, position = f"{m[1]}.{m[2]}", int(m[1]) * 1000 + int(m[2]) * 10
+    elif m := re.match(r"(\d+)_", name):
+        label, position = m[1], int(m[1]) * 1000
+    else:
+        raise AssemblyError(f"{path}: file name must start with <section>.<module>_ (e.g. 2.8_), <section>_ or 00_")
+    return label, position + (1 if path.parent.name == "dify" else 0)
 
 
 def parse_gastbot_covers(path: Path, value) -> dict:
@@ -169,9 +184,13 @@ def lint_data(modules: list[Module], registry: dict) -> list[str]:
     sources = registry["sources"]
     errors = [f"{m.path.name}: data source '{d}' is not in prompts/data_sources.yaml"
               for m in modules for d in m.data if d not in sources]
+    errors += [f"{m.path.name}: `via` '{v}' is not a function in prompts/data_sources.yaml"
+               for m in modules for v in m.via if sources.get(v, {}).get("kind") != "function"]
+    errors += [f"{m.path.name}: issue '{i}' should look like DC2-123 or DC2-A-123"
+               for m in modules for i in m.issues if not re.fullmatch(r"DC2-(A-)?\d+", i)]
     tables = {name for name, s in sources.items() if s.get("kind") in ("table", "view")}
     for m in modules:
-        if m.data and any(d in tables or sources.get(d, {}).get("kind") == "function" for d in m.data) and not m.fields:
+        if any(d in tables for d in m.data) and not m.fields:
             errors.append(f"{m.path.name}: `fields` missing — list the Supabase fields (table.field) this module uses")
         for f in m.fields:
             table, _, col = f.partition(".")
@@ -288,10 +307,10 @@ def render_build(modules: list[Module], target: str, gate: dict, version: str) -
         "target": target,
         "version": version,
         "chars": len(prompt),
-        "included": [{"id": m.id, "status": m.status, "source": m.source} for m in included],
+        "included": [{"id": m.id, "status": m.status, "issues": m.issues} for m in included],
         "held_out": [{"id": m.id, "status": m.status,
                       "reason": m.excluded.get(target) or "status not merged",
-                      "deps": m.deps}
+                      "issues": m.issues}
                      for m in modules if m not in included],
     }
     return prompt, manifest
@@ -314,18 +333,19 @@ def render_report(modules: list[Module], gate: dict, version: str) -> str:
     included = {t: {m.id for m in select(modules=modules, target=t, gate=gate)} for t in TARGETS}
     lines = [f"# Prompt module status — {version}", "",
              "Generated by `scripts/assemble_prompt.py report`. Do not edit by hand.", "",
-             "| Pos | Supabase fields | Module | Status | Requirements | Data | Source | Deps | full | gastbot |",
+             "| Pos | Supabase fields | Module | Status | Requirements | Data | Via | Issues | full | gastbot |",
              "|---|---|---|---|---|---|---|---|---|---|"]
     for m in modules:
         name = f"{m.label} {m.title}" if m.label else m.id
         marks = ["✅" if m.id in included[t] else ("⛔ " + m.excluded[t] if t in m.excluded else "—") for t in TARGETS]
         data = ", ".join(f"`{d}`" for d in m.data) or "general"
+        via = ", ".join(f"`{v}`" for v in m.via) or "—"
         by_table: dict[str, list[str]] = {}
         for f in m.fields:
             t, _, col = f.partition(".")
             by_table.setdefault(t, []).append(col)
         fields = "<br>".join(f"`{t}`: {', '.join(cols)}" for t, cols in by_table.items()) or "—"
-        lines.append(f"| {m.position} | {fields} | {name} | {m.status} | {', '.join(m.requirements)} | {data} | {m.source} | {', '.join(m.deps) or '—'} | {' | '.join(marks)} |")
+        lines.append(f"| {m.position} | {fields} | {name} | {m.status} | {', '.join(m.requirements)} | {data} | {via} | {', '.join(m.issues) or '—'} | {' | '.join(marks)} |")
     catalog = load_yaml(path=PROMPTS / "requirements.yaml")["requirements"]
     lines += ["", "## Requirement → modules", "",
               "| ID | Requirement | Modules | full | gastbot |", "|---|---|---|---|---|"]

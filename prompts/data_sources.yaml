@@ -1,5 +1,5 @@
 # Data registry — which data exists and which build (bot) can reach it (DC2-142).
-# Modules name the data they need in `data:` (or `data: general`) and the exact fields in `fields:` (table.field);
+# Modules name the tables/views they need in `data:` (or `data: general`), the functions that read them in `via:`, and the exact fields in `fields:` (table.field);
 # every field must be listed here, so a typo fails the gate.
 # A module enters a build only if ALL its data sources list that build in `builds`.
 # To give a bot new data (e.g. wine catalog uploaded to Gastbot): move the build from `planned` to `builds`.
@@ -28,6 +28,18 @@ sources:
     kind: function
     fields: [amenity flags (pet_friendly, wifi_available, …), alcohol_free_offer, transport_type, category, city, project_status, expected_completion]
     note: exact filter over rheingau_pages (DC2-131, DC2-132); hybrid = match_rheingau_chunks_filtered (filter pages, then rank chunks by meaning)
+    docs: DC2-A-96
+    builds: [full]
+
+  match_rheingau_chunks:
+    kind: function
+    note: semantic search over rheingau_rag_chunks_v2 (embedding of the question vs. chunk embeddings)
+    docs: DC2-A-96
+    builds: [full]
+
+  match_rheingau_chunks_filtered:
+    kind: function
+    note: hybrid — filter rheingau_pages first (same filters as filter_rheingau_pages), then rank their chunks by meaning
     docs: DC2-A-96
     builds: [full]
 

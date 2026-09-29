@@ -87,6 +87,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Structure** historical anchors moved next to storytelling (2.9 → 4.4); missing information 2.10 → 2.9; complaints 4.4 → 4.5
 - **Naming convention** prompt text no longer names tables, views or functions (2.4 Wines, 2.8 Regional projects, 4.4 Anchors reworded); new gate check; 2.1 Grounding now names the source (rheingau.com passages with the link of their page) and is linked to the chunks table
 - **Legal / partner / press / newsletter / jobs pages** (DC2-152) will be loaded into the search data (`scripts/add_excluded_pages_back.py`, manual GitHub workflow) and found by normal search; no registry module. 3.5 now names both privacy pages (`/datenschutz`, `/datenschutzerklaerung`)
+- **Module headers slimmed** (29.09.2026): only `id`, `title`, `status`, `data` (tables/views), `via` (functions), `fields`, `requirements`, `issues` (issues/articles for this module only) and, where needed, `gastbot_covers`. Label and order come from the file name; origin and data notes moved to "Module history" below. 2.8 renamed REGIONAL PROJECTS (the non-public pages part is gone)
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026
@@ -142,3 +143,39 @@ Note: YouTrack article DC2-A-35 "Dionysus Prompt V.1" (18.09.2026) is an older, 
 - `followupQuestion` (Gastbot) vs. CORE 12 / BLOCK 09 follow-ups — not used until decided (DC2-A-84).
 - Merge `partially` modules? `gate.yaml` merges them (DC2-91 open question). Only CORE 21 is `partially`.
 - Test set: CORE 10 forbids stating dates; the 18.09 test CSV (DC2-A-37) expects dates in answers — expected answers need an update.
+
+## Module history
+
+Where each module's text comes from and its data notes (moved out of the module headers on 29.09.2026). `A-60` is the original prompt article; older `CORE` / `BLOCK` numbers refer to it.
+
+| Module | Id | Origin | Data note |
+|---|---|---|---|
+| – | `core-00-preamble` | DC2-A-60 preamble |  |
+| 1.1 | `core-02-role-persona-tone` | DC2-A-60 CORE 02 |  |
+| 1.2 | `dify-02a-first-turn-greeting` | DC2-A-84 platform baseline (§2/§18 first-turn greeting), full-build equivalent of the Gastbot variable |  |
+| 1.2 | `gastbot-02a-first-turn-greeting` | DC2-A-84 platform baseline (§2/§18 first-turn greeting → isFirstAssistantTurn), DC2-A-112 |  |
+| 1.3 | `core-02b-ai-disclosure` | EU AI Act Art. 50 transparency (DC2-A-106, DC2-98); decision 28.09.2026 — separate module, merged into the first-turn greeting for now |  |
+| 1.4 | `core-04-language` | DC2-A-60 CORE 04 |  |
+| 2.1 | `core-05-source-grounding-source-priority` | DC2-A-60 CORE 05 + CORE 06 merged 28.09.2026 (DC2-142): one grounding rule; repetitions removed from other modules |  |
+| 2.2 | `core-07-entity-recognition-synonyms-entity-integ` | DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and "no new entities" dropped (search + CORE 05 cover them) |  |
+| 2.3 | `block-00-retrieval-sql-and-search` | DC2-A-96 routing (DC2-131, DC2-132); decision 28.09.2026 (DC2-142) — risk note in DC2-A-75 |  |
+| 2.4 | `block-01-wines` | merged 28.09.2026 (DC2-142) from BLOCK 01 (description), 01b (wine data fields) and 09 (wine finder, DC2-A-69); food pairing removed (no data, no requirement) | Gastbot gets this module when the wine data reaches the platform |
+| 2.5 | `block-07-transportation` | DC2-A-60 BLOCKS 07 |  |
+| 2.6 | `block-07b-transport-filter` | DC2-142 (28.09.2026) | rheingau_pages.transport_type — 71 reviewed pages (schema/data/transport_type.sql); 4 info pages are regional (no city); missing cities elsewhere — DC2-150 |
+| 2.7 | `block-10-amenity-facility-data-confidence` | DC2-A-126 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0) | flags only for the 114 accommodations; breakfast_included, group_friendly, wheelchair_accessible empty (DC2-151) and left out of the list; only pet_friendly has false values |
+| 2.8 | `block-11-regional-projects-non-public-pages` | DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 (partner/press/newsletter/jobs) dropped 29.09.2026: those pages come back into the data and are covered by CORE 05 / 17 (FR-13) | 7 regional projects; expected_completion is free text, 2 timelines already past; never-cited pages handled in the data (rheingau_excluded_registry, is_active) |
+| 2.9 | `core-19-missing-information-proactive-suggestion` | DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07 |  |
+| 3.1 | `core-03-pii-handling-guardrail` | DC2-A-60 CORE 03 |  |
+| 3.2 | `core-22-special-category-data-health-avoidance` | DC2-A-60 CORE 22, shortened 29.09.2026 (DC2-142): rationale in the CR-03 note |  |
+| 3.3 | `block-03-alcohol-free-driver-friendly-safety-over` | DC2-A-60 BLOCKS 03; reworked 28.09.2026 (DC2-142): website pages only, "Alkoholfreier Wein" first | wine table has no alcohol-free wines; 29 pages tagged alcohol_free_offer (full build: 3.4); Gastbot finds them through its own RAG |
+| 3.4 | `block-03b-alcohol-free-filter` | DC2-142 (28.09.2026) | rheingau_pages.alcohol_free_offer — 29 pages true after review (schema/data/alcohol_free_offer.sql); NULL = no information |
+| 3.5 | `core-21-logging-transparency-deletion` | DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06 |  |
+| 3.6 | `core-10-dates-time` | DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142) |  |
+| 4.1 | `core-14-general-questions` | DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142) |  |
+| 4.2 | `core-12-follow-up-questions-context-continuity` | DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142) |  |
+| 4.3 | `block-06-historical-cultural-storytelling` | DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026) |  |
+| 4.4 | `block-06b-historical-anchors` | DC2-A-60 BLOCKS 06 (anchor part), split per DC2-142 (28.09.2026) |  |
+| 4.5 | `core-20-complaints-negative-experiences` | DC2-A-60 CORE 20 |  |
+| 5.1 | `core-17-lists-response-format` | DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142) |  |
+| 5.2 | `core-17b-markdown-format` | DC2-A-60 CORE 16 (format part) + CORE 18 merged 29.09.2026 (DC2-142) |  |
+| 6 | `core-23-final-response-check` | DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-142 |  |

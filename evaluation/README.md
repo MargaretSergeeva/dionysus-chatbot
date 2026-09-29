@@ -2,7 +2,7 @@
 
 Test sets for the Dionysus chatbot. Strategy: YouTrack **DC2-A-27** (question design), **DC2-A-132** (CI regression tests), tasks **DC2-137 … DC2-140**.
 
-## gastbot_v1_questions.csv — 100 tests for prompt-v1.0 on Gastbot
+## gastbot_v1_questions.csv — 125 tests for the Gastbot build (prompt-v.1_Gastbot)
 
 Scope: Gastbot V.1 — rheingau.com content through Gastbot's RAG only (no wine catalog, no SQL tools).
 Built 28.09.2026 from the team set "TEST_BOT – 100 Testfragen" (DC2-A-37, 19.09.2026; 72 questions reused, column `origin` = `TB-<id>`) plus 28 new tests for modules and platform built-ins the old set did not cover.
@@ -20,7 +20,7 @@ Facts in `expected_behavior` / `must_include` were checked against the Supabase 
 | `expected_behavior` | pass criterion for a human or LLM judge |
 | `must_include` / `must_not_include` | `;`-separated keywords for an automatic check (case-insensitive substring) |
 | `source_url` | page the answer should come from (when one page is expected) |
-| `origin` | `TB-<id>` = team set row, `new` = added for v1.0 |
+| `origin` | `TB-<id>` = team set row, `new` = added for v1.0, `new-wines` = wine catalog in Gastbot (29.09.2026), `DC2-A-45 #n` = confirmed customer scenario n, `TB-customer` = customer question sheet |
 
 ### Rules the expected answers follow (prompt-v1.0)
 
@@ -28,6 +28,18 @@ Facts in `expected_behavior` / `must_include` were checked against the Supabase 
 - **No confirmed prices** (module 3.6) — even when a price is on the page.
 - **No live status** (availability, today's menu, traffic, weather).
 - **No invented details** — undocumented facts are named as undocumented, with the next step (module 2.9).
+
+### Added 29.09.2026 (GB1-102 … GB1-125, DC2-129)
+
+- **Wine catalog in Gastbot** (module 2.4, `new-wines`): single wine, body, missing fields, unknown wine name, follow-up, vague wine question. The wine page is the source (`source_url`).
+- **Two V.1-limit tests** (GB1-103, GB1-104): exact filters and counts. RAG cannot filter or count; pass = honest partial answer. They show the customer what V.2 (Tools) adds.
+- **All 9 confirmed customer scenarios from DC2-A-45** and uncovered questions from the customer sheet.
+
+**Reading results by module:** every row names its modules (`modules`). Group fails by module to see which part of the prompt does not work; `PLATFORM:<builtin>` fails point to Gastbot settings, not the prompt.
+
+### Archive
+
+`archive/` keeps the older sets from DC2-A-37 and the `run_eval.py` template from DC2-A-39 as sources only. They are **not** test sets for the current prompt: they expect exact dates and prices (forbidden by 3.6), food pairings (removed) and old KB ids. The template posts to a local `/api/chat` that does not exist; the new runner is DC2-138.
 
 ## Module coverage
 

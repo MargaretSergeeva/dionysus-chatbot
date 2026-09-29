@@ -123,7 +123,7 @@
       "deps": []
     },
     {
-      "id": "core-16b-link-format",
+      "id": "core-17b-markdown-format",
       "status": "supported",
       "reason": "platform-covered (conflict): Gastbot formats answers in Markdown and its Links Manager formats links (DC2-A-114)",
       "deps": []

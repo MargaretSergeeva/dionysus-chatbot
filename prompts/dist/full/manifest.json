@@ -69,14 +69,14 @@
       "source": "DC2-A-60 CORE 14 + BLOCKS 08 + DC2-A-146 (recommendation function) + DC2-A-120 (large result sets), merged 28.09.2026"
     },
     {
-      "id": "core-16b-link-format",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 16 (format part) + CORE 18 merged 29.09.2026 (DC2-142)"
-    },
-    {
       "id": "core-17-lists-response-format",
       "status": "supported",
       "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
+    },
+    {
+      "id": "core-17b-markdown-format",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 16 (format part) + CORE 18 merged 29.09.2026 (DC2-142)"
     },
     {
       "id": "core-19-missing-information-proactive-suggestion",

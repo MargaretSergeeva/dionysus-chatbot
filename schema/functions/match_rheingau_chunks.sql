@@ -1,6 +1,5 @@
--- YouTrack: DC2-119 (semantic search), DC2-142 (active pages only, 28.09.2026)
--- Pure semantic search over rheingau_rag_chunks_v2. Only chunks of active pages (rheingau_pages.is_active),
--- so deactivated pages (e.g. test pages, form confirmations) are never returned.
+-- YouTrack: DC2-119 (semantic search), DC2-142
+-- Pure semantic search over rheingau_rag_chunks_v2. Pages the bot must never cite are not in the table (they live in rheingau_excluded_registry only).
 CREATE OR REPLACE FUNCTION public.match_rheingau_chunks(query_embedding vector, match_count integer DEFAULT 10, match_threshold double precision DEFAULT 0.0)
 RETURNS TABLE(chunk_id text, page_id text, section_type text, section_title text, chunk_text text, similarity double precision)
 LANGUAGE sql STABLE AS $$
@@ -9,7 +8,6 @@ LANGUAGE sql STABLE AS $$
   FROM rheingau_rag_chunks_v2 c
   JOIN rheingau_pages rp ON rp.page_id = c.page_id
   WHERE c.embedding IS NOT NULL
-    AND rp.is_active
     AND (rp.category NOT IN ('event','experience') OR public.page_last_date(rp.dates) IS NULL OR public.page_last_date(rp.dates) >= current_date)  -- DC2-142: no past events/experiences
     AND 1 - (c.embedding <=> query_embedding) > match_threshold
   ORDER BY c.embedding <=> query_embedding

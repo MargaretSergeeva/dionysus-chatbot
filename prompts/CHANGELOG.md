@@ -64,6 +64,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 15 Links** = CORE 15 + 16 merged (only links from the knowledge base, exactly as given; most specific page; each URL once); CORE 16 deleted, tests C16 → C15. CORE 16b trimmed to one line.
 - **CORE 17 Answer format, lists & links**: CORE 15 Links merged in (only knowledge-base links, exactly as given; page most specific to the question; each URL once); CORE 15 deleted, tests C15 → C17. BLOCK 07, CORE 19, CORE 23 unchanged (decision 29.09.2026).
 - **CORE 20 Complaints** shortened (~45 words), example with placeholders; refund rule kept in both CORE 10 and 20 (different situations).
+- **CORE 03**: new first line "Never ask for or encourage personal data" (moved from CORE 21); consent background moved to the CR-02 note.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

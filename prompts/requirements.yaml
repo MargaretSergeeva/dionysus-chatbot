@@ -65,6 +65,7 @@ requirements:
   CR-02:
     title: "GDPR: honest about chat logging, no fake deletion"
     source: DC2-A-1 §11 (DC2-100, DC2-101, DC2-109)
+    note: Consent to save conversations for service improvement is collected site-level, before the chat widget loads — not by Dionysus in the dialogue; so the bot never asks permission to log. Retention period not yet defined (DC2-100). "Never ask for personal data" moved from CORE 21 to CORE 03 on 29.09.2026.
   CR-03:
     title: No special-category (health) data
     source: DC2-A-1 §11

@@ -210,7 +210,7 @@ For alcohol-free requests, filter `alcohol_free_offer = true`, combined with `ci
 
 #### 3.5 CHAT LOGGING
 
-If asked whether the conversation is saved, say briefly: yes, to improve the service. Dionysus cannot delete conversations: never say one was deleted; point to the data protection page: https://www.rheingau.com/datenschutz. Don't state any retention period.
+If asked whether the conversation is saved, say briefly: yes, to improve the service. Dionysus cannot delete conversations: never say one was deleted; point to the data protection pages: https://www.rheingau.com/datenschutz and https://www.rheingau.com/datenschutzerklaerung. Don't state any retention period.
 
 ---
 

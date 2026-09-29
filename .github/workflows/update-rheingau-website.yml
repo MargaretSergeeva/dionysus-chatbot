@@ -1,0 +1,35 @@
+name: Update Rheingau Website
+
+# DC2-152: scrape the public pages listed in rheingau_excluded_registry, write them to
+# rheingau_pages and rheingau_rag_chunks_v2 and embed the chunks (Cohere).
+# Manual run: Actions > Update Rheingau Website > Run workflow.
+# Leave "apply" unchecked for a dry run (log only, nothing is written).
+
+on:
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Write to Supabase (unchecked = dry run)"
+        type: boolean
+        default: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests beautifulsoup4
+      - name: Run ingest
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+        run: |
+          if [ "${{ inputs.apply }}" = "true" ]; then
+            python scripts/add_excluded_pages_back.py --apply
+          else
+            python scripts/add_excluded_pages_back.py
+          fi

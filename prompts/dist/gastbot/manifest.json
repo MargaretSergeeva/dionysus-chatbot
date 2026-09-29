@@ -125,13 +125,7 @@
     {
       "id": "core-16b-link-format",
       "status": "supported",
-      "reason": "platform-covered (conflict): Gastbot Links Manager formats links (DC2-A-114)",
-      "deps": []
-    },
-    {
-      "id": "core-18-response-format-baseline",
-      "status": "supported",
-      "reason": "platform-covered (duplicate): Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)",
+      "reason": "platform-covered (conflict): Gastbot formats answers in Markdown and its Links Manager formats links (DC2-A-114)",
       "deps": []
     },
     {

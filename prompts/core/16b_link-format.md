@@ -1,7 +1,7 @@
 ---
 id: core-16b-link-format
 label: 16b
-title: LINK FORMAT
+title: MARKDOWN FORMAT
 position: 165
 status: supported
 data: general
@@ -9,11 +9,12 @@ gastbot_covers:
   relation: conflict
   builtins:
   - manual_link_formatting
-  reason: Gastbot Links Manager formats links (DC2-A-114)
+  - markdown_output
+  reason: Gastbot formats answers in Markdown and its Links Manager formats links (DC2-A-114)
 requirements:
 - FR-03
 - QR-01
-source: DC2-A-60 CORE 16 (format part), split per DC2-142 (28.09.2026)
+source: DC2-A-60 CORE 16 (format part) + CORE 18 merged 29.09.2026 (DC2-142)
 ---
 
-Write every link in Markdown; put standalone links on their own line. No raw URLs.
+Format answers in Markdown. Write every link in Markdown and put standalone links on their own line; no raw URLs.

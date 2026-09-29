@@ -1,4 +1,4 @@
-# Gastbot settings for prompt-v1.0 / v1.1
+# Gastbot settings (prompt-v.1_Gastbot)
 
 Configuration that belongs in Gastbot, not in the prompt text. Source: Gastbot docs in YouTrack (DC2-A-112 custom system prompt, DC2-A-113 knowledge sections/RAG, DC2-A-114 Links Manager, DC2-A-136 model recommendations, DC2-A-137 intents/routing — the last two added 28.09.2026).
 Status of every item: **DOCUMENTED BUT UNVERIFIED** — nobody on the team has confirmed it on the live bot yet (DC2-89, DC2-90).
@@ -40,7 +40,8 @@ The platform recommends a short, high-level prompt: role, sources, key limits, s
 ## Knowledge
 
 - V.1 scope: rheingau.com content only. How the site is loaded into Gastbot (URL import, text sections, PDF) is **UNKNOWN** — to confirm on the platform.
-- No wine catalog, no SQL tools in Gastbot V.1.
+- **Wine catalog (from Gastbot V.1, 30.09.2026):** Gastbot reads the wines from the public wine page https://margaretsergeeva.github.io/dionysus-chatbot/wines/ (all rows of `wines_enriched`, built by the workflow *Publish wine page*). The page keeps the `wines_enriched` column names and includes the dryness and body labels; module 2.4 WINES relies on them. Re-run the workflow (Actions → Publish wine page → Run workflow) and let Gastbot re-crawl whenever the wine data changes.
+- **No SQL tools in Gastbot V.1:** wines are found through RAG only. Single-wine questions work; exact filters and counts ("all dry Rieslings with gold 2022", "how many …") can be incomplete — exact filters would need the Tools intent (V.2).
 - Knowledge quality matters more than the prompt (DC2-A-136): one topic per section, short explicit facts, critical facts in text sections (not only PDF). Option: export the curated `rheingau_pages` (one page = one section) from Supabase into Gastbot, so both bots use the same cleaned data.
 
 ## Verify on the live bot (turn each into a test case)

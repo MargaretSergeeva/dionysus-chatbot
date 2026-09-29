@@ -1,17 +1,12 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 18503,
+  "chars": 18161,
   "included": [
     {
       "id": "core-00-preamble",
       "status": "supported",
       "source": "DC2-A-60 preamble"
-    },
-    {
-      "id": "core-01-core-priorities-principles",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 01"
     },
     {
       "id": "core-02-role-persona-tone",

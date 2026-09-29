@@ -73,6 +73,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 16b renamed 17b** (Markdown format, full build only) and placed right after CORE 17 — it stays a separate module because Gastbot formats answers and links itself (decision 29.09.2026).
 - **CORE 14 Recommendations** now includes CORE 09 ("best/cheapest": no single winner, compare on documented facts, scores only as the data states them); CORE 09 deleted, tests C09 → C14.
 - **CORE 14 Recommendations moved** to directly after CORE 07 Entities (position only; label unchanged).
+- **Core** deleted CORE 01 Priorities; dropped "Never ask permission to save the chat" from CORE 21 (covered by CR-02 / CR-06 notes)
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

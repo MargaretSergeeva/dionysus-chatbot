@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 20004,
+  "chars": 19781,
   "included": [
     {
       "id": "core-00-preamble",
@@ -69,11 +69,6 @@
       "source": "DC2-A-60 CORE 14 + BLOCKS 08 + DC2-A-146 (recommendation function) + DC2-A-120 (large result sets), merged 28.09.2026"
     },
     {
-      "id": "core-15-link-selection-decision-logic",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 15 + CORE 16 merged 29.09.2026 (DC2-142)"
-    },
-    {
       "id": "core-16b-link-format",
       "status": "supported",
       "source": "DC2-A-60 CORE 16 (format part), split per DC2-142 (28.09.2026)"
@@ -81,7 +76,7 @@
     {
       "id": "core-17-lists-response-format",
       "status": "supported",
-      "source": "DC2-A-60 CORE 17"
+      "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
     },
     {
       "id": "core-18-response-format-baseline",

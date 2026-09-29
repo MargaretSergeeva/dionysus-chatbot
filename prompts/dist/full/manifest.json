@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 18055,
+  "chars": 18083,
   "included": [
     {
       "id": "core-00-preamble",
@@ -24,11 +24,6 @@
       "source": "EU AI Act Art. 50 transparency (DC2-A-106, DC2-98); decision 28.09.2026 — separate module, merged into the first-turn greeting for now"
     },
     {
-      "id": "core-03-pii-handling-guardrail",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 03"
-    },
-    {
       "id": "core-04-language",
       "status": "supported",
       "source": "DC2-A-60 CORE 04"
@@ -44,51 +39,6 @@
       "source": "DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and \"no new entities\" dropped (search + CORE 05 cover them)"
     },
     {
-      "id": "core-14-general-questions",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-10-dates-time",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-12-follow-up-questions-context-continuity",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-17-lists-response-format",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-17b-markdown-format",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 16 (format part) + CORE 18 merged 29.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-19-missing-information-proactive-suggestion",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07"
-    },
-    {
-      "id": "core-20-complaints-negative-experiences",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 20"
-    },
-    {
-      "id": "core-21-logging-transparency-deletion",
-      "status": "partially",
-      "source": "DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06"
-    },
-    {
-      "id": "core-22-special-category-data-health-avoidance",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 22, shortened 29.09.2026 (DC2-142): rationale in the CR-03 note"
-    },
-    {
       "id": "block-00-retrieval-sql-and-search",
       "status": "supported",
       "source": "DC2-A-96 routing (DC2-131, DC2-132); decision 28.09.2026 (DC2-142) — risk note in DC2-A-75"
@@ -97,26 +47,6 @@
       "id": "block-01-wines",
       "status": "supported",
       "source": "merged 28.09.2026 (DC2-142) from BLOCK 01 (description), 01b (wine data fields) and 09 (wine finder, DC2-A-69); food pairing removed (no data, no requirement)"
-    },
-    {
-      "id": "block-03-alcohol-free-driver-friendly-safety-over",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 03; reworked 28.09.2026 (DC2-142): website pages only, \"Alkoholfreier Wein\" first"
-    },
-    {
-      "id": "block-03b-alcohol-free-filter",
-      "status": "supported",
-      "source": "DC2-142 (28.09.2026)"
-    },
-    {
-      "id": "block-06-historical-cultural-storytelling",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)"
-    },
-    {
-      "id": "block-06b-historical-anchors",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 06 (anchor part), split per DC2-142 (28.09.2026)"
     },
     {
       "id": "block-07-transportation",
@@ -137,6 +67,76 @@
       "id": "block-11-regional-projects-non-public-pages",
       "status": "supported",
       "source": "DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 (partner/press/newsletter/jobs) dropped 29.09.2026: those pages come back into the data and are covered by CORE 05 / 17 (FR-13)"
+    },
+    {
+      "id": "block-06b-historical-anchors",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 06 (anchor part), split per DC2-142 (28.09.2026)"
+    },
+    {
+      "id": "core-19-missing-information-proactive-suggestion",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07"
+    },
+    {
+      "id": "core-03-pii-handling-guardrail",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 03"
+    },
+    {
+      "id": "core-22-special-category-data-health-avoidance",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 22, shortened 29.09.2026 (DC2-142): rationale in the CR-03 note"
+    },
+    {
+      "id": "block-03-alcohol-free-driver-friendly-safety-over",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 03; reworked 28.09.2026 (DC2-142): website pages only, \"Alkoholfreier Wein\" first"
+    },
+    {
+      "id": "block-03b-alcohol-free-filter",
+      "status": "supported",
+      "source": "DC2-142 (28.09.2026)"
+    },
+    {
+      "id": "core-21-logging-transparency-deletion",
+      "status": "partially",
+      "source": "DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06"
+    },
+    {
+      "id": "core-10-dates-time",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142)"
+    },
+    {
+      "id": "core-14-general-questions",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
+    },
+    {
+      "id": "core-12-follow-up-questions-context-continuity",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
+    },
+    {
+      "id": "block-06-historical-cultural-storytelling",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)"
+    },
+    {
+      "id": "core-20-complaints-negative-experiences",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 20"
+    },
+    {
+      "id": "core-17-lists-response-format",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
+    },
+    {
+      "id": "core-17b-markdown-format",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 16 (format part) + CORE 18 merged 29.09.2026 (DC2-142)"
     },
     {
       "id": "core-23-final-response-check",

@@ -12,10 +12,10 @@ Commands
   verify                         fail if the committed prompts/dist differs from a fresh build
   report                         write prompts/dist/status_report.md
 
-Module file = prompts/{core,blocks,adapters/*}/NN_slug.md with YAML front matter:
+Module file = prompts/modules/<section>/<label>_slug.md (or prompts/adapters/<build>/) with YAML front matter:
   ---
-  id: core-04-language
-  label: '04'            # heading label: '04' (core) or 'BLOCK 03' (block); null = no heading
+  id: core-04-language   # stable identifier, never renumbered
+  label: '1.4'           # section.module, e.g. '2.4'; the section name comes from prompts/sections.yaml; null = no heading
   title: LANGUAGE
   position: 40           # global order in the assembled prompt
   status: supported      # supported | partially | blocked | unknown | draft
@@ -47,7 +47,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 PROMPTS = ROOT / "prompts"
-MODULE_DIRS = ("core", "blocks", "adapters/gastbot", "adapters/dify")
+MODULE_GLOBS = ("modules/*", "adapters/gastbot", "adapters/dify")
 TARGETS = ("full", "gastbot")
 STATUSES = {"supported", "partially", "blocked", "unknown", "draft"}
 REF_RE = re.compile(r"(Block )?§(\d{2}[a-z]?)")  # §10, §10c, Block §06b
@@ -81,7 +81,8 @@ class Module:
         text = self.body.strip()
         if self.label is None:
             return text
-        return f"#### {self.label}. {self.title}\n\n{text}"
+        sep = " " if "." in self.label else ". "
+        return f"#### {self.label}{sep}{self.title}\n\n{text}"
 
 
 def load_yaml(path: Path) -> dict:
@@ -182,7 +183,7 @@ def lint_data(modules: list[Module], registry: dict) -> list[str]:
 
 
 def load_modules() -> list[Module]:
-    modules = [parse_module(path=p) for d in MODULE_DIRS for p in sorted((PROMPTS / d).glob("*.md"))]
+    modules = [parse_module(path=p) for g in MODULE_GLOBS for d in sorted(PROMPTS.glob(g)) for p in sorted(d.glob("*.md"))]
     if not modules:
         raise AssemblyError(f"no modules under {PROMPTS}")
     ids = [m.id for m in modules]
@@ -260,7 +261,16 @@ def run_check(gate: dict, baseline: dict) -> list[Module]:
 
 def render_build(modules: list[Module], target: str, gate: dict, version: str) -> tuple[str, dict]:
     included = select(modules=modules, target=target, gate=gate)
-    prompt = "\n\n---\n\n".join(m.render(target=target) for m in included) + "\n"
+    sections = load_yaml(path=PROMPTS / "sections.yaml")["sections"]
+    parts, seen = [], set()
+    for m in included:
+        text = m.render(target=target)
+        number = int(m.label.split(".")[0]) if m.label else None
+        if number in sections and number not in seen:
+            seen.add(number)
+            text = f"### {number}. {sections[number]}\n\n{text}"
+        parts.append(text)
+    prompt = "\n\n---\n\n".join(parts) + "\n"
     manifest = {
         "target": target,
         "version": version,
@@ -294,7 +304,7 @@ def render_report(modules: list[Module], gate: dict, version: str) -> str:
              "| Pos | Supabase fields | Module | Status | Requirements | Data | Source | Deps | full | gastbot |",
              "|---|---|---|---|---|---|---|---|---|---|"]
     for m in modules:
-        name = f"{m.label}. {m.title}" if m.label else m.id
+        name = f"{m.label} {m.title}" if m.label else m.id
         marks = ["✅" if m.id in included[t] else ("⛔ " + m.excluded[t] if t in m.excluded else "—") for t in TARGETS]
         data = ", ".join(f"`{d}`" for d in m.data) or "general"
         by_table: dict[str, list[str]] = {}

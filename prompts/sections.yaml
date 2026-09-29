@@ -1,0 +1,10 @@
+# Prompt sections (DC2-142). The first number of a module label is its section: label '2.4' = section 2, module 4.
+# Sections follow the structure Gastbot recommends for system prompts (DC2-A-136): role → sources → key rules →
+# behavior → style, plus a final check. A section heading is written into a build before its first module;
+# label '6' (final check) has no section heading.
+sections:
+  1: ROLE
+  2: SOURCES & DATA
+  3: KEY RULES
+  4: BEHAVIOR
+  5: STYLE & FORMAT

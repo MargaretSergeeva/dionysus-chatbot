@@ -18,7 +18,7 @@ The main prompt is one set of modules (`core/`, `blocks/`, `adapters/`). The scr
 - **Data not available** — `prompts/data_sources.yaml` lists which build reaches which data. Gastbot has rheingau.com through its own RAG, but no Supabase tables yet. When a table reaches Gastbot (e.g. the wine catalog is uploaded to the platform), move `gastbot` from `planned` to `builds` — the modules follow, no text changes.
 - **Platform-covered** — `gastbot_covers.relation: conflict` (Gastbot does it differently: answer language, link format, greeting) → never in Gastbot. `relation: duplicate` (Gastbot does the same) → also never in Gastbot: leaving it out is how the live test shows whether Gastbot really provides it. If the test fails, remove `gastbot_covers` and the module goes back in (decision 28.09.2026).
 
-**No build-specific text inside a module.** If only part of a module is covered by Gastbot, split the module (e.g. CORE 16 → 16 URL integrity + 16b link format). The script rejects `only:` markers.
+**No build-specific text inside a module.** If only part of a module is covered by Gastbot, split the module (e.g. answer format and link rules 5.1 + Markdown format 5.2). The script rejects `only:` markers.
 
 ## Layout
 
@@ -28,8 +28,15 @@ prompts/
   gate.yaml                   which statuses merge; which build is linted how
   requirements.yaml           requirement IDs (BR/FR/CR/QR) — machine-readable list behind DC2-A-84
   data_sources.yaml           data registry: Supabase tables/functions + platform data, and which build reaches them
-  core/                       CORE 01–23 — platform-independent behavior (§23 is always last)
-  blocks/                     BLOCK 01–11 — domain and data-dependent rules
+  sections.yaml               section names (label '2.4' = section 2, module 4)
+  modules/
+    0-preamble/               unlabeled start of the prompt
+    1-role/                   1.x role, greeting, AI disclosure, language
+    2-sources/                2.x sources & data: grounding, entities, retrieval, wines, transport, amenities, regional projects, anchors, missing information
+    3-key-rules/              3.x PII, health, alcohol-free (safety + filter), chat logging, dates/prices/booking
+    4-behavior/               4.x recommendations, follow-ups, storytelling, complaints
+    5-style-format/           5.x answer format, Markdown
+    6-final-check/            6 final response check (always last)
   adapters/gastbot/           Gastbot-only text (platform variables)
   adapters/dify/              full-build equivalents of Gastbot-only text
   platform/gastbot_baseline.yaml   Gastbot built-ins + conflict patterns
@@ -44,7 +51,7 @@ prompts/
 
 ```yaml
 id: core-04-language           # unique
-label: '04'                    # heading label: '04' (core), 'BLOCK 03' (block), '02a' (adapter)
+label: '1.4'                   # section.module, e.g. '2.4'; the section name comes from sections.yaml
 title: LANGUAGE
 position: 40                   # order in the assembled prompt
 status: supported              # supported | partially | blocked | unknown | draft
@@ -55,7 +62,7 @@ gastbot_covers:                # only if Gastbot already does this
   relation: conflict           # conflict | duplicate
   builtins: [response_language]  # keys from platform/gastbot_baseline.yaml the text repeats
   reason: Reply Translation (DC2-A-112)
-source: DC2-A-60 CORE 04       # where the text comes from
+source: DC2-A-60 CORE 04       # where the text comes from (historical article numbers)
 deps: []                       # YouTrack issues the data depends on
 ```
 

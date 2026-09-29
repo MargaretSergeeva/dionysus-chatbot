@@ -2,9 +2,8 @@
 """Check that every prompt module in a build has at least one test (DC2-A-132, DC2-140).
 
 Test sets live in evaluation/<target>_*_questions.csv. The `modules` column lists module codes
-separated by ';':  C04 = core '04', B03 = 'BLOCK 03', A02a = adapter '02a',
+separated by ';':  the module label ('1.4', '3.3', '6'), or
 PLATFORM:<builtin> = a Gastbot built-in from prompts/platform/gastbot_baseline.yaml.
-Codes come from the module id: core-* → C<label>, block-* → B<label>, adapter → A<label> (e.g. C10b, B01, A02a).
 
 Fails when a module of the build has no test, or when a test names an unknown code.
 
@@ -23,11 +22,7 @@ PLATFORM_CODES = {"reply_translation", "do_not_translate", "links_manager", "cur
 
 
 def module_code(module) -> str:
-    if module.id.startswith("core-"):
-        return "C" + module.label
-    if module.id.startswith("block-"):
-        return "B" + module.label.removeprefix("BLOCK ")
-    return "A" + module.label
+    return module.label
 
 
 def main() -> int:
@@ -64,7 +59,7 @@ def main() -> int:
         print("\n".join(errors), file=sys.stderr)
         return 1
     print(f"{args.target}: {len(rows)} tests cover all {len(build_codes)} modules")
-    for code, n in sorted(counts.items()):
+    for code, n in sorted(counts.items(), key=lambda kv: [int(x) if x.isdigit() else 0 for x in kv[0].split('.')]):
         print(f"  {code:5} {n:3}  {build_codes[code].title}")
     return 0
 

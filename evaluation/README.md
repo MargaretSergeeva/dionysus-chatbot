@@ -16,7 +16,7 @@ Facts in `expected_behavior` / `must_include` were checked against the Supabase 
 | `context` | earlier turns for multi-turn tests (`User: … \| Assistant: …`); empty = first message |
 | `question` | message to send |
 | `test_type` | what the test stresses |
-| `modules` | prompt modules under test: `C04` = CORE 04, `B03` = BLOCK 03, `A02a` = adapter 02a, `PLATFORM:<builtin>` = Gastbot built-in |
+| `modules` | prompt modules under test: module labels such as `1.4` (Language) or `3.3` (Alcohol-free safety), `PLATFORM:<builtin>` = Gastbot built-in |
 | `expected_behavior` | pass criterion for a human or LLM judge |
 | `must_include` / `must_not_include` | `;`-separated keywords for an automatic check (case-insensitive substring) |
 | `source_url` | page the answer should come from (when one page is expected) |
@@ -24,10 +24,10 @@ Facts in `expected_behavior` / `must_include` were checked against the Supabase 
 
 ### Rules the expected answers follow (prompt-v1.0)
 
-- **No dates or times for events** (CORE 10) — the team set expected dates; v1.0 answers give the event page instead.
-- **No confirmed prices** (BLOCK 04) — even when a price is on the page.
+- **No dates or times for events** (module 3.6) — the team set expected dates; v1.0 answers give the event page instead.
+- **No confirmed prices** (module 3.6) — even when a price is on the page.
 - **No live status** (availability, today's menu, traffic, weather).
-- **No invented details** — undocumented facts are named as undocumented, with the next step (CORE 19).
+- **No invented details** — undocumented facts are named as undocumented, with the next step (module 2.10).
 
 ## Module coverage
 

@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 9745,
+  "chars": 9819,
   "included": [
     {
       "id": "core-00-preamble",
@@ -24,11 +24,6 @@
       "source": "EU AI Act Art. 50 transparency (DC2-A-106, DC2-98); decision 28.09.2026 — separate module, merged into the first-turn greeting for now"
     },
     {
-      "id": "core-03-pii-handling-guardrail",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 03"
-    },
-    {
       "id": "core-05-source-grounding-source-priority",
       "status": "supported",
       "source": "DC2-A-60 CORE 05 + CORE 06 merged 28.09.2026 (DC2-142): one grounding rule; repetitions removed from other modules"
@@ -39,24 +34,9 @@
       "source": "DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and \"no new entities\" dropped (search + CORE 05 cover them)"
     },
     {
-      "id": "core-14-general-questions",
+      "id": "block-07-transportation",
       "status": "supported",
-      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-10-dates-time",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-12-follow-up-questions-context-continuity",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-17-lists-response-format",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
+      "source": "DC2-A-60 BLOCKS 07"
     },
     {
       "id": "core-19-missing-information-proactive-suggestion",
@@ -64,14 +44,9 @@
       "source": "DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07"
     },
     {
-      "id": "core-20-complaints-negative-experiences",
+      "id": "core-03-pii-handling-guardrail",
       "status": "supported",
-      "source": "DC2-A-60 CORE 20"
-    },
-    {
-      "id": "core-21-logging-transparency-deletion",
-      "status": "partially",
-      "source": "DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06"
+      "source": "DC2-A-60 CORE 03"
     },
     {
       "id": "core-22-special-category-data-health-avoidance",
@@ -84,14 +59,39 @@
       "source": "DC2-A-60 BLOCKS 03; reworked 28.09.2026 (DC2-142): website pages only, \"Alkoholfreier Wein\" first"
     },
     {
+      "id": "core-21-logging-transparency-deletion",
+      "status": "partially",
+      "source": "DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06"
+    },
+    {
+      "id": "core-10-dates-time",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142)"
+    },
+    {
+      "id": "core-14-general-questions",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
+    },
+    {
+      "id": "core-12-follow-up-questions-context-continuity",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
+    },
+    {
       "id": "block-06-historical-cultural-storytelling",
       "status": "supported",
       "source": "DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)"
     },
     {
-      "id": "block-07-transportation",
+      "id": "core-20-complaints-negative-experiences",
       "status": "supported",
-      "source": "DC2-A-60 BLOCKS 07"
+      "source": "DC2-A-60 CORE 20"
+    },
+    {
+      "id": "core-17-lists-response-format",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
     },
     {
       "id": "core-23-final-response-check",
@@ -113,12 +113,6 @@
       "deps": []
     },
     {
-      "id": "core-17b-markdown-format",
-      "status": "supported",
-      "reason": "platform-covered (conflict): Gastbot formats answers in Markdown and its Links Manager formats links (DC2-A-114)",
-      "deps": []
-    },
-    {
       "id": "block-00-retrieval-sql-and-search",
       "status": "supported",
       "reason": "data not available: filter_rheingau_pages, wines_enriched",
@@ -137,22 +131,6 @@
         "DC2-142",
         "DC2-143",
         "DC2-144"
-      ]
-    },
-    {
-      "id": "block-03b-alcohol-free-filter",
-      "status": "supported",
-      "reason": "data not available: filter_rheingau_pages",
-      "deps": [
-        "DC2-142"
-      ]
-    },
-    {
-      "id": "block-06b-historical-anchors",
-      "status": "supported",
-      "reason": "data not available: historical_anchors",
-      "deps": [
-        "DC2-142"
       ]
     },
     {
@@ -182,6 +160,28 @@
         "DC2-133",
         "DC2-134"
       ]
+    },
+    {
+      "id": "block-06b-historical-anchors",
+      "status": "supported",
+      "reason": "data not available: historical_anchors",
+      "deps": [
+        "DC2-142"
+      ]
+    },
+    {
+      "id": "block-03b-alcohol-free-filter",
+      "status": "supported",
+      "reason": "data not available: filter_rheingau_pages",
+      "deps": [
+        "DC2-142"
+      ]
+    },
+    {
+      "id": "core-17b-markdown-format",
+      "status": "supported",
+      "reason": "platform-covered (conflict): Gastbot formats answers in Markdown and its Links Manager formats links (DC2-A-114)",
+      "deps": []
     }
   ]
 }

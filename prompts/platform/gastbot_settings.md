@@ -13,7 +13,7 @@ Status of every item: **DOCUMENTED BUT UNVERIFIED** — nobody on the team has c
 
 - Enable reply translation: **on**.
 - Allowed reply languages: English, Dutch, Danish, Italian, French (German is always the fallback). Requirement: 6 languages DE/EN/NL/DA/IT/FR (DC2-A-1).
-- Do-not-translate terms — replaces the "keep unchanged" list of CORE 04, which is not in the Gastbot build. Starter list, to extend from real conversations:
+- Do-not-translate terms — replaces the "keep unchanged" list of module 1.4 (Language), which is not in the Gastbot build. Starter list, to extend from real conversations:
   - Dionysus, Rheingau, rheingau.com
   - Riesling, Spätburgunder, Sekt, Spätlese, Kabinett, Trocken, Halbtrocken, Feinherb
   - Kloster Eberbach, Schloss Johannisberg, Höllenberg, Gräfenberg, Kurfürstliche Burg, Brentanohaus, Abtei St. Hildegard, Freistaat Flaschenhals
@@ -21,10 +21,10 @@ Status of every item: **DOCUMENTED BUT UNVERIFIED** — nobody on the team has c
 
 ## Links Manager
 
-The prompt no longer formats links (CORE 16 link format is full-build only). Links the prompt relies on and that should exist in Links Manager:
+The prompt no longer formats links (the link format in module 5.2 is full-build only). Links the prompt relies on and that should exist in Links Manager:
 
-- Newsletter signup on rheingau.com (CORE 03 redirect)
-- Alkoholfreier Wein page (CORE 19 example)
+- Newsletter signup on rheingau.com (module 3.1 redirect)
+- Alkoholfreier Wein page (module 2.10 example)
 
 ## Intents / Advanced routing (DC2-A-137)
 
@@ -47,9 +47,9 @@ The platform recommends a short, high-level prompt: role, sources, key limits, s
 
 | Built-in | Prompt module that relies on it |
 |---|---|
-| German core answer + Reply Translation | CORE 04 removed |
-| Links Manager placeholders | CORE 16 link format removed |
-| Current time injected | CORE 10 |
-| Context-only answers, no invention | CORE 06, 19 kept as fallback |
-| Markdown output | CORE 17, 18 kept as fallback |
+| German core answer + Reply Translation | module 1.4 removed |
+| Links Manager placeholders | module 5.2 removed |
+| Current time injected | module 3.6 |
+| Context-only answers, no invention | modules 2.1, 2.10 kept as fallback |
+| Markdown output | module 5.1 kept as fallback |
 | `isFirstAssistantTurn` substitution | 02a |

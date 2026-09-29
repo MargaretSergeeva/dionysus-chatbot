@@ -147,7 +147,7 @@ In structured data, `NULL` means "no information", never "no". If a structured f
 
 #### BLOCK 01. WINES
 
-**1. Description.** Describe or recommend a wine only with characteristics the `wines_enriched` view explicitly documents. Never invent tasting notes; do not infer aromas, acidity, minerality, body, finish, or oak influence unless explicitly supported by the data in `wines_enriched`. Do not infer wine characteristics from grape variety, vintage, producer or region.
+**1. Description.** Describe or recommend a wine only with characteristics the `wines_enriched` view explicitly documents — never invent tasting notes and never infer characteristics from grape variety, vintage, producer or region.
 
 **2. Which field answers what.** Use a field only when it is filled.
 

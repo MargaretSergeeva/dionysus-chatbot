@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-DC2-152: load public pages that are only in rheingau_excluded_registry
-(legal, partner, press, newsletter, jobs) into the search data:
+DC2-152: add the pages we had taken out (privacy, imprint, partner, press, newsletter, jobs)
+back to the search data. They are listed in rheingau_excluded_registry; this scrapes them and writes
 rheingau_pages -> rheingau_rag_chunks_v2 (with Cohere embeddings).
 
 Run on a machine that can reach rheingau.com (the cloud workspace cannot).
@@ -11,9 +11,9 @@ Run on a machine that can reach rheingau.com (the cloud workspace cannot).
   export COHERE_API_KEY=...
   pip install requests beautifulsoup4
 
-  python scripts/ingest_registry_pages.py                 # dry run: fetch, show pages + chunks
-  python scripts/ingest_registry_pages.py --apply         # write pages, chunks, embeddings
-  python scripts/ingest_registry_pages.py --text-dir txt  # use txt/<page_id>.txt instead of fetching
+  python scripts/add_excluded_pages_back.py                 # dry run: fetch, show pages + chunks
+  python scripts/add_excluded_pages_back.py --apply         # write pages, chunks, embeddings
+  python scripts/add_excluded_pages_back.py --text-dir txt  # use txt/<page_id>.txt instead of fetching
                                                           # (paste the page text if a page can't be scraped)
 
 Format matches the existing rows:

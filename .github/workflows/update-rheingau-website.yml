@@ -1,8 +1,8 @@
-name: Ingest registry pages
+name: Update Rheingau Website
 
 # DC2-152: scrape the public pages listed in rheingau_excluded_registry, write them to
 # rheingau_pages and rheingau_rag_chunks_v2 and embed the chunks (Cohere).
-# Manual run: Actions > Ingest registry pages > Run workflow.
+# Manual run: Actions > Update Rheingau Website > Run workflow.
 # Leave "apply" unchecked for a dry run (log only, nothing is written).
 
 on:
@@ -29,7 +29,7 @@ jobs:
           COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
         run: |
           if [ "${{ inputs.apply }}" = "true" ]; then
-            python scripts/ingest_registry_pages.py --apply
+            python scripts/add_excluded_pages_back.py --apply
           else
-            python scripts/ingest_registry_pages.py
+            python scripts/add_excluded_pages_back.py
           fi

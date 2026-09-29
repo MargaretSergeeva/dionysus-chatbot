@@ -1,7 +1,7 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 9969,
+  "chars": 9963,
   "included": [
     {
       "id": "core-00-preamble",
@@ -17,7 +17,6 @@
       "id": "gastbot-02a-first-turn-greeting",
       "status": "supported",
       "issues": [
-        "DC2-A-84",
         "DC2-A-112"
       ]
     },
@@ -121,9 +120,7 @@
       "id": "dify-02a-first-turn-greeting",
       "status": "supported",
       "reason": "platform-covered (conflict): Gastbot uses its own greeting variable isFirstAssistantTurn (adapter gastbot-02a)",
-      "issues": [
-        "DC2-A-84"
-      ]
+      "issues": []
     },
     {
       "id": "core-04-language",
@@ -137,9 +134,7 @@
       "reason": "data not available: rheingau_pages, wines_enriched",
       "issues": [
         "DC2-131",
-        "DC2-132",
-        "DC2-A-75",
-        "DC2-A-96"
+        "DC2-132"
       ]
     },
     {
@@ -158,8 +153,7 @@
       "status": "supported",
       "reason": "data not available: rheingau_pages",
       "issues": [
-        "DC2-150",
-        "DC2-A-96"
+        "DC2-150"
       ]
     },
     {
@@ -169,7 +163,6 @@
       "issues": [
         "DC2-131",
         "DC2-151",
-        "DC2-A-96",
         "DC2-A-126"
       ]
     },
@@ -179,8 +172,6 @@
       "reason": "data not available: rheingau_pages",
       "issues": [
         "DC2-133",
-        "DC2-134",
-        "DC2-A-96",
         "DC2-A-130"
       ]
     },
@@ -188,9 +179,7 @@
       "id": "block-03b-alcohol-free-filter",
       "status": "supported",
       "reason": "data not available: rheingau_pages",
-      "issues": [
-        "DC2-A-96"
-      ]
+      "issues": []
     },
     {
       "id": "block-06b-historical-anchors",

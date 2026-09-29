@@ -27,12 +27,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install requests
+      - run: pip install requests reportlab
       - name: Build wine page
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-        run: python scripts/build_wine_page.py
+        run: |
+          python scripts/build_wine_page.py
+          python scripts/build_wine_pdfs.py   # PDFs for Gastbot Files (site/wines/pdf/)
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

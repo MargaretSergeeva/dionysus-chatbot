@@ -9,6 +9,7 @@ logic for when the bot/Dify workflow should call which one: **DC2-A-96**.
 | `match_rheingau_chunks` | pure semantic (RAG) | DC2-119 | Open-ended / descriptive questions |
 | `filter_rheingau_pages` | pure structured filter | DC2-131, DC2-132 | List/filter questions over amenity flags, category & city — needs a complete, exact result set |
 | `match_rheingau_chunks_filtered` | hybrid (filter + semantic) | DC2-131, DC2-132 | Combined questions ("a nice pet-friendly hotel in Rüdesheim") |
+| `filter_public_registry_pages` | registry list | DC2-152 | Title + link of pages outside the search data: legal (Impressum, Datenschutz), partner, press, newsletter, jobs |
 
 All three are called from Dify as RPC/HTTP tools against the Supabase
 PostgREST endpoint (`/rest/v1/rpc/<function_name>`), not embedded as

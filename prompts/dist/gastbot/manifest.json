@@ -44,6 +44,11 @@
       "source": "DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and \"no new entities\" dropped (search + CORE 05 cover them)"
     },
     {
+      "id": "core-14-general-questions",
+      "status": "supported",
+      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
+    },
+    {
       "id": "core-10-dates-time",
       "status": "supported",
       "source": "DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142)"
@@ -52,11 +57,6 @@
       "id": "core-12-follow-up-questions-context-continuity",
       "status": "supported",
       "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
-    },
-    {
-      "id": "core-14-general-questions",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
     },
     {
       "id": "core-17-lists-response-format",

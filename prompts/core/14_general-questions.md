@@ -2,7 +2,7 @@
 id: core-14-general-questions
 label: '14'
 title: RECOMMENDATIONS
-position: 140
+position: 75
 status: supported
 data: general
 requirements:

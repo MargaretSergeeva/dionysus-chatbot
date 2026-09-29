@@ -5,7 +5,7 @@ Build a static, plain-HTML wine page from the Supabase view wines_enriched, so a
 
   export SUPABASE_URL=https://uywsaicdejkrozllalez.supabase.co
   export SUPABASE_SERVICE_KEY=...          # secret key (sb_secret_...) or legacy service_role key
-  python scripts/build_wine_page.py                    # writes site/wines/index.html
+  python scripts/build_wine_page.py                    # writes site/wines/index.html + site/wines/table/index.html
   python scripts/build_wine_page.py --from-json rows.json   # test without Supabase
 
 One block per wine (a heading + fact lines), because a crawler cuts pages into passages: each wine
@@ -79,6 +79,17 @@ def render(rows):
     return "\n".join(out) + "\n"
 
 
+TABLE_TEMPLATE = Path(__file__).with_name("wine_table_template.html")
+
+
+def render_table(rows):
+    """Page for people: searchable, filterable table (JS). noindex — the crawler page stays /wines/."""
+    data = json.dumps([{c: w.get(c) for c in COLUMNS if c != "quelle_url"} for w in rows if (w.get("weinname") or "").strip()],
+                      ensure_ascii=False).replace("</", "<\\/")
+    return (TABLE_TEMPLATE.read_text(encoding="utf-8").replace("__DATA__", data)
+            .replace("__COUNT__", str(len(rows))).replace("__DATE__", date.today().strftime("%d.%m.%Y")))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--from-json", help="read rows from a JSON file instead of Supabase (test)")
@@ -97,6 +108,10 @@ def main():
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(render(rows), encoding="utf-8")
     print(f"{len(rows)} wines -> {path}")
+    tpath = path.parent / "table" / "index.html"
+    tpath.parent.mkdir(parents=True, exist_ok=True)
+    tpath.write_text(render_table(rows), encoding="utf-8")
+    print(f"{len(rows)} wines -> {tpath}")
 
 
 if __name__ == "__main__":

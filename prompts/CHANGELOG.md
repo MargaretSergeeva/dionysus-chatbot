@@ -80,6 +80,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Core** CORE 14: narrowing limited to two questions, guest sets how far; concrete requests with many matches: show 3-5, say there is a lot, offer to narrow with available filters
 - **Core** CORE 07 Entities rewritten as one paragraph: ambiguity question only for fact/link requests about a specific item; no 'entity' jargon
 - **Blocks** BLOCK 01 point 1 shortened (~60 to ~30 words, same rules)
+- **Blocks** BLOCK 01: point 6 (award year and institution) removed; the award row in the field table already says medal level and points
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

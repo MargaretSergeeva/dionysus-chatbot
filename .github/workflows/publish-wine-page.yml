@@ -1,0 +1,46 @@
+name: Publish wine page
+
+# DC2-155: build a plain HTML page of all wines (view wines_enriched) and publish it with GitHub Pages,
+# so Gastbot's crawler can read the wines until the wine upload works. Public URL after the first run:
+#   https://margaretsergeeva.github.io/dionysus-chatbot/wines/
+# One-time setup: repo Settings > Pages > Source = "GitHub Actions". Secrets: SUPABASE_URL, SUPABASE_SERVICE_KEY.
+# Manual run: Actions > Publish wine page > Run workflow (repeat whenever the wine data changes).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests
+      - name: Build wine page
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: python scripts/build_wine_page.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

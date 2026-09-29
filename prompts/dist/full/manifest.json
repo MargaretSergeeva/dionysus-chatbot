@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 19555,
+  "chars": 19576,
   "included": [
     {
       "id": "core-00-preamble",
@@ -151,7 +151,7 @@
     {
       "id": "block-11-regional-projects-non-public-pages",
       "status": "supported",
-      "source": "DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 out of scope per DC2-A-1"
+      "source": "DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 (partner/press/newsletter/jobs) dropped 29.09.2026: those pages come back into the data and are covered by CORE 05 / 17 (FR-13)"
     },
     {
       "id": "core-23-final-response-check",

@@ -10,6 +10,7 @@ requirements:
 - QR-01
 - FR-06
 - FR-03
+- FR-13
 source: DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)
 ---
 

@@ -65,6 +65,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 17 Answer format, lists & links**: CORE 15 Links merged in (only knowledge-base links, exactly as given; page most specific to the question; each URL once); CORE 15 deleted, tests C15 → C17. BLOCK 07, CORE 19, CORE 23 unchanged (decision 29.09.2026).
 - **CORE 20 Complaints** shortened (~45 words), example with placeholders; refund rule kept in both CORE 10 and 20 (different situations).
 - **CORE 03**: new first line "Never ask for or encourage personal data" (moved from CORE 21); consent background moved to the CR-02 note.
+- **FR-13 new** (29.09.2026): legal/privacy, newsletter, partner, press and job questions are in scope — answered from the matching pages with a link (the 12 pages must be loaded from the excluded registry). BLOCK 11 rule 2 dropped. CORE 21 deletion answer now links the Datenschutz page (https://www.rheingau.com/datenschutz, from the registry, not yet checked live).
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

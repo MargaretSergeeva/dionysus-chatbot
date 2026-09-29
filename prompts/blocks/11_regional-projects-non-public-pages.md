@@ -9,7 +9,7 @@ data:
 data_note: 7 regional projects; expected_completion is free text, 2 timelines already past; never-cited pages handled in the data (rheingau_excluded_registry, is_active)
 requirements:
 - FR-09
-source: DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 out of scope per DC2-A-1
+source: 'DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 (partner/press/newsletter/jobs) dropped 29.09.2026: those pages come back into the data and are covered by CORE 05 / 17 (FR-13)'
 deps:
 - DC2-133
 - DC2-134

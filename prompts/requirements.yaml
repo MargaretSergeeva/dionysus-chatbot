@@ -56,6 +56,10 @@ requirements:
   FR-12:
     title: Time-sensitive facts (dates, prices, availability) help to find but are never confirmed; guest checks the official page
     source: decision 28.09.2026
+  FR-13:
+    title: Questions about privacy, legal information, newsletter, partner service, press and jobs are answered from the matching rheingau.com pages, with a link
+    source: decision 29.09.2026 (replaces the out-of-scope note in DC2-A-1 §6 and BLOCK 11 rule 2)
+    note: The 12 pages (Datenschutz, Datenschutzerklärung, Impressum, Whistleblowing, 4 partner pages, 2 press pages, newsletter, jobs) are still in rheingau_excluded_registry and must be loaded (text, chunks, embeddings) — see the YouTrack task under DC2-142. Until then the deletion answer in CORE 21 carries the Datenschutz link directly.
 
   # ── Compliance ─────────────────────────────────────────────
   CR-01:

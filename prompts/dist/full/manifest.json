@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 18083,
+  "chars": 18082,
   "included": [
     {
       "id": "core-00-preamble",
@@ -69,11 +69,6 @@
       "source": "DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 (partner/press/newsletter/jobs) dropped 29.09.2026: those pages come back into the data and are covered by CORE 05 / 17 (FR-13)"
     },
     {
-      "id": "block-06b-historical-anchors",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 06 (anchor part), split per DC2-142 (28.09.2026)"
-    },
-    {
       "id": "core-19-missing-information-proactive-suggestion",
       "status": "supported",
       "source": "DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07"
@@ -122,6 +117,11 @@
       "id": "block-06-historical-cultural-storytelling",
       "status": "supported",
       "source": "DC2-A-60 BLOCKS 06; anchor list moved to Supabase / BLOCK 06b per DC2-142 (28.09.2026)"
+    },
+    {
+      "id": "block-06b-historical-anchors",
+      "status": "supported",
+      "source": "DC2-A-60 BLOCKS 06 (anchor part), split per DC2-142 (28.09.2026)"
     },
     {
       "id": "core-20-complaints-negative-experiences",

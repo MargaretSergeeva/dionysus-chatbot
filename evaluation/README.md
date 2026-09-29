@@ -27,7 +27,7 @@ Facts in `expected_behavior` / `must_include` were checked against the Supabase 
 - **No dates or times for events** (module 3.6) — the team set expected dates; v1.0 answers give the event page instead.
 - **No confirmed prices** (module 3.6) — even when a price is on the page.
 - **No live status** (availability, today's menu, traffic, weather).
-- **No invented details** — undocumented facts are named as undocumented, with the next step (module 2.10).
+- **No invented details** — undocumented facts are named as undocumented, with the next step (module 2.9).
 
 ## Module coverage
 

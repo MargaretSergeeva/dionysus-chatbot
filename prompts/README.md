@@ -32,9 +32,9 @@ prompts/
   modules/
     0-preamble/               unlabeled start of the prompt
     1-role/                   1.x role, greeting, AI disclosure, language
-    2-sources/                2.x sources & data: grounding, entities, retrieval, wines, transport, amenities, regional projects, anchors, missing information
+    2-sources/                2.x sources & data: grounding, entities, retrieval, wines, transport, amenities, regional projects, missing information
     3-key-rules/              3.x PII, health, alcohol-free (safety + filter), chat logging, dates/prices/booking
-    4-behavior/               4.x recommendations, follow-ups, storytelling, complaints
+    4-behavior/               4.x recommendations, follow-ups, storytelling, historical anchors, complaints
     5-style-format/           5.x answer format, Markdown
     6-final-check/            6 final response check (always last)
   adapters/gastbot/           Gastbot-only text (platform variables)

@@ -24,7 +24,7 @@ Status of every item: **DOCUMENTED BUT UNVERIFIED** — nobody on the team has c
 The prompt no longer formats links (the link format in module 5.2 is full-build only). Links the prompt relies on and that should exist in Links Manager:
 
 - Newsletter signup on rheingau.com (module 3.1 redirect)
-- Alkoholfreier Wein page (module 2.10 example)
+- Alkoholfreier Wein page (module 2.9 example)
 
 ## Intents / Advanced routing (DC2-A-137)
 
@@ -50,6 +50,6 @@ The platform recommends a short, high-level prompt: role, sources, key limits, s
 | German core answer + Reply Translation | module 1.4 removed |
 | Links Manager placeholders | module 5.2 removed |
 | Current time injected | module 3.6 |
-| Context-only answers, no invention | modules 2.1, 2.10 kept as fallback |
+| Context-only answers, no invention | modules 2.1, 2.9 kept as fallback |
 | Markdown output | module 5.1 kept as fallback |
 | `isFirstAssistantTurn` substitution | 02a |

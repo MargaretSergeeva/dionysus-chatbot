@@ -17,14 +17,14 @@ from datetime import date
 from pathlib import Path
 import requests
 
-COLUMNS = ["weinname", "erzeuger", "erzeuger_ort", "rebsorte_normalized", "weinart_normalized", "dryness_de",
-           "body_de", "qualitaetsstufe", "lage_weinberg", "jahrgang", "praemierung", "bewertung", "alkohol_pct",
-           "quelle_url"]
+COLUMNS = ["weinname", "weingut", "ort", "rebsorte", "weinart", "geschmacksrichtung",
+           "körper", "qualitätsstufe", "lage", "jahrgang", "prämierung", "bewertung", "alkohol",
+           "quelle"]
 # label shown on the page  ->  column
-FACTS = [("Weingut", "erzeuger"), ("Ort", "erzeuger_ort"), ("Rebsorte", "rebsorte_normalized"),
-         ("Weinart", "weinart_normalized"), ("Geschmacksrichtung", "dryness_de"), ("Körper", "body_de"),
-         ("Qualitätsstufe", "qualitaetsstufe"), ("Lage", "lage_weinberg"), ("Jahrgang", "jahrgang"),
-         ("Prämierung", "praemierung"), ("Bewertung", "bewertung"), ("Alkohol", "alkohol_pct")]
+FACTS = [("Weingut", "weingut"), ("Ort", "ort"), ("Rebsorte", "rebsorte"),
+         ("Weinart", "weinart"), ("Geschmacksrichtung", "geschmacksrichtung"), ("Körper", "körper"),
+         ("Qualitätsstufe", "qualitätsstufe"), ("Lage", "lage"), ("Jahrgang", "jahrgang"),
+         ("Prämierung", "prämierung"), ("Bewertung", "bewertung"), ("Alkohol", "alkohol")]
 
 
 def fetch(base, key):
@@ -33,7 +33,7 @@ def fetch(base, key):
         headers["Authorization"] = f"Bearer {key}"
     rows, start = [], 0
     while True:
-        r = requests.get(f"{base}/rest/v1/wines_enriched?select={','.join(COLUMNS)}&order=erzeuger,weinname",
+        r = requests.get(f"{base}/rest/v1/wines_enriched?select={','.join(COLUMNS)}&order=weingut,weinname",
                          headers={**headers, "Range": f"{start}-{start + 999}"}, timeout=60)
         r.raise_for_status()
         batch = r.json()
@@ -44,7 +44,7 @@ def fetch(base, key):
 
 
 def fmt(col, v):
-    if col == "alkohol_pct":
+    if col == "alkohol":
         return f"{float(v):g} % vol"
     if isinstance(v, float) and v.is_integer():
         return str(int(v))
@@ -64,15 +64,15 @@ def render(rows):
         name = (w.get("weinname") or "").strip()
         if not name:
             continue
-        maker = (w.get("erzeuger") or "").strip()
+        maker = (w.get("weingut") or "").strip()
         out.append(f"<section><h2>{html.escape(name)}" + (f" – {html.escape(maker)}" if maker else "") + "</h2><ul>")
         for label, col in FACTS:
             v = w.get(col)
             if v is None or str(v).strip() == "":
                 continue
             out.append(f"<li>{label}: {html.escape(fmt(col, v))}</li>")
-        if w.get("quelle_url"):
-            u = html.escape(w["quelle_url"], quote=True)
+        if w.get("quelle"):
+            u = html.escape(w["quelle"], quote=True)
             out.append(f'<li>Quelle: <a href="{u}">{u}</a></li>')
         out.append("</ul></section>")
     out.append("</body></html>")
@@ -84,7 +84,7 @@ TABLE_TEMPLATE = Path(__file__).with_name("wine_table_template.html")
 
 def render_table(rows):
     """Page for people: searchable, filterable table (JS). noindex — the crawler page stays /wines/."""
-    data = json.dumps([{c: w.get(c) for c in COLUMNS if c != "quelle_url"} for w in rows if (w.get("weinname") or "").strip()],
+    data = json.dumps([{c: w.get(c) for c in COLUMNS if c != "quelle"} for w in rows if (w.get("weinname") or "").strip()],
                       ensure_ascii=False).replace("</", "<\\/")
     return (TABLE_TEMPLATE.read_text(encoding="utf-8").replace("__DATA__", data)
             .replace("__COUNT__", str(len(rows))).replace("__DATE__", date.today().strftime("%d.%m.%Y")))

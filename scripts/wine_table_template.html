@@ -48,20 +48,20 @@ td{border:0;padding:3px 14px}td:empty{display:none}td[data-l]::before{content:at
 <main>
 <div class="filters">
 <input id="q" type="search" placeholder="Wein, Weingut, Lage suchen …" aria-label="Suche">
-<select id="f-rebsorte_normalized" aria-label="Rebsorte"></select>
-<select id="f-weinart_normalized" aria-label="Weinart"></select>
-<select id="f-dryness_de" aria-label="Geschmacksrichtung"></select>
-<select id="f-praemierung" aria-label="Prämierung"></select>
+<select id="f-rebsorte" aria-label="Rebsorte"></select>
+<select id="f-weinart" aria-label="Weinart"></select>
+<select id="f-geschmacksrichtung" aria-label="Geschmacksrichtung"></select>
+<select id="f-prämierung" aria-label="Prämierung"></select>
 <select id="f-jahrgang" aria-label="Jahrgang"></select>
-<select id="f-erzeuger_ort" aria-label="Ort"></select>
+<select id="f-ort" aria-label="Ort"></select>
 <button id="reset" type="button">Zurücksetzen</button>
 </div>
 <div class="count" id="count"></div>
 <table>
 <thead><tr>
-<th data-k="weinname">Wein</th><th data-k="rebsorte_normalized">Rebsorte</th><th data-k="weinart_normalized">Weinart</th>
-<th data-k="dryness_de">Geschmack</th><th data-k="qualitaetsstufe">Qualität</th><th data-k="jahrgang">Jahrgang</th>
-<th data-k="praemierung">Prämierung</th><th data-k="bewertung">Punkte</th><th data-k="alkohol_pct">Alkohol</th>
+<th data-k="weinname">Wein</th><th data-k="rebsorte">Rebsorte</th><th data-k="weinart">Weinart</th>
+<th data-k="geschmacksrichtung">Geschmack</th><th data-k="qualitätsstufe">Qualität</th><th data-k="jahrgang">Jahrgang</th>
+<th data-k="prämierung">Prämierung</th><th data-k="bewertung">Punkte</th><th data-k="alkohol">Alkohol</th>
 </tr></thead>
 <tbody id="rows"></tbody>
 </table>
@@ -69,37 +69,37 @@ td{border:0;padding:3px 14px}td:empty{display:none}td[data-l]::before{content:at
 <footer>Quelle: <a href="https://www.die-besten-weine-hessens.de/veranstaltung/weinfinder">Die besten Weine Hessens – Weinfinder</a>. Angaben ohne Gewähr.</footer>
 <script>
 const W=__DATA__;
-const F={rebsorte_normalized:"Alle Rebsorten",weinart_normalized:"Alle Weinarten",dryness_de:"Alle Geschmacksrichtungen",
-praemierung:"Alle Prämierungen",jahrgang:"Alle Jahrgänge",erzeuger_ort:"Alle Orte"};
+const F={rebsorte:"Alle Rebsorten",weinart:"Alle Weinarten",geschmacksrichtung:"Alle Geschmacksrichtungen",
+prämierung:"Alle Prämierungen",jahrgang:"Alle Jahrgänge",ort:"Alle Orte"};
 const AW={GOLD:0,SILBER:1,BRONZE:2};
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 for(const[k,label]of Object.entries(F)){
   const vals=[...new Set(W.map(w=>w[k]).filter(v=>v!=null&&v!==""))];
-  vals.sort(k==="jahrgang"?(a,b)=>b-a:k==="praemierung"?(a,b)=>(AW[a]??9)-(AW[b]??9):(a,b)=>String(a).localeCompare(b,"de"));
+  vals.sort(k==="jahrgang"?(a,b)=>b-a:k==="prämierung"?(a,b)=>(AW[a]??9)-(AW[b]??9):(a,b)=>String(a).localeCompare(b,"de"));
   document.getElementById("f-"+k).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option>${esc(v)}</option>`).join("");
 }
-let sortK="praemierung",dir=1;
+let sortK="prämierung",dir=1;
 const $q=document.getElementById("q"),$rows=document.getElementById("rows"),$count=document.getElementById("count");
 function cmp(a,b){
   let x=a[sortK],y=b[sortK];
-  if(sortK==="praemierung"){x=AW[x]??9;y=AW[y]??9}
+  if(sortK==="prämierung"){x=AW[x]??9;y=AW[y]??9}
   if(x==null||x==="")return 1; if(y==null||y==="")return -1;
   return (typeof x==="number"?x-y:String(x).localeCompare(y,"de"))*dir;
 }
 function render(){
   const q=$q.value.trim().toLowerCase();
   const act=Object.keys(F).map(k=>[k,document.getElementById("f-"+k).value]).filter(([,v])=>v);
-  const list=W.filter(w=>act.every(([k,v])=>String(w[k])===v)&&(!q||[w.weinname,w.erzeuger,w.erzeuger_ort,w.lage_weinberg,w.rebsorte_normalized].join(" ").toLowerCase().includes(q))).sort(cmp);
+  const list=W.filter(w=>act.every(([k,v])=>String(w[k])===v)&&(!q||[w.weinname,w.weingut,w.ort,w.lage,w.rebsorte].join(" ").toLowerCase().includes(q))).sort(cmp);
   $count.textContent=`${list.length} von ${W.length} Weinen`;
   document.querySelectorAll("th").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===sortK?(dir>0?"ascending":"descending"):"none"));
   $rows.innerHTML=list.length?list.map(w=>`<tr>
-<td><div class="name">${esc(w.weinname)}</div><div class="sub">${esc(w.erzeuger)}${w.erzeuger_ort?" · "+esc(w.erzeuger_ort):""}${w.lage_weinberg?"<br>Lage: "+esc(w.lage_weinberg):""}${w.body_de==="Vollmundig"?"<br>Vollmundig":""}</div></td>
-<td data-l="Rebsorte">${esc(w.rebsorte_normalized)}</td><td data-l="Weinart">${esc(w.weinart_normalized)}</td>
-<td data-l="Geschmack">${esc(w.dryness_de)}</td><td data-l="Qualität">${esc(w.qualitaetsstufe)}</td>
+<td><div class="name">${esc(w.weinname)}</div><div class="sub">${esc(w.weingut)}${w.ort?" · "+esc(w.ort):""}${w.lage?"<br>Lage: "+esc(w.lage):""}${w.körper==="Vollmundig"?"<br>Vollmundig":""}</div></td>
+<td data-l="Rebsorte">${esc(w.rebsorte)}</td><td data-l="Weinart">${esc(w.weinart)}</td>
+<td data-l="Geschmack">${esc(w.geschmacksrichtung)}</td><td data-l="Qualität">${esc(w.qualitätsstufe)}</td>
 <td class="num" data-l="Jahrgang">${esc(w.jahrgang)}</td>
-<td data-l="Prämierung">${w.praemierung?`<span class="badge ${esc(w.praemierung)}">${esc(w.praemierung[0]+w.praemierung.slice(1).toLowerCase())}</span>`:""}</td>
+<td data-l="Prämierung">${w.prämierung?`<span class="badge ${esc(w.prämierung)}">${esc(w.prämierung[0]+w.prämierung.slice(1).toLowerCase())}</span>`:""}</td>
 <td class="num" data-l="Punkte">${esc(w.bewertung)}</td>
-<td class="num" data-l="Alkohol">${w.alkohol_pct!=null?esc(Number(w.alkohol_pct).toLocaleString("de"))+" %":""}</td></tr>`).join("")
+<td class="num" data-l="Alkohol">${w.alkohol!=null?esc(Number(w.alkohol).toLocaleString("de"))+" %":""}</td></tr>`).join("")
   :`<tr><td colspan="9" class="empty">Keine Weine gefunden – Filter lockern?</td></tr>`;
 }
 document.querySelectorAll("th").forEach(th=>th.onclick=()=>{dir=sortK===th.dataset.k?-dir:1;sortK=th.dataset.k;render()});

@@ -54,16 +54,16 @@ When the guest asks for a fact or a link to a specific place, wine or offer (ope
 
 | Guest asks about | Field |
 |---|---|
-| Wine / name | `weinname` |
+| Wine / name | `weinname` (match also via `weinname_normalized`, `synonyms`) |
 | Winery, place | `weingut`, `ort` |
 | Grape variety | `rebsorte` |
 | Wine type (white, red, rosé, …) | `weinart` |
-| Dryness (trocken, halbtrocken, …) | `Geschmacksrichtung`|
-| Body | only if `Körper` = "Vollmundig": say the wine is full-bodied. Otherwise say nothing about body. |
-| Quality level (Kabinett, Spätlese, …) | `qualitaetsstufe` |
+| Dryness (trocken, halbtrocken, …) | `geschmacksrichtung` |
+| Body | only if `körper` = "Vollmundig": say the wine is full-bodied. Otherwise say nothing about body. |
+| Quality level (Kabinett, Spätlese, …) | `qualitätsstufe` |
 | Vineyard site | `lage` |
 | Vintage | `jahrgang` |
-| Award | `praemierung` (Gold / Silber / Bronze) and `bewertung` (points) |
+| Award | `prämierung` (Gold / Silber / Bronze) and `bewertung` (points) |
 | Alcohol | `alkohol` |
 | Source / link | `quelle` |
 

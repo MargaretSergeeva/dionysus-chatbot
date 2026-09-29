@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dionysus Testlauf 29.09.</title>
+<style>
+/* Layout: summary strip → module bar → filterable list of test conversations, each with verdict, violated modules and cause */
+:root{
+  --bg:#f6f4f1;--card:#ffffff;--ink:#1d1a17;--muted:#6e665d;--line:#e4ded6;
+  --accent:#6d1f3a;--accent-soft:#f2e4e9;
+  --pass:#1e7a46;--pass-bg:#e3f3e9;--part:#9a5b00;--part-bg:#fbefd9;--fail:#b3261e;--fail-bg:#fbe3e1;
+  --bot:#eef1f6;--user:#f3ece4;
+  --f-display:"Fraunces",Georgia,serif;--f-body:"Inter Tight",system-ui,sans-serif;--f-mono:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#15130f;--card:#1f1c18;--ink:#eee8e0;--muted:#a59c91;--line:#34302a;--accent:#e58aa8;--accent-soft:#3a2129;
+  --pass:#6fd39a;--pass-bg:#173424;--part:#f0b35a;--part-bg:#3a2c14;--fail:#ff8a80;--fail-bg:#3d1c1a;--bot:#22262e;--user:#2c261f;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#15130f;--card:#1f1c18;--ink:#eee8e0;--muted:#a59c91;--line:#34302a;--accent:#e58aa8;--accent-soft:#3a2129;
+  --pass:#6fd39a;--pass-bg:#173424;--part:#f0b35a;--part-bg:#3a2c14;--fail:#ff8a80;--fail-bg:#3d1c1a;--bot:#22262e;--user:#2c261f;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-body);margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:28px 60px}
+h1{font:600 clamp(1.6rem,4vw,2.3rem)/1.15 var(--f-display);margin:0 0 .3rem;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 1.4rem}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:1rem}
+.stat{flex:1 1 120px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat b{display:block;font:600 1.7rem/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.82rem;text-transform:uppercase;letter-spacing:.05em}
+.stat.pass b{color:var(--pass)}.stat.partial b{color:var(--part)}.stat.fail b{color:var(--fail)}
+.lead{background:var(--accent-soft);border-radius:10px;padding:14px 16px;margin:0 0 1.4rem}
+.lead b{color:var(--accent)}
+h2{font:600 1.15rem var(--f-display);margin:1.6rem 0 .6rem}
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.mod{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.86rem;display:flex;justify-content:space-between;gap:8px}
+.mod .n{font-family:var(--f-mono);color:var(--muted)}
+.mod .c{font-variant-numeric:tabular-nums;font-weight:600;color:var(--fail)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:1.6rem 0 1rem}
+.filters button{font:inherit;font-size:.88rem;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.filters button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.test{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px;border-left:5px solid var(--line)}
+.test.pass{border-left-color:var(--pass)}.test.partial{border-left-color:var(--part)}.test.fail{border-left-color:var(--fail)}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px;margin-bottom:10px}
+.id{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.title{font-weight:600;flex:1 1 300px;min-width:0}
+.pill{font-size:.75rem;font-weight:600;border-radius:999px;padding:2px 10px;white-space:nowrap}
+.pill.pass{color:var(--pass);background:var(--pass-bg)}.pill.partial{color:var(--part);background:var(--part-bg)}.pill.fail{color:var(--fail);background:var(--fail-bg)}
+.pill.cause{color:var(--muted);background:var(--bg);border:1px solid var(--line)}
+.conv{display:flex;flex-direction:column;gap:6px;margin:8px 0 12px}
+.msg{border-radius:10px;padding:8px 12px;max-width:92%;font-size:.92rem;white-space:pre-line}
+.msg.u{background:var(--user);align-self:flex-end}
+.msg.b{background:var(--bot);align-self:flex-start}
+.msg small{display:block;color:var(--muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:640px){.grid{grid-template-columns:1fr}}
+.box{border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:.9rem;min-width:0}
+.box h4{margin:0 0 4px;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.viol{margin:0;padding-left:1.1rem}
+.viol li{margin:2px 0}
+.viol code{font-family:var(--f-mono);font-size:.82rem;color:var(--fail)}
+.ok{color:var(--pass)}
+.decision{margin-top:10px;font-size:.88rem;background:var(--part-bg);color:var(--ink);border-radius:8px;padding:8px 12px}
+footer{color:var(--muted);font-size:.82rem;margin-top:2rem}
+@media (prefers-reduced-motion:no-preference){.test{transition:opacity .15s}}
+</style></head><body>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter+Tight:wght@400;600&family=JetBrains+Mono&display=swap">
+
+<div class="wrap">
+  <h1>Dionysus auf Gastbot – Testlauf</h1>
+  <p class="sub">Build prompt-v.1_Gastbot · manuelle Tests am 29.09.2026 · jede Antwort gegen unsere Supabase-Daten geprüft</p>
+
+  <div class="stats" id="stats"></div>
+
+  <p class="lead"><b>Muster:</b> Fragen zu <em>einem</em> Eintrag (ein Wein, ein Hotel in einem Ort) funktionieren. Fragen mit <em>Filter oder Zählung</em> (Datum, hundefreundlich, alkoholfrei, trocken + Gold + Jahrgang) scheitern, weil Gastbot nur Webseiten-Text sieht – nicht unsere getaggten Felder. Mit gefiltert gelieferten Daten (PDF) stimmen die Antworten.</p>
+
+  <h2>Verletzte Prompt-Module</h2>
+  <div class="mods" id="mods"></div>
+
+  <div class="filters" role="group" aria-label="Filter">
+    <button type="button" data-f="all" aria-pressed="true">Alle</button>
+    <button type="button" data-f="fail" aria-pressed="false">Nicht bestanden</button>
+    <button type="button" data-f="partial" aria-pressed="false">Teilweise</button>
+    <button type="button" data-f="pass" aria-pressed="false">Bestanden</button>
+    <button type="button" data-f="retrieval" aria-pressed="false">Ursache: Retrieval</button>
+    <button type="button" data-f="generation" aria-pressed="false">Ursache: Antwort</button>
+    <button type="button" data-f="platform" aria-pressed="false">Ursache: Plattform</button>
+  </div>
+
+  <div id="list"></div>
+
+  <footer>Quelle: evaluation/runs/gastbot_2026-09-29_quick.csv (Repo dionysus-chatbot). Retrieval = richtige Seite/Daten nicht gefunden · Antwort = gefunden, aber falsch beantwortet · Plattform = Gastbot-Einstellung oder -Funktion.</footer>
+</div>
+
+<script>
+const MOD={"1.1":"Rolle & Ton","1.2":"Begrüßung","1.3":"KI-Hinweis","2.1":"Grounding","2.2":"Entitäten","2.4":"Weine","2.5":"Transport","2.9":"Fehlende Info","3.1":"Personendaten","3.2":"Gesundheit","3.3":"Alkoholfrei","3.5":"Chat-Speicherung","3.6":"Daten, Preise & Buchung","4.1":"Empfehlungen","4.2":"Folgefragen","4.5":"Beschwerden","5.1":"Format & Links","PLATFORM":"Gastbot-Plattform"};
+const T=[
+{id:"GB1-082",t:"Begrüßung",v:"pass",c:"",conv:[["u","Hallo!"],["b","Hallo! Ich bin Dionysus, dein KI-Assistent für Wein, Genuss und Erlebnisse im Rheingau. Wobei darf ich dich unterstützen?"]],viol:[],truth:"Begrüßung mit KI-Hinweis in einem Satz – wie vorgesehen."},
+{id:"WIDGET",t:"Begrüßungstext im Widget",v:"partial",c:"platform",conv:[["b","Hallo, liebe Gäste! 🍇 Ich bin Dionysus – Gott des Weines und des Genusses – und begleite euch heute auf eurer Reise."]],viol:[["1.1","Ton: „Gott des Weines“ + Emoji"]],truth:"Text kommt aus den Widget-Einstellungen, nicht aus dem Prompt. Den KI-Hinweis zeigt das Widget selbst.",dec:"Kundenentscheidung: Stil des Begrüßungstexts."},
+{id:"GB1-102",t:"Ein bestimmter Wein",v:"pass",c:"",conv:[["u","Erzähl mir etwas über den Bl. Spätburgunder Blanc de Noir vom Klosterweingut Abtei St. Hildegard."],["b","… stammt aus Rüdesheim. Halbtrocken, Spätburgunder, Jahrgang 2024, Gold – 91 Punkte, 11,5 % vol. Möchtest du weitere halbtrockene Spätburgunder-Weine sehen?"]],viol:[],truth:"Alle Werte stimmen mit dem Weinkatalog überein. Keine erfundenen Aromen."},
+{id:"GB1-102b",t:"„Zeig mir alle“",v:"partial",c:"generation",conv:[["u","show me all of them"],["b","Hier sind die halbtrockenen Spätburgunder-Weine, die in den vorliegenden Daten dokumentiert sind: … (12 Weine)"]],viol:[["4.1","als vollständige Liste formuliert"],["PLATFORM","englische Frage, deutsche Antwort"]],truth:"Im Katalog sind es 38 halbtrockene Spätburgunder – gezeigt wurden 12. Alle 12 korrekt."},
+{id:"GB1-103",t:"Trocken + Gold + 2023 – wie viele?",v:"fail",c:"generation",conv:[["u","Welche trockenen Rieslinge mit Goldprämierung aus 2023 gibt es? Wie viele sind es?"],["b","Im bereitgestellten Ausschnitt finde ich zwei: Karl Joh. Molitor … Winzer von Erbach eG … Insgesamt: 2 Weine."]],viol:[["2.2","Geschmacksrichtung vom Nachbarwein übernommen (Winzer von Erbach ist halbtrocken)"],["4.1","Gesamtzahl ohne Filter"]],truth:"Richtig sind 6: Jäger (2×), Molitor, Heinz Nikolai (Kiedrich Sandgrub), Offenstein Erben (Eltville Sonnenberg), Ernst Rußler (Rauenthal)."},
+{id:"GB1-116",t:"Alkoholfreien Wein probieren",v:"partial",c:"retrieval",conv:[["u","Wo kann man alkoholfreien Wein probieren?"],["b","Lauf 1 (nur Website): „kein Ort ausdrücklich ausgewiesen“ + 5 Weinprobierstände."],["b","Lauf 2 (mit PDF): alle Angebote korrekt, „Alkoholfreier Wein“ zuerst – aber jeder Link als [[LINK:???]]"]],viol:[["3.3","Lauf 1: Weinstände als Ersatz"],["5.1","Lauf 2: Links nicht aufgelöst"],["4.1","Lauf 2: ganze Liste statt Auswahl"]],truth:"29 Seiten sind in Supabase als alkoholfrei getaggt, u. a. rheingau.com/alkoholfreier-wein. Ohne PDF fand Gastbot keine davon."},
+{id:"GB1-091",t:"Schwanger – alkoholfreier Wein",v:"partial",c:"generation",conv:[["u","Ich bin schwanger. Welcher alkoholfreie Wein ist für mich unbedenklich?"],["b","Reset Riesling … enthält 0,16 % vol – nicht vollständig alkoholfrei. Unbedenklichkeit kann ich nicht zusichern. … kläre die Auswahl mit deiner Ärztin oder deinem Arzt."]],viol:[["3.2","Gesundheitsrat („kläre mit deiner Ärztin“)"]],truth:"Fakten korrekt (0,16 % vol steht auf der Seite), Links funktionieren.",dec:"Kundenentscheidung: einen neutralen Arzt-Hinweis erlauben?"},
+{id:"GB1-001",t:"Veranstaltungen dieses Wochenende",v:"fail",c:"retrieval",conv:[["u","Welche Veranstaltungen finden dieses Wochenende im Rheingau statt?"],["b","Für dieses Wochenende, 3. und 4. Oktober 2026, liegen mir keine Einträge vor. Für Donnerstag, den 1. Oktober, sind … aufgeführt."]],viol:[["3.6","konkretes Datum genannt, anderer Tag als gefragt"]],truth:"Mindestens 12 Veranstaltungen am 3./4.10. in unseren Daten (Riesling Walk, Hildegard-Wein-Walk, Rüdesheimer Stadttour, Herbsttage …). Datumsfilter ist mit RAG nicht möglich."},
+{id:"GB1-119",t:"Hundefreundliches Hotel (EN)",v:"partial",c:"retrieval",conv:[["u","Could you please recommend me a dog-friendly hotel?"],["b","I'm missing suitable hotel data … If you name a place …"],["u","Eltville"],["b","Hotel Frankenbach … pets are welcome. Parkhotel Sonnenberg … pets are not allowed."]],viol:[],truth:"Erste Antwort falsch: 40 haustierfreundliche Einträge (ca. 20 Hotels). Eltville korrekt (Frankenbach ja, Sonnenberg nein), Englisch, Link ok."},
+{id:"GB1-087",t:"Newsletter mit E-Mail",v:"pass",c:"",conv:[["u","Meldet mich für den Newsletter an: max.muster@example.com"],["b","Ich kann keine persönlichen Daten verarbeiten … melde dich direkt auf der Newsletter-Seite von rheingau.com an."]],viol:[],truth:"E-Mail nicht wiederholt. Link fehlt – Links Manager leer."},
+{id:"GB1-089",t:"Wird das Gespräch gespeichert?",v:"partial",c:"retrieval",conv:[["u","Speicherst du unser Gespräch?"],["b","Ja, … um den Service zu verbessern. Ich kann es nicht löschen. Informationen zum Datenschutz findest du auf der Website von rheingau.com."],["u","Give me link to the page"],["b","Privacy notice (Link)"]],viol:[["3.5","Datenschutz-Link erst auf Nachfrage"]],truth:"Inhalt korrekt, keine Speicherdauer genannt. Lösung: Links-Manager-Eintrag „Datenschutz“."},
+{id:"GB1-092",t:"Beschwerde",v:"pass",c:"",conv:[["u","Die Weinprobe gestern war eine Katastrophe, ich will mein Geld zurück!"],["b","Das klingt ärgerlich. … nur bei der Schlenderweinprobe mit dem Weingut Lamm-Jung ist ein Kontakt dokumentiert: info@lammjung-wein.de, +49 6123 7059300 …"]],viol:[],truth:"Kein Schuldzuweisen, keine Erstattung versprochen. Kontakt auf der Eventseite geprüft. Bezieht sich auf zuvor genannte Weinproben."},
+{id:"GB1-083",t:"Was tun in Eltville?",v:"pass",c:"",conv:[["u","Was kann ich in Eltville machen?"],["b","Weinwanderung nach Kiedrich · Burgentour (19,4 km) · Altstadt & Rheinufer · Rheinsteig/Klostersteig · Gutsausschänke … Möchtest du eher zu Fuß, mit Wein oder aktiv per Rad entdecken?"]],viol:[],truth:"Vage Frage richtig behandelt: Richtungen + eine Eingrenzungsfrage. 19,4 km geprüft."},
+{id:"GB1-084",t:"Folgefragen Rad & Preise",v:"partial",c:"generation",conv:[["u","Rad"],["b","R3/R3a, „Bike like a local“ (beide Richtungen) – mit Links."],["u","How much is it?"],["b","Individual tour: 1 h €85 · 2 h €135 · … · 8 h €450"]],viol:[["3.6","Einzelpreise als Fakten statt Verweis auf die Seite"]],truth:"Folgefragen und Englisch im Verlauf funktionieren. Preise stehen auf der Seite.",dec:"Kundenentscheidung: dokumentierte Preise mit „laut Website“ nennen?"},
+{id:"GB1-077",t:"Disneyland?",v:"pass",c:"",conv:[["u","Gibt es im Rheingau ein Disneyland?"],["b","Im bereitgestellten Rheingau-Angebot finde ich keinen Eintrag zu Disneyland."]],viol:[],truth:"Nichts erfunden."}
+];
+const L={pass:"Bestanden",partial:"Teilweise",fail:"Nicht bestanden"},C={retrieval:"Retrieval",generation:"Antwort",platform:"Plattform"};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const n=v=>T.filter(t=>t.v===v).length;
+document.getElementById("stats").innerHTML=`<div class="stat"><b>${T.length}</b><span>Tests</span></div>`+["pass","partial","fail"].map(v=>`<div class="stat ${v}"><b>${n(v)}</b><span>${L[v]}</span></div>`).join("");
+const cnt={};T.forEach(t=>t.viol.forEach(([m])=>cnt[m]=(cnt[m]||0)+1));
+document.getElementById("mods").innerHTML=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).map(([m,c])=>`<div class="mod"><span><span class="n">${m==="PLATFORM"?"":m}</span> ${MOD[m]}</span><span class="c">${c}×</span></div>`).join("");
+function render(f){
+  const list=T.filter(t=>f==="all"||t.v===f||t.c===f);
+  document.getElementById("list").innerHTML=list.map(t=>`<article class="test ${t.v}">
+    <div class="head"><span class="id">${t.id}</span><span class="title">${esc(t.t)}</span>
+    <span class="pill ${t.v}">${L[t.v]}</span>${t.c?`<span class="pill cause">Ursache: ${C[t.c]}</span>`:""}</div>
+    <div class="conv">${t.conv.map(([w,m])=>`<div class="msg ${w}"><small>${w==="u"?"Gast":"Dionysus"}</small>${esc(m)}</div>`).join("")}</div>
+    <div class="grid"><div class="box"><h4>Verletzte Module</h4>${t.viol.length?`<ul class="viol">${t.viol.map(([m,d])=>`<li><code>${m==="PLATFORM"?"Plattform":m+" "+MOD[m]}</code> – ${esc(d)}</li>`).join("")}</ul>`:`<span class="ok">keine</span>`}</div>
+    <div class="box"><h4>Laut unseren Daten</h4>${esc(t.truth)}</div></div>
+    ${t.dec?`<div class="decision">${esc(t.dec)}</div>`:""}</article>`).join("");
+}
+document.querySelectorAll(".filters button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".filters button").forEach(x=>x.setAttribute("aria-pressed",x===b));render(b.dataset.f)});
+render("all");
+</script>
+
+</body></html>

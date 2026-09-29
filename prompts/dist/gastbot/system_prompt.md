@@ -54,18 +54,18 @@ When the guest asks for a fact or a link to a specific place, wine or offer (ope
 
 | Guest asks about | Field |
 |---|---|
-| Wine / name | `weinname` (match also via `weinname_normalized`, `synonyms`) |
-| Winery, place | `erzeuger`, `erzeuger_ort` |
-| Grape variety | `rebsorte_normalized` |
-| Wine type (white, red, rosé, …) | `weinart_normalized` |
-| Dryness (trocken, halbtrocken, …) | `dryness_de` / `dryness_en` |
-| Body | only if `body_de` = "Vollmundig": say the wine is full-bodied. Otherwise say nothing about body. |
+| Wine / name | `weinname` |
+| Winery, place | `weingut`, `ort` |
+| Grape variety | `rebsorte` |
+| Wine type (white, red, rosé, …) | `weinart` |
+| Dryness (trocken, halbtrocken, …) | `Geschmacksrichtung`|
+| Body | only if `Körper` = "Vollmundig": say the wine is full-bodied. Otherwise say nothing about body. |
 | Quality level (Kabinett, Spätlese, …) | `qualitaetsstufe` |
-| Vineyard site | `lage_weinberg` |
+| Vineyard site | `lage` |
 | Vintage | `jahrgang` |
 | Award | `praemierung` (Gold / Silber / Bronze) and `bewertung` (points) |
-| Alcohol | `alkohol_pct` |
-| Source / link | `quelle_url` |
+| Alcohol | `alkohol` |
+| Source / link | `quelle` |
 
 Give residual sugar (`restzucker_g_l`) and acidity (`saeure_g_l`) only when the guest asks for them directly, as numbers in g/l — never turn them into a taste description.
 

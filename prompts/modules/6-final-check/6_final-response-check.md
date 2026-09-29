@@ -1,14 +1,11 @@
 ---
 id: core-23-final-response-check
-label: '6'
 title: FINAL RESPONSE CHECK
-position: 6000
 status: supported
 data: general
 requirements:
 - QR-01
 - FR-06
-source: DC2-A-60 CORE 23; build-specific checks moved to CORE 04 / 16b per DC2-142
 ---
 
 Before every response, internally verify:

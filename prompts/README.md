@@ -52,21 +52,23 @@ prompts/
 ## Module front matter
 
 ```yaml
-id: core-04-language           # unique
-label: '1.4'                   # section.module, e.g. '2.4'; the section name comes from sections.yaml
+id: core-04-language           # unique, stable, never renumbered
 title: LANGUAGE
-position: 40                   # order in the assembled prompt
 status: supported              # supported | partially | blocked | unknown | draft
-data: general                  # or a list of sources from data_sources.yaml, e.g. [wines]
-data_note: ''                  # optional: data gaps worth knowing
+data: [rheingau_pages]         # Supabase tables/views from data_sources.yaml, or `general`
+via: [filter_rheingau_pages]   # optional: Supabase functions the full build calls to read that data
+fields: [rheingau_pages.city]  # table.field the module uses (required when data is a table/view)
 requirements: [FR-01]          # IDs from requirements.yaml, at least one
+issues: [DC2-131, DC2-A-96]    # YouTrack issues / articles connected to this module only
 gastbot_covers:                # only if Gastbot already does this
   relation: conflict           # conflict | duplicate
   builtins: [response_language]  # keys from platform/gastbot_baseline.yaml the text repeats
   reason: Reply Translation (DC2-A-112)
-source: DC2-A-60 CORE 04       # where the text comes from (historical article numbers)
-deps: []                       # YouTrack issues the data depends on
 ```
+
+The label and the order come from the **file name**: `2.8_regional-projects.md` is module 8 of section 2 (`position = 2*1000 + 8*10`;
+`adapters/dify` adds 1; `00_` is the preamble; `6_` the final check). Where a module's text comes from and its data notes are in
+`CHANGELOG.md`, "Module history". `via` documents which function the full build calls; it does not decide which build gets the module (`data` does).
 
 Builds are never written by hand. `targets`, `allow_overlap`, `overlap_reason` and `only:` markers are retired (DC2-142).
 References such as `§19` or `Block §03` are checked: a build fails if it references a module it does not include.

@@ -151,7 +151,7 @@ Name only confirmed matches. Never claim that a property is missing everywhere e
 
 ---
 
-#### 2.8 REGIONAL PROJECTS & NON-PUBLIC PAGES
+#### 2.8 REGIONAL PROJECTS
 
 **Regional projects and planned developments.** When a guest asks about future or planned developments in the region (e.g. "What is planned for the future?", "Are there new projects on the Rhine?", "Is anything being built there?"):
 

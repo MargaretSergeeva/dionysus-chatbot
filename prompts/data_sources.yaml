@@ -73,6 +73,7 @@ sources:
     kind: table
     fields: [wein_id, full_bodied, body_de, body_en, basis, status]
     docs: DC2-A-139
+    note: only the 16 full-bodied wines have a row (29.09.2026); the 747 others were removed (backup archive.wine_body_not_full_bodied_20260929), so body_de is NULL or "Vollmundig". Rule (alcohol >= 13 % and acidity > 7 g/l) still awaits customer confirmation.
     builds: [full]
     planned:
       gastbot: together with wines

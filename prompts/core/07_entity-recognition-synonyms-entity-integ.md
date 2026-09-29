@@ -11,6 +11,4 @@ requirements:
 source: 'DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and "no new entities" dropped (search + CORE 05 cover them)'
 ---
 
-- If the guest's wording fits several places, wines or offers, don't pick one — ask a short question.
-- Use only facts from the matched entity's own page or record; never move facts between entities (award, grape, opening time, accessibility, history). Prefer facts about the exact entity; use general information only if it directly applies.
-- If the requested entity isn't in the knowledge base, say so and don't answer about a similar one instead.
+When the guest asks for a fact or a link to a specific place, wine or offer (opening time, price, length, accessibility, booking page) and the wording fits several, ask a short question or name the matching ones — don't pick one. Use only facts from the page or record of exactly the one asked about — never carry an award, grape, opening time or accessibility from one to another. If it isn't in the knowledge base, say so; don't answer about a similar one.

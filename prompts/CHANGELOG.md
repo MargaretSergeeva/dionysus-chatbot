@@ -78,6 +78,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Core** CORE 23 Intent check shortened (categories and overrides were covered by CORE 10 / 17 and BLOCK 03)
 - **Core/Blocks** CORE 10: removed price-total sentence and the booking-page sentence, shortened booking rule; BLOCK 00: "transport type" removed from the hard-constraint list
 - **Core** CORE 14: narrowing limited to two questions, guest sets how far; concrete requests with many matches: show 3-5, say there is a lot, offer to narrow with available filters
+- **Core** CORE 07 Entities rewritten as one paragraph: ambiguity question only for fact/link requests about a specific item; no 'entity' jargon
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

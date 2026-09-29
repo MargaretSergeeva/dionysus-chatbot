@@ -143,7 +143,7 @@ def main():
             print(f"  ! {url}: almost no text ({len(text)} chars), skipped"); continue
         pages.append({
             "page_id": pid, "group_name": "Informationsseite", "page_type": "pages", "category": "pages",
-            "primary_category_de": "Allgemeine Information", "tags": "Allgemeine Information",
+            "primary_category_de": "Allgemeine Information", "tags": "Allgemeine Information", "cities": "Rheingau",
             "title": title, "content": text, "source_url": url,
             "content_hash": hashlib.md5(text.encode()).hexdigest(), "last_crawled_at": now,
         })
@@ -160,10 +160,6 @@ def main():
         print("\nDry run. Re-run with --apply to write.")
         return
 
-    vecs = embed([c["chunk_text"] for c in chunks], env("COHERE_API_KEY"))
-    for c, v in zip(chunks, vecs):
-        c["embedding"] = "[" + ",".join(f"{x:.8f}" for x in v) + "]"
-
     up = {"Prefer": "resolution=merge-duplicates,return=minimal"}
     r = requests.post(f"{base}/rest/v1/rheingau_pages?on_conflict=page_id", headers=sb_headers(skey, up),
                       data=json.dumps(pages), timeout=60); r.raise_for_status()
@@ -173,6 +169,19 @@ def main():
     for i in range(0, len(chunks), 50):
         r = requests.post(f"{base}/rest/v1/rheingau_rag_chunks_v2", headers=sb_headers(skey, up),
                           data=json.dumps(chunks[i:i + 50]), timeout=120); r.raise_for_status()
+
+    # embed exactly the text the existing chunks were embedded from:
+    # view rheingau_rag_chunks_v2_embed.embedding_text = 'Titel: ... Kategorie: ... Abschnitt: ... Orte: ... ' + chunk_text
+    r = requests.get(f"{base}/rest/v1/rheingau_rag_chunks_v2_embed?select=chunk_id,embedding_text&page_id=in.({ids})",
+                     headers=sb_headers(skey), timeout=60); r.raise_for_status()
+    emb_rows = r.json()
+    vecs = embed([x["embedding_text"] for x in emb_rows], env("COHERE_API_KEY"))
+    for x, v in zip(emb_rows, vecs):
+        requests.patch(f"{base}/rest/v1/rheingau_rag_chunks_v2?chunk_id=eq.{x['chunk_id']}",
+                       headers=sb_headers(skey, {"Prefer": "return=minimal"}),
+                       data=json.dumps({"embedding": "[" + ",".join(f"{y:.8f}" for y in v) + "]"}),
+                       timeout=60).raise_for_status()
+    print(f"embedded {len(emb_rows)} chunks")
     print("written. Next: check in Supabase, then remove these pages from the registry:")
     print(f"  delete from rheingau_excluded_registry where page_id in ({', '.join(repr(p['page_id']) for p in pages)});")
 

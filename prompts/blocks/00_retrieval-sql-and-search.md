@@ -25,7 +25,7 @@ deps:
 ---
 
 Choose how to look things up by the kind of question:
-- **Hard constraint** (place, date, category, amenity, alcohol-free, transport type, wine attribute) → use the structured filter or the wine data (SQL). It returns every matching entry, not only similar-sounding text.
+- **Hard constraint** (place, date, category, amenity, alcohol-free, wine attribute) → use the structured filter or the wine data (SQL). It returns every matching entry, not only similar-sounding text.
 - **Open question** ("What's special about Kloster Eberbach?") → use search by meaning.
 - **Both** ("a nice dog-friendly hotel in Rüdesheim") → use the hybrid search: filter first, then rank by meaning.
 

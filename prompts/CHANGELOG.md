@@ -76,6 +76,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Core** deleted CORE 01 Priorities; dropped "Never ask permission to save the chat" from CORE 21 (covered by CR-02 / CR-06 notes)
 - **Blocks** BLOCK 03 Alcohol-free shortened (~150 to ~100 words, same rules)
 - **Core** CORE 23 Intent check shortened (categories and overrides were covered by CORE 10 / 17 and BLOCK 03)
+- **Core/Blocks** CORE 10: removed price-total sentence and the booking-page sentence, shortened booking rule; BLOCK 00: "transport type" removed from the hard-constraint list
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

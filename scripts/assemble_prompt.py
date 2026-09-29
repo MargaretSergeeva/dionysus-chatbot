@@ -229,6 +229,18 @@ def lint_platform_variables(modules: list[Module], target: str, variables: list[
     return errors
 
 
+def lint_physical_names(modules: list[Module], registry: dict) -> list[str]:
+    """Prompt text never names tables, views or functions (DC2-142): they differ per build; the module header carries them.
+    Column names in rule tables are allowed (the shared contract). Plain words like `wines` are not checked."""
+    names = [n for n in registry["sources"] if "_" in n] + ["rheingau_excluded_registry", "match_rheingau_chunks", "match_rheingau_chunks_filtered", "filter_public_registry_pages"]
+    errors = []
+    for m in modules:
+        for name in names:
+            if re.search(rf"\b{re.escape(name)}\b", m.body):
+                errors.append(f"{m.path.name}: prompt text names '{name}' — say what it is in words; the table/function belongs in `data`/`fields`")
+    return errors
+
+
 def lint_references(modules: list[Module], target: str) -> list[str]:
     labels = {m.label for m in modules if m.label}
     errors = []
@@ -244,6 +256,7 @@ def run_check(gate: dict, baseline: dict) -> list[Module]:
     modules = load_modules()
     registry = load_yaml(path=PROMPTS / "data_sources.yaml")
     errors = lint_data(modules=modules, registry=registry)
+    errors += lint_physical_names(modules=modules, registry=registry)
     errors += lint_requirements(modules=modules, catalog=load_yaml(path=PROMPTS / "requirements.yaml"))
     if not errors:
         derive_targets(modules=modules, registry=registry)

@@ -18,6 +18,8 @@ The main prompt is one set of modules (`core/`, `blocks/`, `adapters/`). The scr
 - **Data not available** — `prompts/data_sources.yaml` lists which build reaches which data. Gastbot has rheingau.com through its own RAG, but no Supabase tables yet. When a table reaches Gastbot (e.g. the wine catalog is uploaded to the platform), move `gastbot` from `planned` to `builds` — the modules follow, no text changes.
 - **Platform-covered** — `gastbot_covers.relation: conflict` (Gastbot does it differently: answer language, link format, greeting) → never in Gastbot. `relation: duplicate` (Gastbot does the same) → also never in Gastbot: leaving it out is how the live test shows whether Gastbot really provides it. If the test fails, remove `gastbot_covers` and the module goes back in (decision 28.09.2026).
 
+**Naming convention.** Prompt text never names tables, views or functions — they differ per build (Gastbot has its own RAG and, later, an uploaded wine table). It says what the data is in words ("the wine data", "the structured filter"). The physical names live in the module header (`data`, `fields`) and in `data_sources.yaml`. Column names may appear in rule tables: they are the shared contract, so a wine upload to Gastbot keeps the column names of `wines_enriched`. The gate fails when a module text names a registered table, view or function.
+
 **No build-specific text inside a module.** If only part of a module is covered by Gastbot, split the module (e.g. answer format and link rules 5.1 + Markdown format 5.2). The script rejects `only:` markers.
 
 ## Layout

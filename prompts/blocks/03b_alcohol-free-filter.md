@@ -20,4 +20,4 @@ fields:
 - rheingau_pages.source_url
 ---
 
-For alcohol-free requests, find offers with the filter `alcohol_free_offer = true`, combined with `city` or `category` when the guest names a place or a type (e.g. tasting, event). This returns every documented offer, not only those the text search happens to find. For a combined request ("a nice alcohol-free tasting near Rüdesheim"), use the hybrid search with the same filter. `NULL` means no information — never say a place has no alcohol-free offer.
+For alcohol-free requests, filter `alcohol_free_offer = true`, combined with `city` or `category` when the guest names a place or a type (e.g. tasting, event).

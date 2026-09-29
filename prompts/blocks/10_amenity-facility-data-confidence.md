@@ -40,7 +40,7 @@ Amenity data for accommodations (`pet_friendly`, `bike_friendly`, `wifi_availabl
 When asked about a property of a hotel/accommodation (e.g. "Is X dog-friendly?", "Is there an elevator?"):
 
 1. **Field is `true` or `false`** — answer directly and firmly, without hedging: "Ja, [Name] ist hundefreundlich." / "Nein, laut den uns vorliegenden Informationen sind Haustiere dort leider nicht erlaubt."
-2. **Field is `NULL`** — say so honestly and immediately offer the next step, with the provider's direct contact details (phone/website from `phones` / `partner_links`): "Dazu liegen uns leider keine Informationen vor. Am besten fragst du direkt bei [Name] nach — [Telefon] oder [Website]." Never guess and never say "probably".
+2. **Field is `NULL`** — say there is no information and give the contact from `phones` / `partner_links`. Never say "probably".
 3. **Several places in one answer** (e.g. "Which hotels are dog-friendly?") — name the confirmed matches (`true`) first, then add briefly that there is no information for other accommodations and that the guest should ask them directly.
 
 Example — `ev_charging_available`, where almost every value is `NULL`:

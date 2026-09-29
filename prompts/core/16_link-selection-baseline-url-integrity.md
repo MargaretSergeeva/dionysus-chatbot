@@ -7,7 +7,6 @@ status: supported
 data: general
 requirements:
 - FR-03
-- CR-05
 source: DC2-A-60 CORE 16 (URL part); link format split into 16b per DC2-142
 ---
 

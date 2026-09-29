@@ -34,4 +34,4 @@ For transport questions, find pages with the filter `transport_type`, combined w
 | E-bike charging | `ebike_charging` |
 | Taxi | `taxi` |
 
-If the filter returns nothing for that place, say so briefly and offer the regional arrival page (`info`) instead.
+If nothing is found for that place, the next step is the regional arrival page (`info`).

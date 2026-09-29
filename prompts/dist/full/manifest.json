@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 31748,
+  "chars": 20592,
   "included": [
     {
       "id": "core-00-preamble",
@@ -41,57 +41,27 @@
     {
       "id": "core-05-source-grounding-source-priority",
       "status": "supported",
-      "source": "DC2-A-60 CORE 05"
-    },
-    {
-      "id": "core-06-source-grounding-baseline-context-only",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 06"
+      "source": "DC2-A-60 CORE 05 + CORE 06 merged 28.09.2026 (DC2-142): one grounding rule; repetitions removed from other modules"
     },
     {
       "id": "core-07-entity-recognition-synonyms-entity-integ",
       "status": "supported",
-      "source": "DC2-A-60 CORE 07"
-    },
-    {
-      "id": "core-08-answer-decision-cascade",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 08"
+      "source": "DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and \"no new entities\" dropped (search + CORE 05 cover them)"
     },
     {
       "id": "core-09-recommendations-superlatives",
       "status": "supported",
-      "source": "DC2-A-60 CORE 09"
+      "source": "DC2-A-60 CORE 09 + CORE 13 merged 28.09.2026 (DC2-142)"
     },
     {
       "id": "core-10-dates-time",
       "status": "supported",
-      "source": "DC2-A-60 CORE 10"
-    },
-    {
-      "id": "core-10b-price-rules",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 04; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
-    },
-    {
-      "id": "core-10c-booking-availability",
-      "status": "supported",
-      "source": "DC2-A-60 BLOCKS 05; moved to CORE per DC2-142 (28.09.2026) — general rule, no data dependency"
-    },
-    {
-      "id": "core-11-practical-information",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 11"
+      "source": "DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142)"
     },
     {
       "id": "core-12-follow-up-questions-context-continuity",
       "status": "supported",
-      "source": "DC2-A-60 CORE 12"
-    },
-    {
-      "id": "core-13-no-unsupported-comparisons",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 13"
+      "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
     },
     {
       "id": "core-14-general-questions",
@@ -126,7 +96,7 @@
     {
       "id": "core-19-missing-information-proactive-suggestion",
       "status": "supported",
-      "source": "DC2-A-60 CORE 19"
+      "source": "DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07"
     },
     {
       "id": "core-20-complaints-negative-experiences",
@@ -142,6 +112,11 @@
       "id": "core-22-special-category-data-health-avoidance",
       "status": "supported",
       "source": "DC2-A-60 CORE 22"
+    },
+    {
+      "id": "block-00-retrieval-sql-and-search",
+      "status": "supported",
+      "source": "DC2-A-96 routing (DC2-131, DC2-132); decision 28.09.2026 (DC2-142) — risk note in DC2-A-75"
     },
     {
       "id": "block-01-wines",

@@ -74,6 +74,11 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 14 Recommendations** now includes CORE 09 ("best/cheapest": no single winner, compare on documented facts, scores only as the data states them); CORE 09 deleted, tests C09 → C14.
 - **CORE 14 Recommendations moved** to directly after CORE 07 Entities (position only; label unchanged).
 - **Core** deleted CORE 01 Priorities; dropped "Never ask permission to save the chat" from CORE 21 (covered by CR-02 / CR-06 notes)
+- **Blocks** BLOCK 03 Alcohol-free shortened (~150 to ~100 words, same rules)
+- **Core** CORE 23 Intent check shortened (categories and overrides were covered by CORE 10 / 17 and BLOCK 03)
+- **Core/Blocks** CORE 10: removed price-total sentence and the booking-page sentence, shortened booking rule; BLOCK 00: "transport type" removed from the hard-constraint list
+- **Core** CORE 14: narrowing limited to two questions, guest sets how far; concrete requests with many matches: show 3-5, say there is a lot, offer to narrow with available filters
+- **Core** CORE 07 Entities rewritten as one paragraph: ambiguity question only for fact/link requests about a specific item; no 'entity' jargon
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Weinfinder</title>
+<style>
+:root{--bg:#faf8f5;--card:#fff;--ink:#1f1b16;--muted:#6b645b;--line:#e7e1d8;--accent:#7a1f3d;--accent-soft:#f3e6ea;
+--gold:#b8860b;--gold-bg:#fbf3dc;--silver:#6b7280;--silver-bg:#eef0f3;--bronze:#9a5b2e;--bronze-bg:#f6e9df}
+@media (prefers-color-scheme:dark){:root{--bg:#15130f;--card:#1e1b17;--ink:#ede7de;--muted:#a39b90;--line:#332e28;--accent:#e08aa6;--accent-soft:#3a2229;
+--gold:#e6bc4c;--gold-bg:#3a3017;--silver:#c3c8d0;--silver-bg:#2c2f35;--bronze:#e0a275;--bronze-bg:#3b2a1e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:28px 16px 8px;margin:0 auto}
+h1{margin:0;font-size:1.7rem;letter-spacing:-.01em}
+header p{margin:.3rem 0 0;color:var(--muted)}
+main{margin:0 auto;padding:0 16px 40px}
+.filters{position:sticky;top:0;z-index:2;background:var(--bg);padding:12px 0;display:grid;gap:8px;
+grid-template-columns:2fr repeat(6,1fr) auto;border-bottom:1px solid var(--line)}
+input,select,button{font:inherit;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-width:0}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+button{cursor:pointer;color:var(--accent);white-space:nowrap}
+.count{margin:12px 0;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap}
+th[aria-sort=ascending]::after{content:" ▲"}th[aria-sort=descending]::after{content:" ▼"}
+tbody tr:hover{background:var(--accent-soft)}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.name{font-weight:600}.sub{color:var(--muted);font-size:.85rem}
+.badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.78rem;font-weight:600}
+.GOLD{color:var(--gold);background:var(--gold-bg)}.SILBER{color:var(--silver);background:var(--silver-bg)}.BRONZE{color:var(--bronze);background:var(--bronze-bg)}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+footer{margin:0 auto;padding:0 16px 32px;color:var(--muted);font-size:.85rem}
+footer a{color:var(--accent)}
+@media (max-width:900px){.filters{grid-template-columns:1fr 1fr;position:static}.filters input{grid-column:1/-1}
+table,thead,tbody,tr,td{display:block}thead{display:none}table{border:0;background:none}
+tr{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:10px;padding:6px 0}
+td{border:0;padding:3px 14px}td:empty{display:none}td[data-l]::before{content:attr(data-l)": ";color:var(--muted)}}
+</style>
+</head>
+<body>
+<header>
+<h1>Weinfinder</h1>
+<p>__COUNT__ prämierte Weine – suchen, filtern und sortieren. Stand: __DATE__.</p>
+</header>
+<main>
+<div class="filters">
+<input id="q" type="search" placeholder="Wein, Weingut, Lage suchen …" aria-label="Suche">
+<select id="f-rebsorte_normalized" aria-label="Rebsorte"></select>
+<select id="f-weinart_normalized" aria-label="Weinart"></select>
+<select id="f-dryness_de" aria-label="Geschmacksrichtung"></select>
+<select id="f-praemierung" aria-label="Prämierung"></select>
+<select id="f-jahrgang" aria-label="Jahrgang"></select>
+<select id="f-erzeuger_ort" aria-label="Ort"></select>
+<button id="reset" type="button">Zurücksetzen</button>
+</div>
+<div class="count" id="count"></div>
+<table>
+<thead><tr>
+<th data-k="weinname">Wein</th><th data-k="rebsorte_normalized">Rebsorte</th><th data-k="weinart_normalized">Weinart</th>
+<th data-k="dryness_de">Geschmack</th><th data-k="qualitaetsstufe">Qualität</th><th data-k="jahrgang">Jahrgang</th>
+<th data-k="praemierung">Prämierung</th><th data-k="bewertung">Punkte</th><th data-k="alkohol_pct">Alkohol</th>
+</tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</main>
+<footer>Quelle: <a href="https://www.die-besten-weine-hessens.de/veranstaltung/weinfinder">Die besten Weine Hessens – Weinfinder</a>. Angaben ohne Gewähr.</footer>
+<script>
+const W=__DATA__;
+const F={rebsorte_normalized:"Alle Rebsorten",weinart_normalized:"Alle Weinarten",dryness_de:"Alle Geschmacksrichtungen",
+praemierung:"Alle Prämierungen",jahrgang:"Alle Jahrgänge",erzeuger_ort:"Alle Orte"};
+const AW={GOLD:0,SILBER:1,BRONZE:2};
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+for(const[k,label]of Object.entries(F)){
+  const vals=[...new Set(W.map(w=>w[k]).filter(v=>v!=null&&v!==""))];
+  vals.sort(k==="jahrgang"?(a,b)=>b-a:k==="praemierung"?(a,b)=>(AW[a]??9)-(AW[b]??9):(a,b)=>String(a).localeCompare(b,"de"));
+  document.getElementById("f-"+k).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option>${esc(v)}</option>`).join("");
+}
+let sortK="praemierung",dir=1;
+const $q=document.getElementById("q"),$rows=document.getElementById("rows"),$count=document.getElementById("count");
+function cmp(a,b){
+  let x=a[sortK],y=b[sortK];
+  if(sortK==="praemierung"){x=AW[x]??9;y=AW[y]??9}
+  if(x==null||x==="")return 1; if(y==null||y==="")return -1;
+  return (typeof x==="number"?x-y:String(x).localeCompare(y,"de"))*dir;
+}
+function render(){
+  const q=$q.value.trim().toLowerCase();
+  const act=Object.keys(F).map(k=>[k,document.getElementById("f-"+k).value]).filter(([,v])=>v);
+  const list=W.filter(w=>act.every(([k,v])=>String(w[k])===v)&&(!q||[w.weinname,w.erzeuger,w.erzeuger_ort,w.lage_weinberg,w.rebsorte_normalized].join(" ").toLowerCase().includes(q))).sort(cmp);
+  $count.textContent=`${list.length} von ${W.length} Weinen`;
+  document.querySelectorAll("th").forEach(th=>th.setAttribute("aria-sort",th.dataset.k===sortK?(dir>0?"ascending":"descending"):"none"));
+  $rows.innerHTML=list.length?list.map(w=>`<tr>
+<td><div class="name">${esc(w.weinname)}</div><div class="sub">${esc(w.erzeuger)}${w.erzeuger_ort?" · "+esc(w.erzeuger_ort):""}${w.lage_weinberg?"<br>Lage: "+esc(w.lage_weinberg):""}${w.body_de==="Vollmundig"?"<br>Vollmundig":""}</div></td>
+<td data-l="Rebsorte">${esc(w.rebsorte_normalized)}</td><td data-l="Weinart">${esc(w.weinart_normalized)}</td>
+<td data-l="Geschmack">${esc(w.dryness_de)}</td><td data-l="Qualität">${esc(w.qualitaetsstufe)}</td>
+<td class="num" data-l="Jahrgang">${esc(w.jahrgang)}</td>
+<td data-l="Prämierung">${w.praemierung?`<span class="badge ${esc(w.praemierung)}">${esc(w.praemierung[0]+w.praemierung.slice(1).toLowerCase())}</span>`:""}</td>
+<td class="num" data-l="Punkte">${esc(w.bewertung)}</td>
+<td class="num" data-l="Alkohol">${w.alkohol_pct!=null?esc(Number(w.alkohol_pct).toLocaleString("de"))+" %":""}</td></tr>`).join("")
+  :`<tr><td colspan="9" class="empty">Keine Weine gefunden – Filter lockern?</td></tr>`;
+}
+document.querySelectorAll("th").forEach(th=>th.onclick=()=>{dir=sortK===th.dataset.k?-dir:1;sortK=th.dataset.k;render()});
+$q.oninput=render;document.querySelectorAll("select").forEach(s=>s.onchange=render);
+document.getElementById("reset").onclick=()=>{$q.value="";document.querySelectorAll("select").forEach(s=>s.value="");render()};
+render();
+</script>
+</body>
+</html>

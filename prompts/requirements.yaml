@@ -59,7 +59,7 @@ requirements:
   FR-13:
     title: Questions about privacy, legal information, newsletter, partner service, press and jobs are answered from the matching rheingau.com pages, with a link
     source: decision 29.09.2026 (replaces the out-of-scope note in DC2-A-1 §6 and module 2.8 rule 2)
-    note: The 12 pages (Datenschutz, Datenschutzerklärung, Impressum, Whistleblowing, 4 partner pages, 2 press pages, newsletter, jobs) are still in rheingau_excluded_registry and must be loaded (text, chunks, embeddings) — see the YouTrack task under DC2-142. Until then the deletion answer in module 3.5 carries the Datenschutz link directly.
+    note: The 12 pages (Datenschutz, Datenschutzerklärung, Impressum, Whistleblowing, 4 partner pages, 2 press pages, newsletter, jobs) were loaded into the search data (pages + chunks + embeddings) on 29.09.2026 (DC2-152). The bot finds them through normal search; module 3.5 points to the data protection page without naming a URL.
 
   # ── Compliance ─────────────────────────────────────────────
   CR-01:

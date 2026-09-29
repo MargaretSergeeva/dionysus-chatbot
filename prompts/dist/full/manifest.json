@@ -1,7 +1,7 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 18165,
+  "chars": 18159,
   "included": [
     {
       "id": "core-00-preamble",
@@ -16,9 +16,7 @@
     {
       "id": "dify-02a-first-turn-greeting",
       "status": "supported",
-      "issues": [
-        "DC2-A-84"
-      ]
+      "issues": []
     },
     {
       "id": "core-02b-ai-disclosure",
@@ -48,9 +46,7 @@
       "status": "supported",
       "issues": [
         "DC2-131",
-        "DC2-132",
-        "DC2-A-75",
-        "DC2-A-96"
+        "DC2-132"
       ]
     },
     {
@@ -72,8 +68,7 @@
       "id": "block-07b-transport-filter",
       "status": "supported",
       "issues": [
-        "DC2-150",
-        "DC2-A-96"
+        "DC2-150"
       ]
     },
     {
@@ -82,7 +77,6 @@
       "issues": [
         "DC2-131",
         "DC2-151",
-        "DC2-A-96",
         "DC2-A-126"
       ]
     },
@@ -91,8 +85,6 @@
       "status": "supported",
       "issues": [
         "DC2-133",
-        "DC2-134",
-        "DC2-A-96",
         "DC2-A-130"
       ]
     },
@@ -122,9 +114,7 @@
     {
       "id": "block-03b-alcohol-free-filter",
       "status": "supported",
-      "issues": [
-        "DC2-A-96"
-      ]
+      "issues": []
     },
     {
       "id": "core-21-logging-transparency-deletion",
@@ -191,7 +181,6 @@
       "status": "supported",
       "reason": "data not available: gastbot_variables",
       "issues": [
-        "DC2-A-84",
         "DC2-A-112"
       ]
     }

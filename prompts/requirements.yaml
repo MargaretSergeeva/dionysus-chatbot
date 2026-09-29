@@ -23,14 +23,14 @@ requirements:
   FR-01:
     title: Answers in 6 languages (DE, EN, NL, DA, IT, FR)
     source: DC2-A-1 §3
-    note: At least DE, EN, NL, DA, IT, FR — tested. Full build (Dify) answers in any language the guest uses (CORE 04). Gastbot — languages are a platform setting (Reply Translation); more can be selected from its list, but not all; unsupported languages fall back to German. Links always go to German pages (rheingau.com is German-only).
+    note: At least DE, EN, NL, DA, IT, FR — tested. Full build (Dify) answers in any language the guest uses (module 1.4). Gastbot — languages are a platform setting (Reply Translation); more can be selected from its list, but not all; unsupported languages fall back to German. Links always go to German pages (rheingau.com is German-only).
   FR-02:
     title: Informal "du"
     source: DC2-A-1 §3 (client decision 09.09.2026)
   FR-03:
     title: Answers based on the data link to their source (the rheingau.com page, or the wine's source); answers without a source — greeting, clarifying question, "no information" — need no link
     source: DC2-A-1 §3, §11 (data provenance)
-    note: Merged with former CR-05 "answers traceable to their source (provenance)" on 28.09.2026 — same rule, same module (now CORE 17).
+    note: Merged with former CR-05 "answers traceable to their source (provenance)" on 28.09.2026 — same rule, same module (now module 5.1).
   FR-04:
     title: "Wine finder: grape, wine type, dryness, award, winery"
     source: DC2-A-1 §3, §6
@@ -58,22 +58,22 @@ requirements:
     source: decision 28.09.2026
   FR-13:
     title: Questions about privacy, legal information, newsletter, partner service, press and jobs are answered from the matching rheingau.com pages, with a link
-    source: decision 29.09.2026 (replaces the out-of-scope note in DC2-A-1 §6 and BLOCK 11 rule 2)
-    note: The 12 pages (Datenschutz, Datenschutzerklärung, Impressum, Whistleblowing, 4 partner pages, 2 press pages, newsletter, jobs) are still in rheingau_excluded_registry and must be loaded (text, chunks, embeddings) — see the YouTrack task under DC2-142. Until then the deletion answer in CORE 21 carries the Datenschutz link directly.
+    source: decision 29.09.2026 (replaces the out-of-scope note in DC2-A-1 §6 and module 2.8 rule 2)
+    note: The 12 pages (Datenschutz, Datenschutzerklärung, Impressum, Whistleblowing, 4 partner pages, 2 press pages, newsletter, jobs) are still in rheingau_excluded_registry and must be loaded (text, chunks, embeddings) — see the YouTrack task under DC2-142. Until then the deletion answer in module 3.5 carries the Datenschutz link directly.
 
   # ── Compliance ─────────────────────────────────────────────
   CR-01:
     title: Do not process user-submitted personal data
     source: DC2-A-1 §3, §11 (DC2-107)
-    note: Dionysus is a RAG-based information assistant, not a data controller for registration flows — the same "not a booking agent" logic as CORE 10. Keeping PII entirely out of model input/output avoids creating a GDPR processing obligation the bot isn't built to handle. This guardrail is separate from, and narrower than, the logging transparency and deletion handling (CR-02, CORE 21), which covers Dionysus's own conversation logging. (Moved out of CORE 03 on 28.09.2026.)
+    note: Dionysus is a RAG-based information assistant, not a data controller for registration flows — the same "not a booking agent" logic as module 3.6. Keeping PII entirely out of model input/output avoids creating a GDPR processing obligation the bot isn't built to handle. This guardrail is separate from, and narrower than, the logging transparency and deletion handling (CR-02, module 3.5), which covers Dionysus's own conversation logging. (Moved out of module 3.1 on 28.09.2026.)
   CR-02:
     title: "GDPR: honest about chat logging, no fake deletion"
     source: DC2-A-1 §11 (DC2-100, DC2-101, DC2-109)
-    note: Consent to save conversations for service improvement is collected site-level, before the chat widget loads — not by Dionysus in the dialogue; so the bot never asks permission to log. Retention period not yet defined (DC2-100). "Never ask for personal data" moved from CORE 21 to CORE 03 on 29.09.2026.
+    note: Consent to save conversations for service improvement is collected site-level, before the chat widget loads — not by Dionysus in the dialogue; so the bot never asks permission to log. Retention period not yet defined (DC2-100). "Never ask for personal data" moved from module 3.5 to 3.1 on 29.09.2026.
   CR-03:
     title: No special-category (health) data
     source: DC2-A-1 §11
-    note: GDPR Art. 9 special-category consent is a much higher legal bar than ordinary processing. A feature that does not need health data avoids engaging with it structurally instead of building a consent flow to justify collecting it. (Rationale moved out of CORE 22 on 28.09.2026.)
+    note: GDPR Art. 9 special-category consent is a much higher legal bar than ordinary processing. A feature that does not need health data avoids engaging with it structurally instead of building a consent flow to justify collecting it. (Rationale moved out of module 3.2 on 28.09.2026.)
   CR-04:
     title: Guests are told they are talking to an AI (EU AI Act Art. 50)
     source: DC2-A-1 §11, DC2-A-106 (DC2-98)
@@ -81,7 +81,7 @@ requirements:
     title: Consent to save conversations is collected before the chat starts (site-level notice before the widget loads); the bot itself never asks for it
     source: DC2-A-1 §11 (DC2-101)
     prompt: false   # met in the frontend / privacy notice
-    note: The bot's answer "yes, saved to improve the service" (CORE 21) is only true once this notice is live (DC2-101). Background in the CR-02 note.
+    note: The bot's answer "yes, saved to improve the service" (module 3.5) is only true once this notice is live (DC2-101). Background in the CR-02 note.
 
   # ── Quality ────────────────────────────────────────────────
   QR-01:

@@ -83,6 +83,9 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Blocks** BLOCK 01: point 6 (award year and institution) removed; the award row in the field table already says medal level and points
 - **Blocks** BLOCK 06 Storytelling: purpose and moment stated (one short story about a sight, winery or tasting stand in the same place, with link); facts only from retrieved pages; BLOCK 06b cross-reference removed
 - **Core** CORE 23 checks reordered (alcohol-free safety first, then intent, entity, recommendations, links, language, relevance)
+- **Structure** modules regrouped into sections that follow Gastbot's prompt recommendations (DC2-A-136): 1 Role · 2 Sources & data · 3 Key rules · 4 Behavior · 5 Style & format · 6 Final check. Labels are now `section.module` (e.g. 3.3); files live in `prompts/modules/<section>/`; the assembler writes a section heading before the first module of each section (`prompts/sections.yaml`); test-question codes and requirement notes remapped; module ids unchanged
+- **Structure** historical anchors moved next to storytelling (2.9 → 4.4); missing information 2.10 → 2.9; complaints 4.4 → 4.5
+- **Naming convention** prompt text no longer names tables, views or functions (2.4 Wines, 2.8 Regional projects, 4.4 Anchors reworded); new gate check; 2.1 Grounding now names the source (rheingau.com passages with the link of their page) and is linked to the chunks table
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

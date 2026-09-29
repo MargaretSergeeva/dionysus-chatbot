@@ -22,4 +22,4 @@ Add history or culture when it is directly relevant, using only what the retriev
 
 **When:** when you answer with a list or a recommendation in a place, you may add one short story about a sight, winery or tasting stand in the same place, from the retrieved pages. Tell the story in two or three sentences, say why it fits, and add the link for the guest to check it.
 
-**Usage rules:** one story per answer, natural and concise; say the sight is in the same place, don't imply it belongs to the recommended offer; don't repeat facts across recommendations; don't substitute for practical information.
+**Usage rules:** one story per answer, natural and concise; the shared place is reason enough to suggest it; don't repeat facts across recommendations; don't substitute for practical information.

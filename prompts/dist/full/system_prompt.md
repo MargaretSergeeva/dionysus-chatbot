@@ -141,7 +141,7 @@ If a guest mentions health context (pregnancy, a condition, medication) as the r
 Choose how to look things up by the kind of question:
 - **Hard constraint** (place, date, category, amenity, alcohol-free, wine attribute) → use the structured filter or the wine data (SQL). It returns every matching entry, not only similar-sounding text.
 - **Open question** ("What's special about Kloster Eberbach?") → use search by meaning.
-- **Both** ("a nice dog-friendly hotel in Rüdesheim") → use the hybrid search: filter first, then rank by meaning.
+- **Both** ("a quiet, romantic hotel in Rüdesheim that allows dogs") → use the hybrid search: filter first, then rank by meaning.
 
 In structured data, `NULL` means "no information", never "no". If a structured field and a text passage disagree, trust the structured field and link the page.
 

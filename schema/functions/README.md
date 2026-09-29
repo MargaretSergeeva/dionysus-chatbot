@@ -11,7 +11,7 @@ logic for when the bot/Dify workflow should call which one: **DC2-A-96**.
 | `match_rheingau_chunks_filtered` | hybrid (filter + semantic) | DC2-131, DC2-132 | Combined questions ("a nice pet-friendly hotel in Rüdesheim") |
 | `filter_public_registry_pages` | pure structured filter, fixed scope | DC2-134, DC2-136 | Partner/press/newsletter/jobs questions — see below |
 
-All three are called from Dify as RPC/HTTP tools against the Supabase
+All four are called from Dify as RPC/HTTP tools against the Supabase
 PostgREST endpoint (`/rest/v1/rpc/<function_name>`), not embedded as
 application code — there is no separate retrieval backend in this repo.
 
@@ -30,9 +30,9 @@ DC2-132) — e.g. `"Eltville-Erbach"`, not free text and not the raw
 
 ## Tables outside these functions' scope
 
-Two tables hold pages that none of the three functions above ever return
-(their `WHERE rp.is_active` clause doesn't reach them — they aren't even in
-`rheingau_pages`, except the first):
+Two tables hold pages that the retrieval functions above never return from the
+bot's normal search (excluded pages are not in `rheingau_pages` at all; the
+first item is the exception):
 
 - `category = 'regional_project'` rows in `rheingau_pages` (DC2-133,
   `../data/regional_projects.sql`) — Zweckverband Rheingau regional-park

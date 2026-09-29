@@ -251,7 +251,7 @@ def lint_platform_variables(modules: list[Module], target: str, variables: list[
 def lint_physical_names(modules: list[Module], registry: dict) -> list[str]:
     """Prompt text never names tables, views or functions (DC2-142): they differ per build; the module header carries them.
     Column names in rule tables are allowed (the shared contract). Plain words like `wines` are not checked."""
-    names = [n for n in registry["sources"] if "_" in n] + ["rheingau_excluded_registry", "match_rheingau_chunks", "match_rheingau_chunks_filtered", "filter_public_registry_pages"]
+    names = [n for n in registry["sources"] if "_" in n] + ["rheingau_excluded_registry", "match_rheingau_chunks", "match_rheingau_chunks_filtered"]
     errors = []
     for m in modules:
         for name in names:

@@ -88,6 +88,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Naming convention** prompt text no longer names tables, views or functions (2.4 Wines, 2.8 Regional projects, 4.4 Anchors reworded); new gate check; 2.1 Grounding now names the source (rheingau.com passages with the link of their page) and is linked to the chunks table
 - **Legal / partner / press / newsletter / jobs pages** (DC2-152) will be loaded into the search data (`scripts/add_excluded_pages_back.py`, manual GitHub workflow) and found by normal search; no registry module. 3.5 now names both privacy pages (`/datenschutz`, `/datenschutzerklaerung`)
 - **Module headers slimmed** (29.09.2026): only `id`, `title`, `status`, `data` (tables/views), `via` (functions), `fields`, `requirements`, `issues` (issues/articles for this module only) and, where needed, `gastbot_covers`. Label and order come from the file name; origin and data notes moved to "Module history" below. 2.8 renamed REGIONAL PROJECTS (the non-public pages part is gone)
+- **Registry function dropped** (DC2-152, 29.09.2026): the 12 legal / partner / press / newsletter / jobs pages are now in `rheingau_pages` and the chunks (1,935 pages, 9,223 chunks) and were removed from `rheingau_excluded_registry`; `filter_public_registry_pages()` is dropped
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

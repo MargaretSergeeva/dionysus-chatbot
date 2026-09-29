@@ -82,6 +82,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **Blocks** BLOCK 01 point 1 shortened (~60 to ~30 words, same rules)
 - **Blocks** BLOCK 01: point 6 (award year and institution) removed; the award row in the field table already says medal level and points
 - **Blocks** BLOCK 06 Storytelling: purpose and moment stated (one short story about a sight, winery or tasting stand in the same place, with link); facts only from retrieved pages; BLOCK 06b cross-reference removed
+- **Core** CORE 23 checks reordered (alcohol-free safety first, then intent, entity, recommendations, links, language, relevance)
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

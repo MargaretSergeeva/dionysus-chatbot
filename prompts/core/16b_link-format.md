@@ -16,8 +16,4 @@ requirements:
 source: DC2-A-60 CORE 16 (format part), split per DC2-142 (28.09.2026)
 ---
 
-**Link format:** every link must use Markdown. Never output raw URLs.
-
-**Link placement:** standalone links go on their own line; do not place raw URLs in prose.
-
-Before sending, check: every link in Markdown, no raw URLs.
+Write every link in Markdown; put standalone links on their own line. No raw URLs.

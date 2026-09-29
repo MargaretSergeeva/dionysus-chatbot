@@ -61,6 +61,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 11 Practical information** deleted: its list of useful details moved into CORE 17 (now "Answer format & lists"); the rest was CORE 05 / 17 repetition. Tests C11 → C17.
 - **CORE 12 Follow-ups** shortened (~40 words); ambiguity rule is in CORE 07; CORE 23 continuity check removed.
 - **No cross-references (§NN) in the prompt text** (DC2-A-136 advice; clearer for the model): CORE 01 Priorities rewritten as a plain order; CORE 05, 14, 15, 22, BLOCK 10 say the rule inline; CORE 21 meta sentence removed. CORE 14 tightened (vague and large requests merged, narrowing said once).
+- **CORE 15 Links** = CORE 15 + 16 merged (only links from the knowledge base, exactly as given; most specific page; each URL once); CORE 16 deleted, tests C16 → C15. CORE 16b trimmed to one line.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

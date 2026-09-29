@@ -30,7 +30,7 @@ requirements:
   FR-03:
     title: Answers based on the data link to their source (the rheingau.com page, or the wine's source); answers without a source — greeting, clarifying question, "no information" — need no link
     source: DC2-A-1 §3, §11 (data provenance)
-    note: Merged with former CR-05 "answers traceable to their source (provenance)" on 28.09.2026 — same rule, same modules (CORE 15, 16).
+    note: Merged with former CR-05 "answers traceable to their source (provenance)" on 28.09.2026 — same rule, same module (CORE 15).
   FR-04:
     title: "Wine finder: grape, wine type, dryness, award, winery"
     source: DC2-A-1 §3, §6

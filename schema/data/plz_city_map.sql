@@ -71,7 +71,7 @@ WITH extracted AS (
       '(\d{5})\s+(Rüdesheim(?: am Rhein)?|Eltville(?:-\w+)?(?: am Rhein)?|Geisenheim|Oestrich-Winkel(?: Hallgarten)?|Lorch|Kiedrich|Walluf|Hochheim(?: am Main)?|Flörsheim(?: am Main)?|Wiesbaden|Johannisberg|Hattenheim|Erbach|Rauenthal|Winkel|Assmannshausen|Martinsthal|Mittelheim)'
     ))[1] AS plz
   FROM rheingau_pages
-  WHERE is_active
+
 )
 UPDATE rheingau_pages rp
 SET city = m.city,

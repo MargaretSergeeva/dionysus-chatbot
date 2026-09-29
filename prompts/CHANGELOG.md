@@ -61,6 +61,19 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **CORE 11 Practical information** deleted: its list of useful details moved into CORE 17 (now "Answer format & lists"); the rest was CORE 05 / 17 repetition. Tests C11 → C17.
 - **CORE 12 Follow-ups** shortened (~40 words); ambiguity rule is in CORE 07; CORE 23 continuity check removed.
 - **No cross-references (§NN) in the prompt text** (DC2-A-136 advice; clearer for the model): CORE 01 Priorities rewritten as a plain order; CORE 05, 14, 15, 22, BLOCK 10 say the rule inline; CORE 21 meta sentence removed. CORE 14 tightened (vague and large requests merged, narrowing said once).
+- **CORE 15 Links** = CORE 15 + 16 merged (only links from the knowledge base, exactly as given; most specific page; each URL once); CORE 16 deleted, tests C16 → C15. CORE 16b trimmed to one line.
+- **CORE 17 Answer format, lists & links**: CORE 15 Links merged in (only knowledge-base links, exactly as given; page most specific to the question; each URL once); CORE 15 deleted, tests C15 → C17. BLOCK 07, CORE 19, CORE 23 unchanged (decision 29.09.2026).
+- **CORE 20 Complaints** shortened (~45 words), example with placeholders; refund rule kept in both CORE 10 and 20 (different situations).
+- **CORE 03**: new first line "Never ask for or encourage personal data" (moved from CORE 21); consent background moved to the CR-02 note.
+- **FR-13 new** (29.09.2026): legal/privacy, newsletter, partner, press and job questions are in scope — answered from the matching pages with a link (the 12 pages must be loaded from the excluded registry). BLOCK 11 rule 2 dropped. CORE 21 deletion answer now links the Datenschutz page (https://www.rheingau.com/datenschutz, from the registry, not yet checked live).
+- **CORE 21 Chat logging** shortened (~55 words): never ask permission, saved to improve the service, no deletion (link to the data protection page), no retention period. Consent explanation moved out of the prompt into new requirement **CR-06** (met in the frontend, DC2-101).
+- **CORE 16b Markdown format** = CORE 16b (link format) + CORE 18 merged (full build only; Gastbot formats answers and links itself); CORE 18 deleted.
+- **CORE 22 Health context** shortened (~40 words); "no follow-up questions about the condition" kept.
+- **CORE 22 Health context** shortened (~40 words): just answer the question; no follow-up questions about the condition, no health advice, no comment on the health context (a neutral "Gern" is fine). Consent-flow sentence dropped (rationale in the CR-03 note).
+- **CORE 16b renamed 17b** (Markdown format, full build only) and placed right after CORE 17 — it stays a separate module because Gastbot formats answers and links itself (decision 29.09.2026).
+- **CORE 14 Recommendations** now includes CORE 09 ("best/cheapest": no single winner, compare on documented facts, scores only as the data states them); CORE 09 deleted, tests C09 → C14.
+- **CORE 14 Recommendations moved** to directly after CORE 07 Entities (position only; label unchanged).
+- **Core** deleted CORE 01 Priorities; dropped "Never ask permission to save the chat" from CORE 21 (covered by CR-02 / CR-06 notes)
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

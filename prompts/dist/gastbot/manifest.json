@@ -1,17 +1,12 @@
 {
   "target": "gastbot",
   "version": "prompt-v1.2",
-  "chars": 11840,
+  "chars": 9598,
   "included": [
     {
       "id": "core-00-preamble",
       "status": "supported",
       "source": "DC2-A-60 preamble"
-    },
-    {
-      "id": "core-01-core-priorities-principles",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 01"
     },
     {
       "id": "core-02-role-persona-tone",
@@ -44,9 +39,9 @@
       "source": "DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and \"no new entities\" dropped (search + CORE 05 cover them)"
     },
     {
-      "id": "core-09-recommendations-superlatives",
+      "id": "core-14-general-questions",
       "status": "supported",
-      "source": "DC2-A-60 CORE 09 + CORE 13 merged 28.09.2026 (DC2-142)"
+      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
     },
     {
       "id": "core-10-dates-time",
@@ -59,24 +54,9 @@
       "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
     },
     {
-      "id": "core-14-general-questions",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 14 + BLOCKS 08 + DC2-A-146 (recommendation function) + DC2-A-120 (large result sets), merged 28.09.2026"
-    },
-    {
-      "id": "core-15-link-selection-decision-logic",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 15"
-    },
-    {
-      "id": "core-16-link-selection-baseline-url-integrity",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 16 (URL part); link format split into 16b per DC2-142"
-    },
-    {
       "id": "core-17-lists-response-format",
       "status": "supported",
-      "source": "DC2-A-60 CORE 17"
+      "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
     },
     {
       "id": "core-19-missing-information-proactive-suggestion",
@@ -91,12 +71,12 @@
     {
       "id": "core-21-logging-transparency-deletion",
       "status": "partially",
-      "source": "DC2-A-60 CORE 21"
+      "source": "DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06"
     },
     {
       "id": "core-22-special-category-data-health-avoidance",
       "status": "supported",
-      "source": "DC2-A-60 CORE 22"
+      "source": "DC2-A-60 CORE 22, shortened 29.09.2026 (DC2-142): rationale in the CR-03 note"
     },
     {
       "id": "block-03-alcohol-free-driver-friendly-safety-over",
@@ -133,15 +113,9 @@
       "deps": []
     },
     {
-      "id": "core-16b-link-format",
+      "id": "core-17b-markdown-format",
       "status": "supported",
-      "reason": "platform-covered (conflict): Gastbot Links Manager formats links (DC2-A-114)",
-      "deps": []
-    },
-    {
-      "id": "core-18-response-format-baseline",
-      "status": "supported",
-      "reason": "platform-covered (duplicate): Gastbot built-in (documented, not yet verified live); left out of the Gastbot build so the live test shows whether Gastbot provides it (decision 28.09.2026)",
+      "reason": "platform-covered (conflict): Gastbot formats answers in Markdown and its Links Manager formats links (DC2-A-114)",
       "deps": []
     },
     {

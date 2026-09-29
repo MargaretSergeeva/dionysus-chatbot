@@ -1,17 +1,12 @@
 {
   "target": "full",
   "version": "prompt-v1.2",
-  "chars": 20592,
+  "chars": 18161,
   "included": [
     {
       "id": "core-00-preamble",
       "status": "supported",
       "source": "DC2-A-60 preamble"
-    },
-    {
-      "id": "core-01-core-priorities-principles",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 01"
     },
     {
       "id": "core-02-role-persona-tone",
@@ -49,9 +44,9 @@
       "source": "DC2-A-60 CORE 07, shortened 28.09.2026 (DC2-142): synonym matching and \"no new entities\" dropped (search + CORE 05 cover them)"
     },
     {
-      "id": "core-09-recommendations-superlatives",
+      "id": "core-14-general-questions",
       "status": "supported",
-      "source": "DC2-A-60 CORE 09 + CORE 13 merged 28.09.2026 (DC2-142)"
+      "source": "DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142)"
     },
     {
       "id": "core-10-dates-time",
@@ -64,34 +59,14 @@
       "source": "DC2-A-60 CORE 12, shortened 28.09.2026 (DC2-142)"
     },
     {
-      "id": "core-14-general-questions",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 14 + BLOCKS 08 + DC2-A-146 (recommendation function) + DC2-A-120 (large result sets), merged 28.09.2026"
-    },
-    {
-      "id": "core-15-link-selection-decision-logic",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 15"
-    },
-    {
-      "id": "core-16-link-selection-baseline-url-integrity",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 16 (URL part); link format split into 16b per DC2-142"
-    },
-    {
-      "id": "core-16b-link-format",
-      "status": "supported",
-      "source": "DC2-A-60 CORE 16 (format part), split per DC2-142 (28.09.2026)"
-    },
-    {
       "id": "core-17-lists-response-format",
       "status": "supported",
-      "source": "DC2-A-60 CORE 17"
+      "source": "DC2-A-60 CORE 17 + CORE 11 list + CORE 15/16 links, merged 28–29.09.2026 (DC2-142)"
     },
     {
-      "id": "core-18-response-format-baseline",
+      "id": "core-17b-markdown-format",
       "status": "supported",
-      "source": "DC2-A-60 CORE 18"
+      "source": "DC2-A-60 CORE 16 (format part) + CORE 18 merged 29.09.2026 (DC2-142)"
     },
     {
       "id": "core-19-missing-information-proactive-suggestion",
@@ -106,12 +81,12 @@
     {
       "id": "core-21-logging-transparency-deletion",
       "status": "partially",
-      "source": "DC2-A-60 CORE 21"
+      "source": "DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06"
     },
     {
       "id": "core-22-special-category-data-health-avoidance",
       "status": "supported",
-      "source": "DC2-A-60 CORE 22"
+      "source": "DC2-A-60 CORE 22, shortened 29.09.2026 (DC2-142): rationale in the CR-03 note"
     },
     {
       "id": "block-00-retrieval-sql-and-search",
@@ -161,7 +136,7 @@
     {
       "id": "block-11-regional-projects-non-public-pages",
       "status": "supported",
-      "source": "DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 out of scope per DC2-A-1"
+      "source": "DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 (partner/press/newsletter/jobs) dropped 29.09.2026: those pages come back into the data and are covered by CORE 05 / 17 (FR-13)"
     },
     {
       "id": "core-23-final-response-check",

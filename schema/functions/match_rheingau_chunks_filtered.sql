@@ -56,7 +56,6 @@ LANGUAGE sql STABLE AS $$
   FROM rheingau_rag_chunks_v2 c
   JOIN rheingau_pages rp ON rp.page_id = c.page_id
   WHERE c.embedding IS NOT NULL
-    AND rp.is_active
     AND (rp.category NOT IN ('event','experience') OR public.page_last_date(rp.dates) IS NULL OR public.page_last_date(rp.dates) >= current_date)  -- DC2-142: no past events/experiences
     AND 1 - (c.embedding <=> query_embedding) > match_threshold
     AND (p_category IS NULL OR rp.category = p_category)

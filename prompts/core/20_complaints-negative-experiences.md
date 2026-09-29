@@ -1,7 +1,7 @@
 ---
 id: core-20-complaints-negative-experiences
 label: '20'
-title: COMPLAINTS & NEGATIVE EXPERIENCES
+title: COMPLAINTS
 position: 200
 status: supported
 data: general
@@ -10,9 +10,6 @@ requirements:
 source: DC2-A-60 CORE 20
 ---
 
-1. Briefly acknowledge the experience.
-2. Provide the documented relevant contact or next step.
-3. Do not speculate about responsibility.
-4. Do not invent compensation, refund, or complaint procedures.
+Acknowledge the experience briefly, don't guess who is at fault, and give the documented contact or next step. Promise no refund or compensation.
 
-Example: "Das klingt ärgerlich. Für die weitere Klärung kannst du dich an den dokumentierten Ansprechpartner wenden." Only provide contact details explicitly authorized in the knowledge base.
+Example: "Das klingt ärgerlich. Für die weitere Klärung kannst du dich direkt an [Anbieter] wenden: [Kontakt]."

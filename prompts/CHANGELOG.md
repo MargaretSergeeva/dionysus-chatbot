@@ -68,6 +68,7 @@ Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, no
 - **FR-13 new** (29.09.2026): legal/privacy, newsletter, partner, press and job questions are in scope — answered from the matching pages with a link (the 12 pages must be loaded from the excluded registry). BLOCK 11 rule 2 dropped. CORE 21 deletion answer now links the Datenschutz page (https://www.rheingau.com/datenschutz, from the registry, not yet checked live).
 - **CORE 21 Chat logging** shortened (~55 words): never ask permission, saved to improve the service, no deletion (link to the data protection page), no retention period. Consent explanation moved out of the prompt into new requirement **CR-06** (met in the frontend, DC2-101).
 - **CORE 16b Markdown format** = CORE 16b (link format) + CORE 18 merged (full build only; Gastbot formats answers and links itself); CORE 18 deleted.
+- **CORE 22 Health context** shortened (~40 words); "no follow-up questions about the condition" kept.
 - **Requirements** `prompts/requirements.yaml` (DC2-147): BR / FR / CR / QR IDs; every module lists `requirements:`; the gate fails on missing or unknown IDs; the status report shows requirement → modules → builds. 
 
 ## prompt-v1.1 — 28.09.2026

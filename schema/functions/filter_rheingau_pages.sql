@@ -36,6 +36,8 @@ CREATE OR REPLACE FUNCTION public.filter_rheingau_pages(
   p_drying_room_available boolean DEFAULT NULL,
   p_hiking_certified boolean DEFAULT NULL,
   p_accessibility_certified boolean DEFAULT NULL,
+  p_alcohol_free_offer boolean DEFAULT NULL,  -- DC2-142, 28.09.2026
+  p_transport_type text DEFAULT NULL,  -- DC2-142: station, ferry, boat_landing, cable_car, parking, camper_stop, ebike_charging, taxi, info
   p_limit integer DEFAULT 20
 )
 RETURNS TABLE (
@@ -65,7 +67,9 @@ RETURNS TABLE (
   luggage_transport_available boolean,
   drying_room_available boolean,
   hiking_certified boolean,
-  accessibility_certified boolean
+  accessibility_certified boolean,
+  alcohol_free_offer boolean,
+  transport_type text
 )
 LANGUAGE sql STABLE AS $$
   SELECT
@@ -76,9 +80,10 @@ LANGUAGE sql STABLE AS $$
     rp.nonsmoking, rp.group_friendly, rp.elevator_available, rp.ev_charging_available,
     rp.bike_rental_available, rp.vegetarian_available, rp.gluten_free_available,
     rp.luggage_transport_available, rp.drying_room_available, rp.hiking_certified,
-    rp.accessibility_certified
+    rp.accessibility_certified, rp.alcohol_free_offer, rp.transport_type
   FROM rheingau_pages rp
   WHERE rp.is_active
+    AND (rp.category NOT IN ('event','experience') OR public.page_last_date(rp.dates) IS NULL OR public.page_last_date(rp.dates) >= current_date)  -- DC2-142: no past events/experiences
     AND (p_category IS NULL OR rp.category = p_category)
     AND (p_page_type IS NULL OR rp.page_type = p_page_type)
     AND (p_city IS NULL OR rp.city = p_city)
@@ -100,13 +105,15 @@ LANGUAGE sql STABLE AS $$
     AND (p_drying_room_available IS NULL OR rp.drying_room_available = p_drying_room_available)
     AND (p_hiking_certified IS NULL OR rp.hiking_certified = p_hiking_certified)
     AND (p_accessibility_certified IS NULL OR rp.accessibility_certified = p_accessibility_certified)
+    AND (p_alcohol_free_offer IS NULL OR rp.alcohol_free_offer = p_alcohol_free_offer)
+    AND (p_transport_type IS NULL OR rp.transport_type = p_transport_type)
   ORDER BY rp.title
   LIMIT GREATEST(p_limit, 1);
 $$;
 
 COMMENT ON FUNCTION public.filter_rheingau_pages(
   text, text, text, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean,
-  boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, integer
+  boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, text, integer
 ) IS
   'Structured-filter retrieval (DC2-131, city param DC2-132), companion to match_rheingau_chunks
    (DC2-119). Every boolean/city param left NULL is not filtered on; a true/false param only

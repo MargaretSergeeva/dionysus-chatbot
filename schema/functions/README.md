@@ -9,8 +9,9 @@ logic for when the bot/Dify workflow should call which one: **DC2-A-96**.
 | `match_rheingau_chunks` | pure semantic (RAG) | DC2-119 | Open-ended / descriptive questions |
 | `filter_rheingau_pages` | pure structured filter | DC2-131, DC2-132 | List/filter questions over amenity flags, category & city — needs a complete, exact result set |
 | `match_rheingau_chunks_filtered` | hybrid (filter + semantic) | DC2-131, DC2-132 | Combined questions ("a nice pet-friendly hotel in Rüdesheim") |
+| `filter_public_registry_pages` | pure structured filter, fixed scope | DC2-134, DC2-136 | Partner/press/newsletter/jobs questions — see below |
 
-All three are called from Dify as RPC/HTTP tools against the Supabase
+All four are called from Dify as RPC/HTTP tools against the Supabase
 PostgREST endpoint (`/rest/v1/rpc/<function_name>`), not embedded as
 application code — there is no separate retrieval backend in this repo.
 
@@ -26,3 +27,28 @@ exclude every unconfirmed row.
 *canonical* value in `rheingau_pages.city` (see `../data/plz_city_map.sql`,
 DC2-132) — e.g. `"Eltville-Erbach"`, not free text and not the raw
 `cities` column, which mixes real towns with the "Rheingau" region tag.
+
+## Tables outside these functions' scope
+
+Two tables hold pages that the retrieval functions above never return from the
+bot's normal search (excluded pages are not in `rheingau_pages` at all; the
+first item is the exception):
+
+- `category = 'regional_project'` rows in `rheingau_pages` (DC2-133,
+  `../data/regional_projects.sql`) — Zweckverband Rheingau regional-park
+  development projects. Not excluded, just a distinct category with its own
+  `project_status`/`expected_completion` fields; a future "what's planned in
+  the region" routing case could query these via `filter_rheingau_pages`
+  with `p_category='regional_project'`, but no such Dify routing exists yet.
+- `rheingau_excluded_registry` (DC2-134, `../data/excluded_pages_registry.sql`)
+  — a separate table (not `rheingau_pages`) for pages that stay out of the
+  tourist-facing retrieval entirely. Of its 9 `registry_category` values,
+  only 4 are queryable at all — `partner_area`, `press_area`, `newsletter`,
+  `jobs` — real content someone could legitimately ask the bot about
+  (brochures, certification, ad-code guidelines, newsletter signup, job
+  openings). `filter_public_registry_pages()` (DC2-136) is the *only*
+  function that touches this table, and it always scopes to exactly those
+  4 categories — there's no parameter to widen it. The other 5 categories
+  (`legal`, `organisation`, `internal`, `technical`, `no_content`) are
+  unreachable by design: checked case by case, genuinely nothing to answer
+  with (see DC2-A-130 Regel 3 for the per-category reasoning).

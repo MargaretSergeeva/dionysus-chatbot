@@ -1,5 +1,10 @@
 # Prompt changelog
 
+## Gastbot V.1 follow-up — 29.09.2026 (evening)
+
+- **`wines_enriched` columns renamed to the German labels of the wine page** (Supabase migration `wines_enriched_german_columns`; base tables unchanged): erzeuger → weingut, erzeuger_ort → ort, rebsorte_normalized → rebsorte (raw → rebsorte_original), weinart_normalized → weinart (raw → weinart_original), dryness_de → geschmacksrichtung, body_de → körper, qualitaetsstufe → qualitätsstufe, praemierung → prämierung, lage_weinberg → lage, alkohol_pct → alkohol, quelle_url → quelle. `dryness_en` and `body_en` dropped (the bot translates). Lowercase umlaut names need no quotes in Postgres.
+- Why: the prompt, the Gastbot wine page and the full build now use one set of names. Module 2.4 updated at the source (the direct edit of `dist/gastbot` in d7406ae is now built from the module); `data_sources.yaml`, `build_wine_page.py` and the table page follow.
+
 ## prompt-v1.2 — 28.09.2026
 
 Start of the data-linked prompt rework (**DC2-142**): data lives in Supabase, not in prompt text.

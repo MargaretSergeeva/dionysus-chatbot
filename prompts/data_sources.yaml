@@ -45,8 +45,8 @@ sources:
 
   wines_enriched:
     kind: view
-    fields: [weinname, weinname_normalized, synonyms, erzeuger, erzeuger_ort, rebsorte_normalized, weinart_normalized, qualitaetsstufe, lage_weinberg, jahrgang, praemierung, bewertung, alkohol_pct, restzucker_g_l, saeure_g_l, dryness_de, dryness_en, body_de, body_en, quelle_url]
-    note: single source the bot reads for wines = wines + wine_dryness + wine_body (schema/views/wines_enriched.sql); modules use this, not the base tables
+    fields: [weinname, weinname_normalized, synonyms, weingut, ort, rebsorte, weinart, qualitätsstufe, lage, jahrgang, prämierung, bewertung, alkohol, restzucker_g_l, saeure_g_l, geschmacksrichtung, körper, quelle]
+    note: single source the bot reads for wines = wines + wine_dryness + wine_body (schema/views/wines_enriched.sql); modules use this, not the base tables; column names = German labels on the wine page (29.09.2026)
     docs: DC2-A-102
     builds: [full, gastbot]
 

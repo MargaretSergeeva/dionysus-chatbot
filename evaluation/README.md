@@ -77,6 +77,7 @@ reviewed Excel back:
    python scripts/eval/review_xlsx.py import <file.xlsx> --out evaluation/review/<run>__reviewed.csv
 ```
 
+- **Question count: 125 (confirmed 30.09.2026).** Rozaliia's "120" was an outdated number; the repo set is the reference for all runs.
 - **Fixed IDs**: `id` in `gastbot_v1_questions.csv` never changes across runs. `python scripts/eval/questions_tool.py compare <file>` lists IDs/texts that differ from another file (Margarita's Excel, Rozaliia's 120). The repo has 125; retire a row with `origin=retired` instead of deleting.
 - **Reviewer split**: column `reviewer` (63 Margarita / 62 Oksana, balanced per category). Only empty cells are filled by `questions_tool.py assign`, so assignments stay stable.
 - **Reference data**: `expected_answer` and `key_facts` (`;`-separated) per question — still empty; fill them for the judge (and for reviewers' ideal answers).

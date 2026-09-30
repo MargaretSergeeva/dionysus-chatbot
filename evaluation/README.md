@@ -87,6 +87,10 @@ reviewed Excel back:
 - Intake accepts CSV/XLSX with an ID column (`question_id`, `id`, `ID`) and an answer column (`answer`, `actual_answer`, `Antwort`); it stops on unknown/duplicate/missing IDs.
 - Setup: `pip install -r evaluation/requirements.txt`. Older flat run files (`runs/gastbot_2026-09-29_quick.*`) stay as they are.
 
+### Dify runs (Margarita)
+
+`python scripts/eval/dify_runner.py --version v1.0 --prompt-file prompts/dify/prompt-v.1.0_Dify.md --prompt-tag prompt-v.1.0_Dify` runs all questions through the Dify API into the same run format. Console setup and API key: `prompts/dify/SETUP.md`.
+
 ### Private judge (Margarita only)
 
 `rubric.md` (version in its header) + `python scripts/eval/judge.py --run <run csv>` → `judge/<track>/<ver>__<date>.judge.csv` with the same fields as the Excel plus `needs_manual` / `manual_reason`. Model and rubric version + hash are logged in the `.judge.meta.json`. Not shared with the team. Prices, dates and counts are flagged for Supabase/manual check, never trusted. Calibrate per run: `calibrate.py sample` picks ~10 rows to score by hand, `calibrate.py compare` shows agreement and bias; then adjust the rubric and bump its version.

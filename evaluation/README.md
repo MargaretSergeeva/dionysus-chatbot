@@ -61,3 +61,32 @@ Gastbot has no API access for us yet, so the tests run by hand — on the `gastb
 4. Compare pass rates per category and per module; keep the better build.
 
 The Dify build (`full`) will run the same questions automatically via the Dify API once DC2-138 … DC2-140 are done.
+
+## Review process (from 30.09.2026)
+
+Team side stays Telegram + Excel; Margarita mirrors everything here (source of truth).
+
+```
+Oksana prompt ──► prompts/gastbot/prompt-v.X.Y_Gastbot.md  + git tag prompt-v.X.Y_Gastbot
+Vova runs the fixed question set ──► file via Telegram
+   python scripts/eval/intake.py <file> --track oksana/gastbot/vX.Y --prompt-tag prompt-v.X.Y_Gastbot
+      ──► evaluation/runs/oksana/gastbot/vX.Y__<date>.csv (+ .meta.json)
+   python scripts/eval/review_xlsx.py fill --run <that csv> --split
+      ──► evaluation/review/…__Margarita.xlsx / …__Oksana.xlsx   (send back via Telegram, 50/50 by question_id)
+reviewed Excel back:
+   python scripts/eval/review_xlsx.py import <file.xlsx> --out evaluation/review/<run>__reviewed.csv
+```
+
+- **Fixed IDs**: `id` in `gastbot_v1_questions.csv` never changes across runs. `python scripts/eval/questions_tool.py compare <file>` lists IDs/texts that differ from another file (Margarita's Excel, Rozaliia's 120). The repo has 125; retire a row with `origin=retired` instead of deleting.
+- **Reviewer split**: column `reviewer` (63 Margarita / 62 Oksana, balanced per category). Only empty cells are filled by `questions_tool.py assign`, so assignments stay stable.
+- **Reference data**: `expected_answer` and `key_facts` (`;`-separated) per question — still empty; fill them for the judge (and for reviewers' ideal answers).
+- **Review template**: `templates/review_template.xlsx` (regenerate with `review_xlsx.py template`). Locked: question_id, category, question, answer, reviewer. Editable: score, ideal_answer, fix_type (prompt/Vova/data/links), check_length, check_link_at_end, check_general_vs_specific, comment. **Score is inverted: 1 = super, 5 = bad.** Sheet protection has no password — it prevents accidents only.
+- **Prompt rules as criteria** (Rozaliia): limited length, general link at the end, general question → general answer / specific → specific.
+- **Tracks**: `oksana/gastbot/<ver>` and `margarita/dify/<ver>`; every run stores its prompt tag in the meta file.
+- Intake accepts CSV/XLSX with an ID column (`question_id`, `id`, `ID`) and an answer column (`answer`, `actual_answer`, `Antwort`); it stops on unknown/duplicate/missing IDs.
+- Setup: `pip install -r evaluation/requirements.txt`. Older flat run files (`runs/gastbot_2026-09-29_quick.*`) stay as they are.
+
+### Private judge (Margarita only)
+
+`rubric.md` (version in its header) + `python scripts/eval/judge.py --run <run csv>` → `judge/<track>/<ver>__<date>.judge.csv` with the same fields as the Excel plus `needs_manual` / `manual_reason`. Model and rubric version + hash are logged in the `.judge.meta.json`. Not shared with the team. Prices, dates and counts are flagged for Supabase/manual check, never trusted. Calibrate per run: `calibrate.py sample` picks ~10 rows to score by hand, `calibrate.py compare` shows agreement and bias; then adjust the rubric and bump its version.
+Gastbot vs Dify differences partly come from retrieval (website + PDFs vs Dify knowledge base), not only the prompt.

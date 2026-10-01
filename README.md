@@ -1,91 +1,100 @@
 # Dionysus Chatbot
 
-Data pipeline and RAG chatbot for the Rheingau tourism platform (rheingau.com) — wine-finder search and regional tour/activity discovery.
+RAG chatbot for the Rheingau tourism platform (rheingau.com) — wine-finder search (763 wines) and regional tour/activity discovery, grounded in rheingau.com's own content (1,922 pages) and wine competition data.
 
-Dionysus is a RAG-based chatbot for the Rheingau-Taunus destination management platform, covering wine-finder search (763 wine entries) and regional tour/activity discovery sourced from rheingau.com itself.
+This repo holds the chatbot's source of truth: the modular system prompt, the Supabase schema and retrieval functions, the data/publishing scripts and the test sets.
 
 ## What makes this project distinctive
 
-- **Modular, versioned prompt architecture** — instead of one static system prompt, behavior is built from small, independently-versioned prompt blocks (one file per capability: wine filtering, alcohol-free search, pairing suggestions, etc.), each tagged by data readiness. `scripts/assemble_prompt.py` builds two prompts from the same modules — `full` (Dify) and `gastbot` — so features ship or roll back independently, without touching the rest. See [`prompts/README.md`](prompts/README.md).
-- **Core vs. conditional behavior separation** — always-on behavioral rules (e.g. the PII-handling guardrail) are kept apart from data-dependent prompt blocks, since they don't toggle with data status.
-- **Three-tool PM constellation** — GitHub (code/source of truth), YouTrack DC2 (issues, requirements, phase docs, traceability), Supabase/Postgres+pgvector (curated data + embeddings) — cross-linked by convention (commits reference issue IDs, new files link their YouTrack article and vice versa).
-- **Multilingual retrieval** — DE/EN/NL/DA/IT/FR chatbot answers grounded in semantic search over wine competition data and rheingau.com's own tour/activity content.
-- **Built-in compliance** — EU AI Act risk classification and GDPR documentation live alongside deployment, not bolted on after.
+- **Modular, versioned prompt** — behavior is built from small modules (one file per capability), not one static prompt. `scripts/assemble_prompt.py` builds two prompts from the same modules: `full` (own stack: Dify + Supabase) and `gastbot` (partner platform Gastbot). Each module is gated by data availability and by what the platform already does. See [`prompts/README.md`](prompts/README.md) and [`prompts/CHANGELOG.md`](prompts/CHANGELOG.md). Current version: see `prompts/VERSION`.
+- **Prompt text names no tables** — data is described in words; physical names live in module headers and `prompts/data_sources.yaml`, so a module follows the data when it reaches a new build.
+- **Core vs. conditional behavior** — always-on rules (PII, health data, AI disclosure) are kept apart from data-dependent modules.
+- **Multilingual** — answers in the user's language (DE/EN/NL/DA/IT/FR).
+- **Tests per module** — each test names the prompt modules it checks, so failures group by module (`scripts/check_test_coverage.py` enforces coverage).
+- **Built-in compliance** — EU AI Act and GDPR rules are prompt modules (AI disclosure, PII, logging/deletion), not an afterthought.
 
-## Project management
+## Repo structure
 
-- Issue tracking & Knowledge Base: [YouTrack — dionysus-chatbot-2026 (DC2)](https://dionysus-chatbot-2026.youtrack.cloud)
-- Commits referencing an issue ID (e.g. `DC2-14 add wine scraper`) auto-link to that issue
-- Project follows CPMAI phases: Business Understanding → Data Understanding → Data Preparation → Modeling → Evaluation → Deployment/Monitoring — see Knowledge Base for phase docs
+```
+prompts/       modular system prompt (modules, adapters, data registry, gate, dist builds) — source of truth
+schema/
+  data/        one-off data fixes and lookup tables (SQL)
+  functions/   Postgres retrieval functions (semantic, filter, hybrid) — see schema/functions/README.md
+  views/       wines_enriched view (what the bot reads for wines)
+scripts/       prompt assembler, test-coverage check, wine page/PDF builders, site ingest, Dify smoke test
+evaluation/    test sets (gastbot_v1_questions.csv), run results (runs/), archive — see evaluation/README.md
+.github/workflows/  prompt gate & build, Dify smoke test, wine page publishing, rheingau.com ingest
+```
 
 ## Architecture
 
 ```
-Source sites (Weinfinder, rheingau.com)
-        │
-        ▼
-   scraper/           raw HTML/JSON snapshots
-        │
-        ▼
-   pipeline/          cleaning & normalization
-        │
-        ▼
-   Postgres (Supabase) curated tables + pgvector embeddings
-        │
-        ▼
-   Chatbot platform    retrieval-augmented answers (structured filters + semantic search)
-        │
-        ▼
-   compliance/         EU AI Act & GDPR checks applied at deployment
+rheingau.com pages ──► scripts/add_excluded_pages_back.py ──► Supabase (Postgres + pgvector)
+wine data (763) ─────► wines → wines_enriched view          rheingau_pages, rheingau_rag_chunks_v2, wines_*
+                                                                   │
+                         retrieval functions (schema/functions) ◄──┤
+                                                                   ▼
+prompts/modules ──► assemble_prompt.py ──► dist/full ───────► Dify (our stack)
+                                      └──► dist/gastbot ────► Gastbot (partner platform, own RAG)
+                                                                   ▲
+wines_enriched ──► build_wine_page.py / build_wine_pdfs.py ────────┘  (GitHub Pages + PDFs for Gastbot)
 ```
 
-## Repo structure (proposed — CPMAI-aligned)
-
-```
-/docs/business-understanding/
-/docs/data-understanding/
-/pipeline/                  cleaning/normalization scripts (Data Preparation)
-/modeling/
-  /modeling/schema/         SQL schema + pgvector setup (or keep /schema/ top-level — TBD)
-/prompts/                   modular prompt modules + generated builds (live, DC2-92: one repo, prompt under /prompts)
-/evaluation/                 testing
-/deployment/
-  /deployment/compliance/   EU AI Act & GDPR docs (moved from /docs/ai-act-gdpr.md)
-```
+Gastbot indexes rheingau.com with its own RAG and has no Supabase access; the wine catalog reaches it as a crawled GitHub Pages site and uploaded PDFs.
 
 ## Setup
 
-1. Clone the repo
-2. Create a free Postgres instance (Supabase or Neon) and enable the `pgvector` extension
-3. Copy `.env.example` to `.env` and fill in your database connection string
-4. Install dependencies: `pip install -r requirements.txt`
-5. Run the schema migration: `psql $DATABASE_URL -f schema/init.sql`
+```
+pip install -r requirements.txt          # prompt tooling (pyyaml)
+pip install requests beautifulsoup4      # only for the ingest / wine page scripts
+```
 
-## Running the pipeline
+Secrets are read from the environment (never committed): `SUPABASE_URL`, `SUPABASE_SERVICE_KEY` (`sb_secret_…` or legacy service_role key), `COHERE_API_KEY` (embeddings), `DIFY_API_KEY` (smoke test). GitHub Actions use repository secrets of the same names.
+
+Schema changes are applied to Supabase as migrations (the SQL files here are the source of truth); they are not run by hand against production.
+
+## Common tasks
+
+**Prompt** (details in `prompts/README.md`)
 
 ```
-# 1. Scrape raw data
-python scraper/weinfinder.py
-python scraper/rheingau_site.py
-
-# 2. Clean and normalize
-python pipeline/clean_wines.py
-
-# 3. Load into Postgres + generate embeddings
-python pipeline/load_to_db.py
+python scripts/assemble_prompt.py check                 # validate modules, lint both builds
+python scripts/assemble_prompt.py build --target all    # write prompts/dist/<target>/
+python scripts/assemble_prompt.py verify                # fail if committed dist is stale
+python scripts/check_test_coverage.py --target gastbot --tests evaluation/gastbot_v1_questions.csv
 ```
+
+A tag `prompt-vX.Y` publishes both builds as a GitHub Release.
+
+**Wine pages for Gastbot** (after wine data changes)
+
+- Run the *Publish wine page* workflow (builds `/wines/` pages per winery, a sitemap and a filterable table page for people, published with GitHub Pages), or run `scripts/build_wine_page.py` locally.
+- `scripts/build_wine_pdfs.py` builds the wine catalog PDFs for Gastbot's Files source; re-upload them to Gastbot.
+
+**rheingau.com content** — run the *Update Rheingau Website* workflow (leave "apply" unchecked for a dry run). Needs a machine that can reach rheingau.com.
+
+**Testing** — send the questions in `evaluation/gastbot_v1_questions.csv` to the bot, record results under `evaluation/runs/`, and group failures by the `modules` column. `scripts/dify_smoke_test.py` checks the merged prompt against a live Dify app on every push to `main` that touches `prompts/`.
 
 ## Data sources
 
-| Source                      | Content                                                  | Access method                                       |
-| ---------------------------- | --------------------------------------------------------- | ------------------------------------------------------ |
-| die-besten-weine-hessens.de | 763 wine entries (grape, type, award, taste, alcohol %)  | Custom scraper (JS-rendered, not sitemap-crawlable) |
-| rheingau.com                | Main site content, tours, wanderwege, radfahren         | Platform's built-in sitemap import                  |
+| Source | Content | Access |
+| --- | --- | --- |
+| die-besten-weine-hessens.de | 763 wine entries (grape, type, award, taste, alcohol %) | Custom scraper; loaded into Supabase `wines`, read through `wines_enriched` |
+| rheingau.com | Main site content, tours, hiking and cycling routes, privacy/imprint pages | Scraped into `rheingau_pages` and `rheingau_rag_chunks_v2` (Cohere embeddings); Gastbot indexes it itself |
+
+The registry of tables, views and functions and which build reaches them is `prompts/data_sources.yaml`.
+
+## Project management
+
+- Issues and Knowledge Base: [YouTrack — dionysus-chatbot-2026 (DC2)](https://dionysus-chatbot-2026.youtrack.cloud)
+- Commits reference an issue ID (e.g. `DC2-129 …`) and auto-link to it
+- Phases follow CPMAI: Business Understanding → Data Understanding → Data Preparation → Modeling → Evaluation → Deployment/Monitoring — see the Knowledge Base
 
 ## Governance
 
-- EU AI Act risk classification and GDPR data processing notes: see `/deployment/compliance/ai-act-gdpr.md`
 - Wine competition data is public information; no personal data is processed in the wine dataset
+- Chatbot behavior for personal data, health-related requests, AI disclosure and chat logging is defined in `prompts/modules/1-role/` and `prompts/modules/3-key-rules/`
+- EU AI Act risk classification and GDPR documentation: kept in the YouTrack Knowledge Base
 
 ## Team
 

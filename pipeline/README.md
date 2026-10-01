@@ -1,6 +1,6 @@
 # Data pipeline
 
-Every step that cleans, normalizes, enriches or anonymizes data lives here as a script — not only in Supabase.
+Two datasets: **wines** (cleaned, normalized, enriched) and the **Rheingau website** (content unchanged, only filter fields added). Every such step lives here as a script — not only in Supabase.
 A re-import must be able to run the whole chain again. Plan and inventory: YouTrack **DC2-162**.
 
 Rules
@@ -23,17 +23,20 @@ Rules
 Run 3–5: `SUPABASE_DB_URL=… pipeline/wines/run_all.sh`. Step 2 differs from the live data (see its header) and runs only after that is resolved.
 Steps 4 and 5 were checked on 01.10.2026: their rules reproduce the existing `wine_dryness` (763 rows) and `wine_body` (16 rows) exactly. Afterwards: GitHub Action *Publish wine page* and the Gastbot wine PDFs (`scripts/build_wine_pdfs.py`).
 
-## rheingau_pages/ — website content (→ `rheingau_pages`, `rheingau_rag_chunks_v2`)
+## website_filters/ — filter fields on the Rheingau website data
 
-| Step | File | Issue | What it sets |
+The website content (`rheingau_pages`, `rheingau_rag_chunks_v2`) is **not** cleaned or changed. These steps only add
+fields the bot can filter on. Crawl, chunking and embeddings are the website import, not part of this pipeline.
+
+| Step | File | Issue | Filter field on `rheingau_pages` |
 |---|---|---|---|
-| 1 | `01_city_plz_map.sql` | DC2-150 | city from postal code |
-| 2 | `02_transport_type.sql` | DC2-142 | `transport_type` for 71 reviewed pages |
-| 3 | `03_alcohol_free_offer.sql` | DC2-142 | `alcohol_free_offer` for 29 reviewed pages |
-| 4 | `04_excluded_pages.sql` | DC2-133, 152 | pages excluded from the bot |
+| 1 | `01_city_plz_map.sql` | DC2-150 | `city` from postal code (`_plz_city_map`) |
+| 2 | `02_transport_type.sql` | DC2-142 | `transport_type` (71 reviewed pages) |
+| 3 | `03_alcohol_free_offer.sql` | DC2-142 | `alcohol_free_offer` (29 reviewed pages) |
+| 4 | `04_excluded_pages.sql` | DC2-133, 152 | pages excluded from the bot (`rheingau_excluded_registry`) |
 
-Still to bring in (DC2-162): crawl + chunking + embeddings, amenity flags, past-event filter, regional projects.
+Still to bring in (DC2-162): amenity flags (`pet_friendly`, `bike_friendly` …, migrations `add_amenity_flags…`, `backfill_…`).
 
 ## privacy/ — guest data (planned)
 
-PII anonymization of logged `sessions` / `messages` (DC2-109), retention (DC2-100). Runs on a schedule, not on import.
+PII anonymization of the chat logs `sessions`, `messages`, `matched_documents` (DC2-109), retention (DC2-100). Runs on a schedule, not on import. See `privacy/README.md`.

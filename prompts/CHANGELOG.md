@@ -1,5 +1,9 @@
 # Prompt changelog
 
+## Data fix — 01.10.2026
+
+- **Lage without trailing dash**: 74 wines had a Lage like "Heppenheim -" (village only, no vineyard site). The trailing " -" is stripped in `wines.lage_weinberg`, the village is kept (`schema/data/wines_lage_trailing_dash.sql`, Supabase migration `wines_lage_trailing_dash`; backup `archive.wines_lage_20261001`). Wine names keep their " - " (official names). Re-run *Publish wine page* and re-upload the wine PDFs to Gastbot.
+
 ## Gastbot V.1 follow-up — 29.09.2026 (evening)
 
 - **`wines_enriched` columns renamed to the German labels of the wine page** (Supabase migration `wines_enriched_german_columns`; base tables unchanged): erzeuger → weingut, erzeuger_ort → ort, rebsorte_normalized → rebsorte (raw → rebsorte_original), weinart_normalized → weinart (raw → weinart_original), dryness_de → geschmacksrichtung, body_de → körper, qualitaetsstufe → qualitätsstufe, praemierung → prämierung, lage_weinberg → lage, alkohol_pct → alkohol, quelle_url → quelle. `dryness_en` and `body_en` dropped (the bot translates). Lowercase umlaut names need no quotes in Postgres.

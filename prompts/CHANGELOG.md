@@ -171,14 +171,14 @@ Where each module's text comes from and its data notes (moved out of the module 
 | 2.3 | `block-00-retrieval-sql-and-search` | DC2-A-96 routing (DC2-131, DC2-132); decision 28.09.2026 (DC2-142) — risk note in DC2-A-75 |  |
 | 2.4 | `block-01-wines` | merged 28.09.2026 (DC2-142) from BLOCK 01 (description), 01b (wine data fields) and 09 (wine finder, DC2-A-69); food pairing removed (no data, no requirement) | Gastbot gets this module when the wine data reaches the platform |
 | 2.5 | `block-07-transportation` | DC2-A-60 BLOCKS 07 |  |
-| 2.6 | `block-07b-transport-filter` | DC2-142 (28.09.2026) | rheingau_pages.transport_type — 71 reviewed pages (pipeline/rheingau_pages/02_transport_type.sql); 4 info pages are regional (no city); missing cities elsewhere — DC2-150 |
+| 2.6 | `block-07b-transport-filter` | DC2-142 (28.09.2026) | rheingau_pages.transport_type — 71 reviewed pages (pipeline/website_filters/02_transport_type.sql); 4 info pages are regional (no city); missing cities elsewhere — DC2-150 |
 | 2.7 | `block-10-amenity-facility-data-confidence` | DC2-A-126 (staged child of DC2-A-60, translated DE→EN for prompt-v1.0) | flags only for the 114 accommodations; breakfast_included, group_friendly, wheelchair_accessible empty (DC2-151) and left out of the list; only pet_friendly has false values |
 | 2.8 | `block-11-regional-projects-non-public-pages` | DC2-A-130 rule 1 (translated DE→EN); rule 3 (never-cited pages) moved to the data per DC2-142 (28.09.2026); rule 2 (partner/press/newsletter/jobs) dropped 29.09.2026: those pages come back into the data and are covered by CORE 05 / 17 (FR-13) | 7 regional projects; expected_completion is free text, 2 timelines already past; never-cited pages handled in the data (rheingau_excluded_registry, is_active) |
 | 2.9 | `core-19-missing-information-proactive-suggestion` | DC2-A-60 CORE 19, rewritten 28.09.2026 (DC2-142): say briefly that a detail is missing + next step (was: never say it is missing); unmatched entities → CORE 07 |  |
 | 3.1 | `core-03-pii-handling-guardrail` | DC2-A-60 CORE 03 |  |
 | 3.2 | `core-22-special-category-data-health-avoidance` | DC2-A-60 CORE 22, shortened 29.09.2026 (DC2-142): rationale in the CR-03 note |  |
 | 3.3 | `block-03-alcohol-free-driver-friendly-safety-over` | DC2-A-60 BLOCKS 03; reworked 28.09.2026 (DC2-142): website pages only, "Alkoholfreier Wein" first | wine table has no alcohol-free wines; 29 pages tagged alcohol_free_offer (full build: 3.4); Gastbot finds them through its own RAG |
-| 3.4 | `block-03b-alcohol-free-filter` | DC2-142 (28.09.2026) | rheingau_pages.alcohol_free_offer — 29 pages true after review (pipeline/rheingau_pages/03_alcohol_free_offer.sql); NULL = no information |
+| 3.4 | `block-03b-alcohol-free-filter` | DC2-142 (28.09.2026) | rheingau_pages.alcohol_free_offer — 29 pages true after review (pipeline/website_filters/03_alcohol_free_offer.sql); NULL = no information |
 | 3.5 | `core-21-logging-transparency-deletion` | DC2-A-60 CORE 21, shortened 29.09.2026 (DC2-142): consent background moved to CR-02 / CR-06 |  |
 | 3.6 | `core-10-dates-time` | DC2-A-60 CORE 10 + BLOCKS 04 (price) + BLOCKS 05 (booking), merged 28.09.2026 (DC2-142) |  |
 | 4.1 | `core-14-general-questions` | DC2-A-60 CORE 14 + CORE 09 (+ CORE 13) + BLOCKS 08 + DC2-A-146 + DC2-A-120, merged 29.09.2026 (DC2-142) |  |

@@ -1,5 +1,9 @@
 # Prompt changelog
 
+## Follow-up question — 02.10.2026
+
+- **4.1 Recommendations**: new rule *Follow-up after options* — after tourism options (activities, places, accommodation, events) end with one short question that helps the guest choose or continue; skip after a direct factual answer. Why: wines already had follow-ups (2.4 §4), tourism answers ended without a question (DC2-A-150). Test GB1-126.
+
 ## Data fix — 01.10.2026
 
 - **Lage without trailing dash**: 74 wines had a Lage like "Heppenheim -" (village only, no vineyard site). The trailing " -" is stripped in `wines.lage_weinberg`, the village is kept (`schema/data/wines_lage_trailing_dash.sql`, Supabase migration `wines_lage_trailing_dash`; backup `archive.wines_lage_20261001`). Wine names keep their " - " (official names). Re-run *Publish wine page* and re-upload the wine PDFs to Gastbot.
